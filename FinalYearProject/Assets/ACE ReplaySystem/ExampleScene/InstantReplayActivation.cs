@@ -10,8 +10,8 @@ public class InstantReplayActivation : MonoBehaviour
     void Update()
     {
         //Enter replay mode
-        if (Input.GetKeyDown(KeyCode.R) && !replay.ReplayMode())
-            replay.EnterReplayMode();
+        //if (Input.GetKeyDown(KeyCode.R) && !replay.ReplayMode())
+        //    replay.EnterReplayMode();
 
     }
 }

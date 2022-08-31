@@ -264,5 +264,5 @@ public class Record : MonoBehaviour
     public Animator GetAnimator() { return animator; }
     public int GetAnimFramesRecorded() { return animFramesRecorded; }
     public AudioSource GetAudioSource() { return null; }
-    public ParticleSystem GetParticle() { return particle; }
+    public ParticleSystem GetParticle() { return null; }
 }

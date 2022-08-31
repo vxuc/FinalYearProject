@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class ReplayManager : MonoBehaviour
 {
+    public static ReplayManager Instance;
+
     public enum ReplayState { PAUSE, PLAYING, TRAVEL_BACK }
     //States
     ReplayState state = ReplayState.PAUSE;
@@ -61,6 +63,16 @@ public class ReplayManager : MonoBehaviour
         //if the frameRate is increased to 144 f.e., the replay would last a maximum of 69 seconds.
         //This is due to how the unity's internal animator recorder works, as it can only record up to 10000 frames, no more.
         //At 60fps the replay can reach up to 166 seconds.
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         Application.targetFrameRate = 60;
     }
 
@@ -606,15 +618,15 @@ public class ReplayManager : MonoBehaviour
     // Save Replay Mode
     public void SaveReplay()
     {
-        if (!Directory.Exists("Replay"))
-            Directory.CreateDirectory("Replay");
+        if (!Directory.Exists("Replays/" + DataManager.Instance.replayName))
+            Directory.CreateDirectory("Replays/" + DataManager.Instance.replayName);
 
         BinaryFormatter formatter = new BinaryFormatter();
 
         int i = 0;
         foreach (Record record in records)
         {
-            FileStream file = File.Create("Replay/test" + i + ".bin");
+            FileStream file = File.Create("Replays/" + DataManager.Instance.replayName + "/replay" + i + ".bin");
 
             formatter.Serialize(file, record.frames);
 
@@ -632,13 +644,13 @@ public class ReplayManager : MonoBehaviour
         bool found = true;
         while (found)
         {
-            if (!File.Exists("Replay/test" + i + ".bin"))
+            if (!File.Exists("Replays/" + DataManager.Instance.replayName + "/replay" + i + ".bin"))
             {
                 found = false;
                 break;
             }
 
-            FileStream file = File.Open("Replay/test" + i + ".bin", FileMode.Open);
+            FileStream file = File.Open("Replays/" + DataManager.Instance.replayName + "/replay" + i + ".bin", FileMode.Open);
 
             List<Frame> frames = (List<Frame>)formatter.Deserialize(file);
             foreach (Record record in FindObjectsOfType<Record>())
@@ -755,8 +767,11 @@ public class ReplayManager : MonoBehaviour
             Rigidbody rb = records[i].GetRigidbody();
             if (rb != null)
             {
-                rb.velocity = records[i].GetFrameAtIndex(records[i].GetLength() - 1).GetRBVelocity();
-                rb.angularVelocity = records[i].GetFrameAtIndex(records[i].GetLength() - 1).GetRBAngularVelocity();
+                if (records[i].GetFrameAtIndex(records[i].GetLength() - 1) != null)
+                {
+                    rb.velocity = records[i].GetFrameAtIndex(records[i].GetLength() - 1).GetRBVelocity();
+                    rb.angularVelocity = records[i].GetFrameAtIndex(records[i].GetLength() - 1).GetRBAngularVelocity();
+                }
             }
 
             //reset animations
