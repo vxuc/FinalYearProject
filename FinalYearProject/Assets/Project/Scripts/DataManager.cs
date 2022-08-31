@@ -32,6 +32,11 @@ public class DataManager : MonoBehaviour
 
     public void RefreshReplays()
     {
+        for (int i = 0; i < contentTransform.childCount; i++)
+        {
+            Destroy(contentTransform.GetChild(i).gameObject);
+        }
+
         DirectoryInfo dir = new DirectoryInfo("Replays/");
         var info = dir.GetDirectories(".");
         int count = dir.GetDirectories().Length;

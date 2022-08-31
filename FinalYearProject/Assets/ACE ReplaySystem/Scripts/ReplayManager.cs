@@ -667,6 +667,7 @@ public class ReplayManager : MonoBehaviour
         EnterReplayMode();
     }
 
+
     // Start replay mode
     public void EnterReplayMode()
     {
