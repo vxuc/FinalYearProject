@@ -82,9 +82,9 @@ public class ReplayManager : MonoBehaviour
 
         if (interpolation)
         {
-            maximumLength = (int)(10000f / (Application.targetFrameRate * recordInterval));
-            if (recordMaxLength > maximumLength)
-                recordMaxLength = maximumLength;
+            //maximumLength = (int)(10000f / (Application.targetFrameRate * recordInterval));
+            //if (recordMaxLength > maximumLength)
+            //    recordMaxLength = maximumLength;
         }
         else
         {
@@ -114,71 +114,79 @@ public class ReplayManager : MonoBehaviour
                         HandleDeletedObjects(records[i], frameIndex);
                         HandleInstantiatedObjects(records[i], auxIndex);
 
-                        //if record exists at frameIndex moment
-                        if (IsRecordActiveInReplay(records[i], frameIndex))
+                        if (records[i].dataType == Record.DATA_TYPE.DATA_TRANSFORM)
                         {
-                            //transforms
-                            if (interpolation)
+                            //if record exists at frameIndex moment
+                            if (IsRecordActiveInReplay(records[i], frameIndex))
                             {
-                                float max = Application.targetFrameRate * recordInterval;
-                                float value = replayTimer / max;
-                                InterpolateTransforms(records[i], auxIndex, value);
-                            }
-                            else
-                            {
-                                //not slowmotion
-                                if (speeds[speedIndex] >= 1)
-                                    SetTransforms(records[i], auxIndex);
+                                //transforms
+                                if (interpolation)
+                                {
+                                    float max = Application.targetFrameRate * recordInterval;
+                                    float value = replayTimer / max;
+                                    InterpolateTransforms(records[i], auxIndex, value);
+                                }
                                 else
                                 {
-                                    if (slowMotionTimer == 0)
+                                    //not slowmotion
+                                    if (speeds[speedIndex] >= 1)
                                         SetTransforms(records[i], auxIndex);
-                                    else //interpolate slow motion frames
-                                        InterpolateTransforms(records[i], auxIndex, slowMotionTimer);
+                                    else
+                                    {
+                                        if (slowMotionTimer == 0)
+                                            SetTransforms(records[i], auxIndex);
+                                        else //interpolate slow motion frames
+                                            InterpolateTransforms(records[i], auxIndex, slowMotionTimer);
+                                    }
                                 }
-                            }
 
 
-                            //animations 
-                            Animator animator = records[i].GetAnimator();
-                            if (animator != null)
-                            {
-                                float time = (animator.recorderStopTime - animator.recorderStartTime) / records[i].GetLength();
-
-                                if (interpolation)
-                                    time = (animator.recorderStopTime - animator.recorderStartTime) / records[i].GetAnimFramesRecorded();
-
-                                //Speed of replay
-                                time *= speeds[speedIndex];
-
-                                if (animator.playbackTime + time <= animator.recorderStopTime)
-                                    animator.playbackTime += time;
-                            }
-
-                            //audios
-                            AudioSource source = records[i].GetAudioSource();
-                            if (source != null)
-                            {
-                                if (records[i].GetFrameAtIndex(auxIndex) != null)
+                                //animations 
+                                Animator animator = records[i].GetAnimator();
+                                if (animator != null)
                                 {
-                                    if (records[i].GetFrameAtIndex(auxIndex).GetAudioData().Playing() && source.isPlaying == false)
-                                        source.Play();
+                                    float time = (animator.recorderStopTime - animator.recorderStartTime) / records[i].GetLength();
 
-                                    if (source.isPlaying)
-                                        SetAudioProperties(source, records[i].GetFrameAtIndex(auxIndex).GetAudioData());
+                                    if (interpolation)
+                                        time = (animator.recorderStopTime - animator.recorderStartTime) / records[i].GetAnimFramesRecorded();
+
+                                    //Speed of replay
+                                    time *= speeds[speedIndex];
+
+                                    if (animator.playbackTime + time <= animator.recorderStopTime)
+                                        animator.playbackTime += time;
+                                }
+
+                                //audios
+                                AudioSource source = records[i].GetAudioSource();
+                                if (source != null)
+                                {
+                                    if (records[i].GetFrameAtIndex(auxIndex) != null)
+                                    {
+                                        if (records[i].GetFrameAtIndex(auxIndex).GetAudioData().Playing() && source.isPlaying == false)
+                                            source.Play();
+
+                                        if (source.isPlaying)
+                                            SetAudioProperties(source, records[i].GetFrameAtIndex(auxIndex).GetAudioData());
+                                    }
+                                }
+
+                                //particles
+                                ParticleSystem particle = records[i].GetParticle();
+                                if (particle != null)
+                                {
+                                    if (records[i].GetFrameAtIndex(auxIndex).ParticleTime() != 0f && particle.isPlaying == false)
+                                        particle.Play();
+
+                                    if (records[i].GetFrameAtIndex(auxIndex).ParticleTime() == 0 && particle.isPlaying)
+                                        particle.Stop();
                                 }
                             }
-
-                            //particles
-                            ParticleSystem particle = records[i].GetParticle();
-                            if (particle != null)
-                            {
-                                if (records[i].GetFrameAtIndex(auxIndex).ParticleTime() != 0f && particle.isPlaying == false)
-                                    particle.Play();
-
-                                if (records[i].GetFrameAtIndex(auxIndex).ParticleTime() == 0 && particle.isPlaying)
-                                    particle.Stop();
-                            }
+                        }
+                        else if (records[i].dataType == Record.DATA_TYPE.DATA_WEATHER)
+                        {
+                            //weather type
+                            Weather.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
                         }
                     }
 
