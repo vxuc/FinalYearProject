@@ -1236,7 +1236,6 @@ GameObject:
   - component: {fileID: 148582801}
   - component: {fileID: 148582800}
   - component: {fileID: 148582799}
-  - component: {fileID: 148582798}
   - component: {fileID: 148582797}
   - component: {fileID: 148582796}
   - component: {fileID: 148582795}
@@ -1422,18 +1421,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &148582798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148582794}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!81 &148582799
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1492,8 +1479,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148582794}
-  m_LocalRotation: {x: 0.11406318, y: -0.0037497042, z: 0.0003549618, w: 0.99346644}
-  m_LocalPosition: {x: -33.781124, y: 3.9028347, z: -49.02482}
+  m_LocalRotation: {x: 0.11406212, y: -0.0037410283, z: 0.0004295159, w: 0.9934665}
+  m_LocalPosition: {x: -33.782326, y: 4.476986, z: -46.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2609,6 +2596,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ReplayManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2809413419116962253, guid: 2e298f85a08feb54799879133844dcf5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2809413419116962254, guid: 2e298f85a08feb54799879133844dcf5,
         type: 3}
@@ -6236,8 +6228,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1301243409}
-  m_Follow: {fileID: 1301243409}
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 0}
   m_CommonLens: 1
   m_Lens:
     FieldOfView: 40
@@ -6264,9 +6256,9 @@ MonoBehaviour:
     Value: 0.39
     m_SpeedMode: 0
     m_MaxSpeed: 4
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
-    m_InputAxisName: Mouse Y
+    m_AccelTime: 1
+    m_DecelTime: 1
+    m_InputAxisName: Joystick Y
     m_InputAxisValue: 0
     m_InvertInput: 1
     m_MinValue: 0
@@ -6288,13 +6280,13 @@ MonoBehaviour:
     Value: 0
     m_SpeedMode: 0
     m_MaxSpeed: 300
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
-    m_InputAxisName: Mouse X
+    m_AccelTime: 1
+    m_DecelTime: 1
+    m_InputAxisName: Joystick X
     m_InputAxisValue: 0
     m_InvertInput: 0
-    m_MinValue: -180
-    m_MaxValue: 180
+    m_MinValue: -360
+    m_MaxValue: 360
     m_Wrap: 1
     m_Recentering:
       m_enabled: 0
@@ -6334,7 +6326,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1223333537}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33.782326, y: 4.476986, z: -50.6092}
+  m_LocalPosition: {x: -33.782326, y: 4.476986, z: -46.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6909,20 +6901,19 @@ PrefabInstance:
         type: 3}
       propertyPath: cam
       value: 
-      objectReference: {fileID: 148582801}
+      objectReference: {fileID: 0}
     - target: {fileID: 1819199311356575096, guid: 8c10ca2d3f27a2549be73fd3a0c44dc8,
         type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1819199311356575096, guid: 8c10ca2d3f27a2549be73fd3a0c44dc8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c10ca2d3f27a2549be73fd3a0c44dc8, type: 3}
---- !u!4 &1301243409 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1329908302254663618, guid: 8c10ca2d3f27a2549be73fd3a0c44dc8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1301243408}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1309169872
 GameObject:
   m_ObjectHideFlags: 0
