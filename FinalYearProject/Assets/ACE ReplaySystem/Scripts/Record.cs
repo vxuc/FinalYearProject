@@ -1,10 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Record : MonoBehaviour
 {
+    public enum DATA_TYPE
+    {
+        DATA_TRANSFORM,
+        DATA_WEATHER,
+        DATA_TIME,
+        DATA_TOTAL
+    }
+
+
     [Header("ReplayManager")]
     [Tooltip("Drag and drop the Replay Manager of the scene here, not necessary if you put below the ReplayManager name.")]
     public ReplayManager replay;
@@ -18,6 +28,11 @@ public class Record : MonoBehaviour
     [Header("Scripts to NOT disable")]
     [Tooltip("Drag and drop the scripts that dont have to be disabled during replay.")]
     [SerializeField] MonoBehaviour[] scripts = null;
+
+    //Scripts of the GO that dont have to be disabled during replay
+    [Header("Type of Record Data")]
+    [Tooltip("Drag and drop the scripts that dont have to be disabled during replay.")]
+    public DATA_TYPE dataType = DATA_TYPE.DATA_TRANSFORM;
 
     //List of recorded Frames 
     public List<Frame> frames = new List<Frame>();
@@ -47,6 +62,8 @@ public class Record : MonoBehaviour
     private int recordDeletedFrame = -1;
     //deleted go 
     private GameObject deletedGO;
+
+    private Weather.WEATHER_TYPE weatherType;
 
     void Start()
     {
@@ -95,6 +112,9 @@ public class Record : MonoBehaviour
 
         //record particle data
         RecordParticle(frame);
+
+        //record weather data
+        RecordWeather(frame);
 
         //Add new frame to the list
         AddFrame(frame);
@@ -161,6 +181,12 @@ public class Record : MonoBehaviour
             else
                 frame.SetParticleData(0f);
         }
+    }
+
+    //Record Weather
+    void RecordWeather(Frame frame)
+    {
+        frame.SetWeatherData(Weather.Instance.weatherType);
     }
 
     //Prepare to record again
@@ -261,8 +287,9 @@ public class Record : MonoBehaviour
 
     // other recorded components
     public Rigidbody GetRigidbody() { return rigidBody; }
-    public Animator GetAnimator() { return animator; }
+    public Animator GetAnimator() { return null; }
     public int GetAnimFramesRecorded() { return animFramesRecorded; }
     public AudioSource GetAudioSource() { return null; }
     public ParticleSystem GetParticle() { return null; }
+    public Weather.WEATHER_TYPE GetWeather() { return weatherType; }
 }

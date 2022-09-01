@@ -150,6 +150,9 @@ public class Frame
     //object name
     public string objName;
 
+    //weather index
+    Weather.WEATHER_TYPE weatherType;
+
     //Constructor
     public Frame(Vector3 position, Quaternion rotation, Vector3 scale_)
     {
@@ -176,6 +179,12 @@ public class Frame
     {
         particleTime = time;
     }
+    
+    //particle set data
+    public void SetWeatherData(Weather.WEATHER_TYPE type)
+    {
+        weatherType = type;
+    }
 
     //Getters
     public Vector3 GetPosition() { return pos; }
@@ -191,4 +200,5 @@ public class Frame
 
     //Particle getter
     public float ParticleTime() { return particleTime; }
+    public Weather.WEATHER_TYPE GetWeatherData() { return weatherType; }
 }
