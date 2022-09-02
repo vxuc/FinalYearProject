@@ -284,7 +284,7 @@ public class Record : MonoBehaviour
     //SETTERS
     public void SetDeletedGameObject(GameObject go) { deletedGO = go; }
     public void SetFirstFrameIndex() { numberFirstFrame = frames[0].record_data.spawnFrame; }
-    public void SetRecordDeletedFrame(int frame) { recordDeletedFrame = frame; }
+    public void SetRecordDeletedFrame(int frame) { recordDeletedFrame = frame; frames[0].record_data.despawnFrame = frame; }
 
     public void IncreaseRecordedAnimatorFrames() { animFramesRecorded++; }
 

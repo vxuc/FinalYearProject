@@ -60,6 +60,7 @@ public class ReplayManager : MonoBehaviour
 
     //Deleted gameobjects pool
     private List<GameObject> DeletedPool = new List<GameObject>();
+    private List<GameObject> DestroyPool = new List<GameObject>();
 
     List<List<Frame>> unassignedRecordList = new List<List<Frame>>();
 
@@ -115,8 +116,6 @@ public class ReplayManager : MonoBehaviour
                 {
                     if (timer2 >= frame[0].record_data.spawnFrame)
                     {
-                        Debug.Log("TEST: " + frame[0].record_data.spawnFrame + " " + timer2);
-
                         foreach (GameObject prefab in DataManager.Instance.prefabList)
                         {
                             int index = prefab.name.Length - 1;
@@ -153,9 +152,6 @@ public class ReplayManager : MonoBehaviour
                 {
                     for (int i = 0; i < records.Count; i++)
                     {
-                        //Check for instantiated and deleted GOs
-                        if (records[i].name == "Sphere(Clone)")
-                            Debug.Log("FIRST: " + frameIndex + " " + records[i].GetFirstFrameIndex());
                         int auxIndex = frameIndex - records[i].GetFirstFrameIndex();
                         HandleDeletedObjects(records[i], frameIndex);
                         HandleInstantiatedObjects(records[i], auxIndex);
@@ -232,11 +228,13 @@ public class ReplayManager : MonoBehaviour
                         else if (records[i].dataType == Record.DATA_TYPE.DATA_WEATHER)
                         {
                             //weather type
-                            Weather.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
+                            if (records[i].GetFrameAtIndex(auxIndex) != null)
+                                Weather.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
                         }
 
-                        //if (records[i].frames[records[i].frames.Count - 1].record_data.spawnFrame >= timer2)
-                        //    DestroyRecordedGO(records[i].gameObject);
+                        if (timer2 >= records[i].frames[0].record_data.despawnFrame)
+                            if (timer2 < records[i].frames[records[i].frames.Count - 1].record_data.spawnFrame)
+                                DestroyGO(records[i].gameObject);
                     }
 
                     if (interpolation)
@@ -282,6 +280,12 @@ public class ReplayManager : MonoBehaviour
                 TravelBack();
             }
 
+            foreach (GameObject go in DestroyPool)
+            {
+                records.Remove(go.GetComponent<Record>());
+                Destroy(go);
+            }
+            DestroyPool.Clear();
         }
         else //game is recording
         {
@@ -480,6 +484,11 @@ public class ReplayManager : MonoBehaviour
         }
 
         SetDeleteChildrenRecords(obj, obj);
+    }
+
+    public void DestroyGO(GameObject go)
+    {
+        DestroyPool.Add(go);
     }
 
     //Set deleted frame and go deleted to childs with also records
@@ -748,7 +757,6 @@ public class ReplayManager : MonoBehaviour
                 }
                 
                 string final = frames[0].objName.Substring(0, frames[0].objName.Length - s.Length);
-                Debug.Log("FINAL: " + final);
                 if (final == record.gameObject.name)
                 {
                     record.frames = frames;

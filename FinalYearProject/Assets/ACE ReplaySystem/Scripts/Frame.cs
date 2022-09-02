@@ -138,6 +138,7 @@ public class Frame
     public struct RECORD_DATA
     {
         public int spawnFrame;
+        public int despawnFrame;
         public string prefabName;
     }
 
