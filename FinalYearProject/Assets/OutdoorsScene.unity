@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -309,6 +309,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &23643722
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1390,6 +1391,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!114 &148582797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1882,6 +1884,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &229294181
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3393,6 +3396,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &661140952
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4539,6 +4543,11 @@ PrefabInstance:
     - target: {fileID: 933037771637241484, guid: f8d24d4bd1eaa97488ad597ff6adb827,
         type: 3}
       propertyPath: m_Name
+      value: Sphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 933037771637241485, guid: f8d24d4bd1eaa97488ad597ff6adb827,
+        type: 3}
+      propertyPath: prefabName
       value: Sphere
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7075,6 +7084,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &1309169875
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8448,6 +8458,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &1651510409
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8583,6 +8594,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!114 &1684503399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14215,6 +14227,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!114 &1755407415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19208,6 +19221,7 @@ MonoBehaviour:
   - {fileID: 1780480595}
   dataType: 1
   frames: []
+  prefabName: 
 --- !u!4 &1780480594
 Transform:
   m_ObjectHideFlags: 0
@@ -19439,6 +19453,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sphere (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 933037771637241485, guid: f8d24d4bd1eaa97488ad597ff6adb827,
+        type: 3}
+      propertyPath: prefabName
+      value: Sphere
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8d24d4bd1eaa97488ad597ff6adb827, type: 3}
 --- !u!1 &1782380359
@@ -19590,6 +19609,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!82 &1789184698
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19750,6 +19770,8 @@ MonoBehaviour:
   replayInfoPrefab: {fileID: 653874329964902766, guid: b6fc02ac4978d8241b75fa27e795d1b7,
     type: 3}
   contentTransform: {fileID: 569700464}
+  prefabList:
+  - {fileID: 933037771637241484, guid: f8d24d4bd1eaa97488ad597ff6adb827, type: 3}
 --- !u!4 &1791684183
 Transform:
   m_ObjectHideFlags: 0
@@ -19818,6 +19840,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &1795852962
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20291,6 +20314,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &1915904441
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20495,6 +20519,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!114 &1943754409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25368,6 +25393,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &1993171235
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -25500,6 +25526,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
+  prefabName: 
 --- !u!54 &1993552578
 Rigidbody:
   m_ObjectHideFlags: 0

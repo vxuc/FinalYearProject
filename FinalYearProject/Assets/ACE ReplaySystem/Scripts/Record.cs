@@ -63,7 +63,10 @@ public class Record : MonoBehaviour
     //deleted go 
     private GameObject deletedGO;
 
+    //weather type
     private Weather.WEATHER_TYPE weatherType;
+
+    [SerializeField] string prefabName;
 
     void Start()
     {
@@ -81,13 +84,30 @@ public class Record : MonoBehaviour
         {
             replay.AddRecord(this);
 
+            //if (replay.ReplayMode())
+            //{
+            //    if (frames.Count > 0)
+            //}
+            //else
+            //{
+            //    if (frames.Count > 0)
+            //        numberFirstFrame = replay.GetReplayLength();
+            //}
+            //if (frames.Count > 0) 
+            //    numberFirstFrame = frames[0].record_data.spawnFrame;
             //first frame initialization, useful to know the frame where an instantiated go was spawned
-            numberFirstFrame = replay.GetReplayLength();
+            //
+
             //look if it is an instantiated go
             if (numberFirstFrame != 0) instantiated = true;
         }
         else
             Debug.LogWarning("ReplayManager not found, make sure there is a replayManger in the scene. Make sure to assign it by drag and drop or by puting the correct replayManagerName");
+    }
+
+    public void SetNumberFirstFrame(int i)
+    {
+        numberFirstFrame = i;
     }
 
     public string GetReplayManagerName()
@@ -98,8 +118,8 @@ public class Record : MonoBehaviour
     public void RecordFrame()
     {
         //record transforms
-        Frame frame = new Frame(transform.position, transform.rotation, transform.localScale);
-        frame.objName = name;
+        Frame frame = new Frame(transform.position, transform.rotation, transform.localScale, name + DataManager.Instance.GetNewID().ToString(), prefabName, ReplayManager.Instance.GetRunningTime());
+        frame.record_data.spawnFrame = ReplayManager.Instance.GetRunningTime();
 
         //record animations
         RecordAnimation();

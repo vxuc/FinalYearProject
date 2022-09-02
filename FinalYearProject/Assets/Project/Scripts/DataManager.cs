@@ -13,6 +13,9 @@ public class DataManager : MonoBehaviour
     [SerializeField] GameObject replayInfoPrefab;
     [SerializeField] Transform contentTransform;
 
+    public int id;
+    public List<GameObject> prefabList = new List<GameObject>();
+
     void Awake()
     {
         if (Instance == null)
@@ -28,6 +31,11 @@ public class DataManager : MonoBehaviour
     public void SetReplayName(string name)
     {
         replayName = name;
+    }
+
+    public int GetNewID()
+    {
+        return id++;
     }
 
     public void RefreshReplays()

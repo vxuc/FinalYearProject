@@ -34,7 +34,6 @@ public class Weather : MonoBehaviour
     void Update()
     {
         text.text = "Weather: " + weatherType.ToString();
-        Debug.Log("Current Weather: " + weatherType.ToString());
         if (Input.GetKeyDown(KeyCode.R))
         {
             weatherType++;

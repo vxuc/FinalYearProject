@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -29,6 +30,9 @@ public class ReplayManager : MonoBehaviour
     [Tooltip("Time between recorded frames")]
     [SerializeField] private float recordInterval = 0.2f;
 
+    private int timer = 0;
+    private int timer2 = 0;
+
     //replay current frame index
     private int frameIndex = 0;
     //replay timer used for interpolation
@@ -56,6 +60,8 @@ public class ReplayManager : MonoBehaviour
 
     //Deleted gameobjects pool
     private List<GameObject> DeletedPool = new List<GameObject>();
+
+    List<List<Frame>> unassignedRecordList = new List<List<Frame>>();
 
     private void Awake()
     {
@@ -104,12 +110,52 @@ public class ReplayManager : MonoBehaviour
             {
                 //update slider value
                 timeLine.value = frameIndex;
+                List<List<Frame>> framesToRemove = new List<List<Frame>>();
+                foreach (List<Frame> frame in unassignedRecordList)
+                {
+                    if (timer2 >= frame[0].record_data.spawnFrame)
+                    {
+                        Debug.Log("TEST: " + frame[0].record_data.spawnFrame + " " + timer2);
+
+                        foreach (GameObject prefab in DataManager.Instance.prefabList)
+                        {
+                            int index = prefab.name.Length - 1;
+                            string s = "";
+                            while (true)
+                            {
+                                if (Char.IsDigit(prefab.name[index]))
+                                    s += prefab.name[index];
+                                else
+                                    break;
+
+                                index--;
+                            }
+
+                            string final = prefab.name.Substring(0, prefab.name.Length - s.Length);
+                            if (final == frame[0].record_data.prefabName)
+                            {
+                                GameObject go = Instantiate(prefab);
+                                go.GetComponent<Record>().SetNumberFirstFrame(frame[0].record_data.spawnFrame);
+                                Debug.Log("INstanTED NEW OBJ " + frame[0].record_data.prefabName);
+                                go.GetComponent<Record>().frames = frame;
+                                framesToRemove.Add(frame);
+                            }
+                        }
+                    }
+                }
+
+                foreach (List<Frame> frame in framesToRemove)
+                {
+                    unassignedRecordList.Remove(frame);
+                }
 
                 if (frameIndex < recordMaxLength - 1 && frameIndex < timeLine.maxValue - 1)
                 {
                     for (int i = 0; i < records.Count; i++)
                     {
                         //Check for instantiated and deleted GOs
+                        if (records[i].name == "Sphere(Clone)")
+                            Debug.Log("FIRST: " + frameIndex + " " + records[i].GetFirstFrameIndex());
                         int auxIndex = frameIndex - records[i].GetFirstFrameIndex();
                         HandleDeletedObjects(records[i], frameIndex);
                         HandleInstantiatedObjects(records[i], auxIndex);
@@ -188,6 +234,9 @@ public class ReplayManager : MonoBehaviour
                             //weather type
                             Weather.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
                         }
+
+                        //if (records[i].frames[records[i].frames.Count - 1].record_data.spawnFrame >= timer2)
+                        //    DestroyRecordedGO(records[i].gameObject);
                     }
 
                     if (interpolation)
@@ -197,6 +246,7 @@ public class ReplayManager : MonoBehaviour
                         if (replayTimer >= frames)
                         {
                             replayTimer = 0;
+                            timer2++;
                             frameIndex++;
                         }
                     }
@@ -231,6 +281,7 @@ public class ReplayManager : MonoBehaviour
             {
                 TravelBack();
             }
+
         }
         else //game is recording
         {
@@ -254,7 +305,10 @@ public class ReplayManager : MonoBehaviour
                 }
 
                 if (recordTimer >= Application.targetFrameRate * recordInterval)
+                {
+                    timer++;
                     recordTimer = 0;
+                }
             }
             else
             {
@@ -292,6 +346,17 @@ public class ReplayManager : MonoBehaviour
             //instantiate 
             if (go.activeInHierarchy == false)
             {
+                //for (int i = 0; i < unassignedRecordList.Count; i++)
+                //{
+                //    if (unassignedRecordList[i][0].objName == rec.name)
+                //    {
+                //        Debug.Log("FOUND NEW OBJ " + rec.name);
+                //        rec.frames = unassignedRecordList[i];
+                //        unassignedRecordList.RemoveAt(i);
+                //        break;
+                //    }
+                //}
+
                 //if it hasn't been deleted during recording
                 if (rec.GetRecordDeletedFrame() == -1)
                 {
@@ -484,6 +549,11 @@ public class ReplayManager : MonoBehaviour
         return value;
     }
 
+    public int GetRunningTime()
+    {
+        return timer;
+    }
+
     //Return if in replayMode or not
     public bool ReplayMode()
     {
@@ -661,11 +731,38 @@ public class ReplayManager : MonoBehaviour
             FileStream file = File.Open("Replays/" + DataManager.Instance.replayName + "/replay" + i + ".bin", FileMode.Open);
 
             List<Frame> frames = (List<Frame>)formatter.Deserialize(file);
+
+            bool exist = false;
             foreach (Record record in FindObjectsOfType<Record>())
             {
-                if (frames[0].objName == record.gameObject.name)
+                int index = frames[0].objName.Length - 1;
+                string s = "";
+                while (true)
+                {
+                    if (Char.IsDigit(frames[0].objName[index]))
+                        s += frames[0].objName[index];
+                    else
+                        break;
+
+                    index--;
+                }
+                
+                string final = frames[0].objName.Substring(0, frames[0].objName.Length - s.Length);
+                Debug.Log("FINAL: " + final);
+                if (final == record.gameObject.name)
+                {
                     record.frames = frames;
+                    exist = true;
+                }
             }
+            
+            if (!exist)
+            {
+                Debug.Log("UNFOUND " + frames[0].objName);
+                unassignedRecordList.Add(frames);
+            }
+
+            //FindObjectsOfType<Record>()[i].frames = frames;
 
             file.Close();
             i++;
@@ -1299,4 +1396,8 @@ public class ReplayManager : MonoBehaviour
         isReplayMode = false;
     }
 
+    public int GetFrameIndex()
+    {
+        return frameIndex;
+    }
 }
