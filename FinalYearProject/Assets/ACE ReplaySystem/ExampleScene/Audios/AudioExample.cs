@@ -20,7 +20,7 @@ public class AudioExample : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer >= 10.0f)
+        if (timer >= 7.0f)
         {
             source.Play();
             particle.Play();

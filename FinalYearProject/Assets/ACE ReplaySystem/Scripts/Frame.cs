@@ -134,6 +134,14 @@ public struct SerializableQuaternion
 [Serializable]
 public class Frame
 {
+    [Serializable]
+    public struct RECORD_DATA
+    {
+        public int spawnFrame;
+        public int despawnFrame;
+        public string prefabName;
+    }
+
     //transform data
     SerializableVector3 pos, scale;
     SerializableQuaternion rot;
@@ -150,15 +158,24 @@ public class Frame
     //object name
     public string objName;
 
+    //spawn time
+    int spawnFrame;
+
     //weather index
     Weather.WEATHER_TYPE weatherType;
 
+    //record data
+    public RECORD_DATA record_data;
+
     //Constructor
-    public Frame(Vector3 position, Quaternion rotation, Vector3 scale_)
+    public Frame(Vector3 position, Quaternion rotation, Vector3 scale_, string _objName, string _prefabName, int _frameIndex)
     {
         pos = position;
         rot = rotation;
         scale = scale_;
+        objName = _objName;
+        record_data.prefabName = _prefabName;
+        record_data.spawnFrame = _frameIndex;
     }
 
     //RigidBody set velocity data
