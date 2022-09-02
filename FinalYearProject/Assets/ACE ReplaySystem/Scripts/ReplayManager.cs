@@ -800,6 +800,7 @@ public class ReplayManager : MonoBehaviour
             records[i].SetKinematic(true);
             records[i].ManageScripts(false);
 
+            records[i].SetFirstFrameIndex();
             int auxIndex = frameIndex - records[i].GetFirstFrameIndex();
 
             if (IsRecordActiveInReplay(records[i], frameIndex))
