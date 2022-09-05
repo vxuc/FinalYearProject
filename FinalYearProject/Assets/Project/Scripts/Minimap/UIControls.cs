@@ -21,6 +21,7 @@ public class UIControls : MonoBehaviour
 
     void Open()
     {
+        //To open up Menu press 'M' refer to new input system
         if(!openMenu)
         {
             userInterface.SetActive(true);

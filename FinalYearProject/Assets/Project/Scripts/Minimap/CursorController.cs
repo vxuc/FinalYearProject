@@ -7,13 +7,33 @@ using UnityEngine.UI;
 public class CursorController : MonoBehaviour
 {
     private CursorControls controls;
+
+    //Minimap RT
     [SerializeField] Camera uiCamera;
+
+    //Spawn Object
     [SerializeField] GameObject prefab;
+
+
+    //LINE RENDERER
+    //DOTS
+    [Header("Dots")]
+    [SerializeField] Transform dotParent;
+    [SerializeField] private GameObject dotPrefab;
+
+    //LINES
+    [Header("Lines")]
+    [SerializeField] private GameObject linePrefab;
+    [SerializeField] Transform lineParent;
+
+    private LineController currentLine;
+
+
+
 
     private void Awake()
     {
         controls = new CursorControls();
-        //uiCamera = GameObject.FindGameObjectWithTag("MapCamera").GetComponent<Camera>();
     }
 
     void Start()
@@ -39,6 +59,8 @@ public class CursorController : MonoBehaviour
 
     }
 
+
+    //Code to insert waypoints and spawn in map
     private void DetectObject()
     {
        
@@ -55,15 +77,29 @@ public class CursorController : MonoBehaviour
             Debug.Log("Hit " + result.gameObject.name);
             Debug.Log("Mouse Pos: " + pointerData.position);
 
+            //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
             Vector3 pos = new Vector3((pointerData.position.x - 750 * 0.5f) / 750 * 20000f, 10000, (pointerData.position.y - 750 * 0.5f) / 750 * 20000f);
             Debug.Log("World Pos: " + pos);
             Instantiate(prefab, pos, Quaternion.identity);
+
+            //Draw a line
+            renderLine();
+
+            currentLine.AddPoint(Instantiate(prefab, pos, Quaternion.identity).transform);
         }
 
     }
 
+    void renderLine()
+    {
+        if(currentLine == null)
+        {
+            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+        }
+    }    
+
     //On Press
-    void StartedClick()
+    public void StartedClick()
     {
         Debug.Log("Start Click");
         DetectObject();
