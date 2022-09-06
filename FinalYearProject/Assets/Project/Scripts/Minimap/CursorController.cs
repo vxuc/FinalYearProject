@@ -78,7 +78,7 @@ public class CursorController : MonoBehaviour
             Debug.Log("Mouse Pos: " + pointerData.position);
 
             //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
-            Vector3 pos = new Vector3((pointerData.position.x - 750 * 0.5f) / 750 * 20000f, 10000, (pointerData.position.y - 750 * 0.5f) / 750 * 20000f);
+            Vector3 pos = new Vector3((pointerData.position.x - 750 * 0.5f) / 750 * 1350000, 50000, (pointerData.position.y - 750 * 0.5f) / 750 * 1350000);
             Debug.Log("World Pos: " + pos);
             Instantiate(prefab, pos, Quaternion.identity);
 
