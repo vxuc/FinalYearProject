@@ -5,7 +5,7 @@ using UnityEngine;
 public class LineController : MonoBehaviour
 {
     private LineRenderer lr;
-    private List<Transform> points;
+    public List<Transform> points;
 
     private void Awake()
     {
