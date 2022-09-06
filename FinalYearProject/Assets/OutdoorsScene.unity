@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -566,6 +566,75 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 44558594}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &53395160
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435,
+        type: 3}
+      propertyPath: m_Name
+      value: EnvBlockout
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cfc2dbb3cc99b6941bd3e5fc1f6d0435, type: 3}
 --- !u!1 &66039764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1682,7 +1751,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 5000
+  far clip plane: 10000000
   field of view: 40
   orthographic: 0
   orthographic size: 5
@@ -1708,14 +1777,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148582794}
-  m_LocalRotation: {x: 0.24348561, y: -0.00008583301, z: 0.000021547587, w: 0.96990454}
-  m_LocalPosition: {x: -33.782326, y: 5.9700003, z: -48.7}
+  m_LocalRotation: {x: 0, y: -0.00008726013, z: 0, w: 1}
+  m_LocalPosition: {x: -41, y: 50, z: 42130}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 11.929, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.01, z: 0}
 --- !u!114 &148582802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2875,7 +2944,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 100000
   field of view: 60
   orthographic: 1
   orthographic size: 33.16
@@ -2902,7 +2971,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 432442251}
   m_LocalRotation: {x: 0.50429994, y: 0.49566326, z: -0.504274, w: 0.49568868}
-  m_LocalPosition: {x: -16.32, y: 73.09562, z: -2.4}
+  m_LocalPosition: {x: -16.32, y: 500, z: -2.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
