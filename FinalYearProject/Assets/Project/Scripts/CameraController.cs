@@ -18,14 +18,17 @@ public class CameraController : MonoBehaviour
 
     [Header("Zoom")]
     int currZoom = 0;
-
-    
+    float cameraOriginalViewPoint;
 
     // Start is called before the first frame update
     void Start()
     {
         joystickSensitivity *= 100;
         timer = timeToLoseTarget;
+        if (GetComponent<Camera>())
+            cameraOriginalViewPoint = GetComponent<Camera>().fieldOfView;
+        else
+            cameraOriginalViewPoint = 70;
     }
 
     // Update is called once per frame
@@ -111,14 +114,14 @@ public class CameraController : MonoBehaviour
         switch (currZoom)
         {
             case 1:
-                GetComponent<Camera>().fieldOfView = 45; //x2
+                GetComponent<Camera>().fieldOfView = cameraOriginalViewPoint * 0.5f; //x2
                 break;
             case 2:
-                GetComponent<Camera>().fieldOfView = 10; //x9
+                GetComponent<Camera>().fieldOfView = cameraOriginalViewPoint * 0.1f; //x10
                 break;
             default:
                 //40 Initialy
-                GetComponent<Camera>().fieldOfView = 90;
+                GetComponent<Camera>().fieldOfView = cameraOriginalViewPoint;
                 break;
 
         }
