@@ -53,7 +53,7 @@ public class InformationController : MonoBehaviour
     private void updateTimeText()
     {
         string time = System.DateTime.Now.ToString("hh:mm:ss");
-        string date = System.DateTime.Now.ToString("dd//MM/yy");
+        string date = System.DateTime.Now.ToString("dd/MM/yy");
         timeText.text = date + "    " + time;
     }
 
