@@ -8,6 +8,7 @@ public class PlaneMovement : MonoBehaviour
     Rigidbody rb;
     Vector3 desiredPosition;
     int index = 0;
+    [SerializeField] float movementSpeed;
 
     private void Start()
     {
@@ -26,7 +27,7 @@ public class PlaneMovement : MonoBehaviour
             UpdateDesiredPosition();
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.fixedDeltaTime * 1000f);
+        transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.fixedDeltaTime * movementSpeed);
         transform.rotation = Quaternion.LookRotation(transform.position - desiredPosition, Vector3.up);
         //rb.MovePosition(desiredPosition);
     }
