@@ -42,7 +42,10 @@ public class CameraController : MonoBehaviour
 
         if (objectGazed || tracking)
         {
-            ToggleTargeting();
+            if (Input.GetKeyDown(KeyCode.JoystickButton0))
+            {
+                ToggleTargeting();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3))
@@ -61,21 +64,30 @@ public class CameraController : MonoBehaviour
 
     private void CameraRotation()
     {
-        float x;
-        float y;
+        float x = 0;
+        float y = 0;
+
+        float angleX = transform.rotation.eulerAngles.x;
+        angleX = (angleX > 180) ? angleX - 360 : angleX;
+        float currAngleX = -angleX;
+
         if (Input.GetJoystickNames() != null)
         {
             x = Input.GetAxis("Joystick X") * joystickSensitivity;
             y = Input.GetAxis("Joystick Y") * joystickSensitivity;
         }
 
-        else
+        if(currAngleX <= -45 && y < 0)
         {
-            x = Input.GetAxis("Horizontal") * joystickSensitivity;
-            y = -Input.GetAxis("Vertical") * joystickSensitivity;
+            rotation = new Vector3(45, transform.rotation.eulerAngles.y, 0);
         }
+        else if (currAngleX >= 85 && y > 0)
+        {
+            rotation = new Vector3(-85, transform.rotation.eulerAngles.y, 0);
+        }
+        else
+            rotation += new Vector3(-y, x, 0) * Time.deltaTime;
 
-        rotation += new Vector3(-y, x, 0) * Time.deltaTime;
         transform.rotation = Quaternion.Euler(rotation);
     }
 
@@ -99,14 +111,16 @@ public class CameraController : MonoBehaviour
         switch (currZoom)
         {
             case 1:
-                GetComponent<Camera>().fieldOfView = 20;
+                GetComponent<Camera>().fieldOfView = 45; //x2
                 break;
             case 2:
-                GetComponent<Camera>().fieldOfView = 10;
+                GetComponent<Camera>().fieldOfView = 10; //x9
                 break;
             default:
-                GetComponent<Camera>().fieldOfView = 40;
+                //40 Initialy
+                GetComponent<Camera>().fieldOfView = 90;
                 break;
+
         }
     }
     private void GettingTarget()
@@ -151,8 +165,6 @@ public class CameraController : MonoBehaviour
     }
     private void ToggleTargeting()
     {
-        if (Input.GetKeyDown(KeyCode.JoystickButton0))
-        {
             if (tracking)
             {
                 rotation = transform.rotation.eulerAngles;
@@ -167,7 +179,6 @@ public class CameraController : MonoBehaviour
                 tracking = true;
                 Debug.Log("Locking on a target");
             }
-        }
     }
     private void FollowingTarget()
     {
@@ -197,12 +208,18 @@ public class CameraController : MonoBehaviour
             timer = timeToLoseTarget;
         }
     }
-    bool ObjectInRayArray(RaycastHit[] array, GameObject gameObject)
+
+    private bool ObjectInRayArray(RaycastHit[] array, GameObject gameObject)
     {
         for (int i = 0; i < array.Length; i++)
         {
             if (array[i].transform == gameObject) return true;
         }
         return false;
+    }
+
+    public bool isTracking()
+    {
+        return tracking;
     }
 }

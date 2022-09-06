@@ -8,7 +8,7 @@ public class ThermalController : MonoBehaviour
 
     GameObject[] gameObjectsWithHeat;
 
-    public GameObject InfraredEnvironment;
+    public GameObject infraredEnvironmentWhite, infraredEnvironmentBlack;
 
     [Header("Shader")]
     [SerializeField] Shader defaultShader;
@@ -23,14 +23,13 @@ public class ThermalController : MonoBehaviour
         foreach (GameObject gameObject in gameObjectsWithHeat)
         {
             if(gameObject.GetComponent<Renderer>())
-            gameObject.GetComponent<Renderer>().material.shader = defaultShader;
+                gameObject.GetComponent<Renderer>().material.shader = defaultShader;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<Camera>().backgroundColor = Color.black;
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
@@ -50,13 +49,16 @@ public class ThermalController : MonoBehaviour
         switch (mode)
         {
             case 1:
-                InfraredEnvironment.SetActive(true);
+                infraredEnvironmentWhite.SetActive(true);
+                infraredEnvironmentBlack.SetActive(false);
                 break;
             case 2:
-                InfraredEnvironment.SetActive(true);
+                infraredEnvironmentWhite.SetActive(false);
+                infraredEnvironmentBlack.SetActive(true);
                 break;
             default:
-                InfraredEnvironment.SetActive(false);
+                infraredEnvironmentWhite.SetActive(false);
+                infraredEnvironmentBlack.SetActive(false);
                 break;
         }
 
