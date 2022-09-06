@@ -11,6 +11,8 @@ public class LineController : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         lr.positionCount = 0;
+
+        points = new List<Transform>();
     }
 
     public void AddPoint(Transform point)
