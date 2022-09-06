@@ -1572,6 +1572,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: LinePrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 4702167874489944867, guid: 839fdc8fc7c3ca74d879bc59c579c02c,
+        type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4702167874489944867, guid: 839fdc8fc7c3ca74d879bc59c579c02c,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6353797638382548819, guid: 839fdc8fc7c3ca74d879bc59c579c02c,
         type: 3}
       propertyPath: m_RootOrder
