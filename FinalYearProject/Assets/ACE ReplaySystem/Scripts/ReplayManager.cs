@@ -232,9 +232,9 @@ public class ReplayManager : MonoBehaviour
                                 Weather.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
                         }
 
-                        if (timer2 >= records[i].frames[0].record_data.despawnFrame)
-                            if (timer2 < records[i].frames[records[i].frames.Count - 1].record_data.spawnFrame)
-                                DestroyGO(records[i].gameObject);
+                        //if (timer2 >= records[i].frames[0].record_data.despawnFrame)
+                        //    if (timer2 < records[i].frames[records[i].frames.Count - 1].record_data.spawnFrame)
+                        //        DestroyGO(records[i].gameObject);
                     }
 
                     if (interpolation)
@@ -612,6 +612,7 @@ public class ReplayManager : MonoBehaviour
         replayCam = new GameObject("ReplayCamera");
         replayCam.AddComponent<Camera>();
         replayCam.AddComponent<ReplayCamera>();
+        replayCam.GetComponent<Camera>().farClipPlane = 1000000f;
 
         cameras = Camera.allCameras;
     }

@@ -45,17 +45,17 @@ public class CursorController : MonoBehaviour
 
     void Update()
     {
-        //Enables cursor only when UI is open
-        if (!UIControls.openMenu)
-        {
-            Cursor.visible = false;
-            OnDisable();
-        }
-        else if(UIControls.openMenu)
-        {
-            Cursor.visible = true;
-            OnEnable();
-        }      
+        ////Enables cursor only when UI is open
+        //if (!UIControls.openMenu)
+        //{
+        //    Cursor.visible = false;
+        //    OnDisable();
+        //}
+        //else if(UIControls.openMenu)
+        //{
+        //    Cursor.visible = true;
+        //    OnEnable();
+        //}      
 
     }
 
