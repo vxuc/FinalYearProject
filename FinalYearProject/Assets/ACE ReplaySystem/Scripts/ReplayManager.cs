@@ -612,7 +612,8 @@ public class ReplayManager : MonoBehaviour
         replayCam = new GameObject("ReplayCamera");
         replayCam.AddComponent<Camera>();
         replayCam.AddComponent<ReplayCamera>();
-        replayCam.GetComponent<Camera>().farClipPlane = 1000000f;
+        replayCam.GetComponent<Camera>().farClipPlane = current.farClipPlane;
+        replayCam.GetComponent<Camera>().cullingMask = current.cullingMask;
 
         cameras = Camera.allCameras;
     }
@@ -708,6 +709,11 @@ public class ReplayManager : MonoBehaviour
     {
         if (!Directory.Exists("Replays/" + DataManager.Instance.replayName))
             Directory.CreateDirectory("Replays/" + DataManager.Instance.replayName);
+        else
+        {
+            Directory.Delete("Replays/" + DataManager.Instance.replayName, true);
+            Directory.CreateDirectory("Replays/" + DataManager.Instance.replayName);
+        }
 
         BinaryFormatter formatter = new BinaryFormatter();
 
