@@ -1,0 +1,34 @@
+{
+    "name": "KeyboardControls",
+    "maps": [
+        {
+            "name": "Keyboard",
+            "id": "1650914f-b417-4e18-a569-1b94d5d445e3",
+            "actions": [
+                {
+                    "name": "Open Menu",
+                    "type": "Button",
+                    "id": "55e733d2-7b8f-4d91-91eb-b6f85b65048d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6b6580ac-1805-4288-9e77-5d13b18b6469",
+                    "path": "<Keyboard>/m",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open Menu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
