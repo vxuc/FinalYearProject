@@ -35,14 +35,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!tracking)
-        {
-            CameraRotation();
-        }
-        else
-        {
-            FollowingTarget();
-        }
 
         if (objectGazed || tracking)
         {
@@ -64,6 +56,18 @@ public class CameraController : MonoBehaviour
         }
 
         GettingTarget();
+    }
+
+    private void FixedUpdate()
+    {
+        if (!tracking)
+        {
+            CameraRotation();
+        }
+        else
+        {
+            FollowingTarget();
+        }
     }
 
     private void CameraRotation()
@@ -118,7 +122,7 @@ public class CameraController : MonoBehaviour
                 GetComponent<Camera>().fieldOfView = cameraOriginalFOV * 0.5f; //x2
                 break;
             case 2:
-                GetComponent<Camera>().fieldOfView = cameraOriginalFOV * 0.1f; //x10
+                GetComponent<Camera>().fieldOfView = cameraOriginalFOV * 0.042f; //x24
                 break;
             default:
                 GetComponent<Camera>().fieldOfView = cameraOriginalFOV;
@@ -130,7 +134,8 @@ public class CameraController : MonoBehaviour
     {
         if (objectGazed)
             Debug.Log(objectGazed.name);
-        RaycastHit[] hit = Physics.SphereCastAll(transform.position, spotRadius, transform.forward,32000);
+
+        RaycastHit[] hit = Physics.SphereCastAll(transform.position, spotRadius, transform.forward,float.MaxValue);
 
         if (!ObjectInRayArray(hit, objectGazed))
         {
