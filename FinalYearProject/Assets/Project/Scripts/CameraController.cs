@@ -19,6 +19,8 @@ public class CameraController : MonoBehaviour
     [Header("Zoom")]
     int currZoom = 0;
     float cameraOriginalFOV;
+
+    float fMagnificationFactor = 1.0f;
     
 
     // Start is called before the first frame update
@@ -49,7 +51,12 @@ public class CameraController : MonoBehaviour
             CameraZooming();
         }
 
-        if(Input.GetKeyDown(KeyCode.Joystick1Button7))
+        if (Input.GetKey(KeyCode.P) || Input.GetKey(KeyCode.O))
+        {
+            CameraZooming();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
             if(GetComponent<ThermalController>())
                 GetComponent<ThermalController>().ToggleInfrared(0);
@@ -116,6 +123,26 @@ public class CameraController : MonoBehaviour
             }
         }
 
+        if (Input.GetKey(KeyCode.P))
+        {
+            fMagnificationFactor += 0.1f;
+            if (fMagnificationFactor > 38f)
+            {
+                fMagnificationFactor = 38f;
+            }
+        }
+        else if (Input.GetKey(KeyCode.O))
+        {
+            fMagnificationFactor -= 0.1f;
+            if (fMagnificationFactor < 1.0f)
+            {
+                fMagnificationFactor = 1.0f;
+            }
+        }
+        GetComponent<Camera>().fieldOfView = cameraOriginalFOV * 1.0f / fMagnificationFactor;
+        Debug.Log(fMagnificationFactor);
+
+        /*
         switch (currZoom)
         {
             case 1:
@@ -129,6 +156,7 @@ public class CameraController : MonoBehaviour
                 break;
 
         }
+        */
     }
     private void GettingTarget()
     {
