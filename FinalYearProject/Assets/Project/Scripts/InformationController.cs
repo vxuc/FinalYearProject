@@ -13,6 +13,7 @@ public class InformationController : MonoBehaviour
     public TextMeshProUGUI rotationText;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI modesText;
+    public Image trackingDots;
     public Image pinkDot;
 
     [Header("ModesText")]
@@ -48,11 +49,16 @@ public class InformationController : MonoBehaviour
         {
             DisplayPinkDot();
         }
+
+        if(trackingDots && cameraController)
+        {
+            DisplayTrackingDots();
+        }
     }
 
     private void updateTimeText()
     {
-        string time = System.DateTime.Now.ToString("hh:mm:ss");
+        string time = System.DateTime.Now.ToString("HH:mm:ss");
         string date = System.DateTime.Now.ToString("dd/MM/yy");
         timeText.text = date + "    " + time;
     }
@@ -73,7 +79,7 @@ public class InformationController : MonoBehaviour
 
     private void UpdateModes()
     {
-        if (Input.GetKeyDown(KeyCode.Joystick1Button9))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button9) && secondHalf)
         {
             if (firstHalf)
                 firstHalf = false;
@@ -81,7 +87,7 @@ public class InformationController : MonoBehaviour
                 firstHalf = true;
         }
 
-        if(Input.GetKeyDown(KeyCode.Joystick1Button8))
+        if(Input.GetKeyDown(KeyCode.Joystick1Button8) && firstHalf)
         {
             if (secondHalf)
                 secondHalf = false;
@@ -95,6 +101,7 @@ public class InformationController : MonoBehaviour
     {
         string firstText;
         string secondText;
+
         if (firstHalf)
             firstText = "TC";
         else
@@ -123,6 +130,14 @@ public class InformationController : MonoBehaviour
         {
             pinkDot.gameObject.SetActive(false);
         }
+    }
+
+    private void DisplayTrackingDots()
+    {
+        if (cameraController.isTracking())
+            trackingDots.gameObject.SetActive(true);
+        else
+            trackingDots.gameObject.SetActive(false);
     }
 
 }
