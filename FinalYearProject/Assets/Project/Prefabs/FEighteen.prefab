@@ -9,11 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5082536602517480010}
-  - component: {fileID: 6508885190544740918}
   - component: {fileID: -9188588151553638329}
   - component: {fileID: 858736273698213191}
   m_Layer: 0
-  m_Name: F18
+  m_Name: FEighteen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,19 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6508885190544740918
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5603353903959242992}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &-9188588151553638329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,6 +78,7 @@ GameObject:
   - component: {fileID: 8243164627556631297}
   - component: {fileID: 3370620465514725849}
   - component: {fileID: 4822450225289392360}
+  - component: {fileID: 1438293220816692506}
   m_Layer: 0
   m_Name: side1
   m_TagString: Untagged
@@ -177,3 +164,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heatValue: 100
+--- !u!65 &1438293220816692506
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7445638060734891937}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1215.5137, y: 370.6856, z: 1698.4116}
+  m_Center: {x: -0.8069458, y: 75.64636, z: -49.598267}

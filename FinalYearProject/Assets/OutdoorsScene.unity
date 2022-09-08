@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2066,6 +2066,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planePrefab: {fileID: 5603353903959242992, guid: 1c4ff80eec7a1984da0eeb6453a42ef7,
+    type: 3}
+  planeIconPrefab: {fileID: 4960177244102878687, guid: 49ac663d7270d714ea6eb8ca43b5969a,
     type: 3}
 --- !u!4 &182635137
 Transform:
@@ -10381,8 +10383,6 @@ MonoBehaviour:
   uiCamera: {fileID: 148582800}
   prefab: {fileID: 3577819586816937143, guid: 24c873ce4b81b624eaca9011f69c79be, type: 3}
   dotParent: {fileID: 997300993}
-  dotPrefab: {fileID: 3577819586816937143, guid: 24c873ce4b81b624eaca9011f69c79be,
-    type: 3}
   linePrefab: {fileID: 3803256447485463771, guid: 839fdc8fc7c3ca74d879bc59c579c02c,
     type: 3}
   lineParent: {fileID: 253789203}
