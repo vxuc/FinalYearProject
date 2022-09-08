@@ -33,17 +33,21 @@ public class ThermalController : MonoBehaviour
         }
     }
 
-    public void ChangeCameraMode()
+    public void ChangeCameraMode(bool init = true)
     {
-        int noOfCameraModes = System.Enum.GetValues(typeof(CameraModes)).Length - 1;
-        int currMode = (int)cameraModes;
-        ++currMode;
+        if (init)
+        {
+            int noOfCameraModes = System.Enum.GetValues(typeof(CameraModes)).Length - 1;
+            int currMode = (int)cameraModes;
+            ++currMode;
 
-        if (currMode > noOfCameraModes)
-            currMode = 0;
+            if (currMode > noOfCameraModes)
+                currMode = 0;
 
-        cameraModes = (CameraModes)currMode;
-        Debug.Log(cameraModes.ToString());
+            cameraModes = (CameraModes)currMode;
+            Debug.Log(cameraModes.ToString());
+        }
+        
         //Environment
         switch (cameraModes)
         {
@@ -130,5 +134,11 @@ public class ThermalController : MonoBehaviour
     public CameraModes GetCameraMode()
     { 
         return cameraModes;
+    }
+
+    public void SetCameraMode(CameraModes mode)
+    {
+        cameraModes = mode;
+        ChangeCameraMode(false);
     }
 }

@@ -231,6 +231,22 @@ public class ReplayManager : MonoBehaviour
                             if (records[i].GetFrameAtIndex(auxIndex) != null)
                                 Weather.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
                         }
+                        else if (records[i].dataType == Record.DATA_TYPE.DATA_CAMERA_ZOOM)
+                        {
+                            //weather type
+                            if (records[i].GetFrameAtIndex(auxIndex) != null)
+                            {
+                                Camera.main.fieldOfView = records[i].GetFrameAtIndex(auxIndex).GetCameraZoom();
+                            }
+                        }
+                        else if (records[i].dataType == Record.DATA_TYPE.DATA_CAMERA_MODE)
+                        {
+                            //weather type
+                            if (records[i].GetFrameAtIndex(auxIndex) != null)
+                            {
+                                FindObjectOfType<ThermalController>().SetCameraMode(records[i].GetFrameAtIndex(auxIndex).GetCameraMode());
+                            }
+                        }
 
                         //if (timer2 >= records[i].frames[0].record_data.despawnFrame)
                         //    if (timer2 < records[i].frames[records[i].frames.Count - 1].record_data.spawnFrame)
@@ -272,6 +288,7 @@ public class ReplayManager : MonoBehaviour
                 {
                     replayCam.transform.position = current.transform.position;
                     replayCam.transform.rotation = current.transform.rotation;
+                    replayCam.GetComponent<Camera>().fieldOfView = current.fieldOfView;
                 }
             }
             //TRAVEL BACK IN TIME FUNCTIONALITY

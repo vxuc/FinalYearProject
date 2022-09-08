@@ -164,8 +164,13 @@ public class Frame
     //weather index
     Weather.WEATHER_TYPE weatherType;
 
+    //camera mode
+    ThermalController.CameraModes cameraMode;
+
     //record data
     public RECORD_DATA record_data;
+
+    float cameraZoom;
 
     //Constructor
     public Frame(Vector3 position, Quaternion rotation, Vector3 scale_, string _objName, string _prefabName, int _frameIndex)
@@ -202,6 +207,16 @@ public class Frame
     {
         weatherType = type;
     }
+    
+    public void SetCameraZoom(float zoom)
+    {
+        cameraZoom = zoom;
+    }
+
+    public void SetCameraMode(ThermalController.CameraModes mode)
+    {
+        cameraMode = mode;
+    }
 
     //Getters
     public Vector3 GetPosition() { return pos; }
@@ -218,4 +233,6 @@ public class Frame
     //Particle getter
     public float ParticleTime() { return particleTime; }
     public Weather.WEATHER_TYPE GetWeatherData() { return weatherType; }
+    public float GetCameraZoom() { return cameraZoom; }
+    public ThermalController.CameraModes GetCameraMode() { return cameraMode; }
 }
