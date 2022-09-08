@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    enum CameraZoom
+    {
+        x1,
+        x4,
+        x24
+    };
+
     [Header("Camera Movement")]
     Vector3 rotation = new Vector3(0, 0, 0);
-    public float joystickSensitivity = 1;
+    [SerializeField] float joystickSensitivity = 100;
+    float originalJoystickSensitivity;
 
     [Header("Tracking")]
     bool tracking = false;
@@ -17,21 +25,28 @@ public class CameraController : MonoBehaviour
     [SerializeField] float spotRadius = 1f;
 
     [Header("Zoom")]
-    int currZoom = 0;
     float cameraOriginalFOV;
+    float cameraThermalOriginalFOV;
 
     float fMagnificationFactor = 1.0f;
-    
+    CameraZoom cameraZoom = 0;
+
+    [Header("Thermal")]
+    public ThermalController thermalController;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        joystickSensitivity *= 100;
+        originalJoystickSensitivity = joystickSensitivity;
         timer = timeToLoseTarget;
+
         if (GetComponent<Camera>())
             cameraOriginalFOV = GetComponent<Camera>().fieldOfView;
         else
             cameraOriginalFOV = 70;
+
+        cameraThermalOriginalFOV = cameraOriginalFOV * 24 / 17;
     }
 
     // Update is called once per frame
@@ -46,20 +61,9 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
             CameraZooming();
-        }
-
-        if (Input.GetKey(KeyCode.P) || Input.GetKey(KeyCode.O))
-        {
-            CameraZooming();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
-        {
-            if(GetComponent<ThermalController>())
-                GetComponent<ThermalController>().ToggleInfrared(0);
         }
 
         GettingTarget();
@@ -108,9 +112,13 @@ public class CameraController : MonoBehaviour
 
     private void CameraZooming()
     {
+        int noOfCameraModes = System.Enum.GetValues(typeof(CameraZoom)).Length - 1;
+        int currZoom = (int)cameraZoom;
+
+        float currFOV = GetComponent<Camera>().fieldOfView;
         if (Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
-            if (currZoom < 2)
+            if (currZoom < noOfCameraModes )
             {
                 ++currZoom;
             }
@@ -122,41 +130,45 @@ public class CameraController : MonoBehaviour
                 --currZoom;
             }
         }
+        cameraZoom = (CameraZoom)currZoom;
 
-        if (Input.GetKey(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
-            fMagnificationFactor += 0.1f;
-            if (fMagnificationFactor > 38f)
-            {
-                fMagnificationFactor = 38f;
-            }
+            thermalController.ChangeCameraMode();
         }
-        else if (Input.GetKey(KeyCode.O))
-        {
-            fMagnificationFactor -= 0.1f;
-            if (fMagnificationFactor < 1.0f)
-            {
-                fMagnificationFactor = 1.0f;
-            }
-        }
-        GetComponent<Camera>().fieldOfView = cameraOriginalFOV * 1.0f / fMagnificationFactor;
-        Debug.Log(fMagnificationFactor);
 
-        /*
-        switch (currZoom)
+        switch (cameraZoom)
         {
-            case 1:
-                GetComponent<Camera>().fieldOfView = cameraOriginalFOV * 0.5f; //x2
+            case CameraZoom.x24:
+                fMagnificationFactor = 24f;
                 break;
-            case 2:
-                GetComponent<Camera>().fieldOfView = cameraOriginalFOV * 0.042f; //x24
+            case CameraZoom.x4:
+                fMagnificationFactor = 4f;
                 break;
             default:
-                GetComponent<Camera>().fieldOfView = cameraOriginalFOV;
+                fMagnificationFactor = 1f;
                 break;
 
         }
-        */
+
+        if (thermalController)
+        {
+            switch (thermalController.GetCameraMode())
+            {
+                case ThermalController.CameraModes.Color:
+                    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / fMagnificationFactor;
+                    break;
+                default:
+                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / fMagnificationFactor;
+                    break;
+            }
+        }
+        else
+            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / fMagnificationFactor;
+
+
+        joystickSensitivity = originalJoystickSensitivity / fMagnificationFactor;
+
     }
     private void GettingTarget()
     {
@@ -178,21 +190,24 @@ public class CameraController : MonoBehaviour
             {
                 if (objectGazed != q.transform.gameObject)
                 {
-                    if (objectGazed == null)
-                        objectGazed = q.transform.gameObject;
-
-                    else
+                    if (q.transform.gameObject.layer != 6)
                     {
-                        HeatController object1Heat = objectGazed.GetComponent<HeatController>();
-                        HeatController object2Heat = q.transform.gameObject.GetComponent<HeatController>();
-                        if (!object1Heat && object2Heat)
-                        {
+                        if (objectGazed == null)
                             objectGazed = q.transform.gameObject;
-                        }
-                        if (object1Heat && object2Heat)
+
+                        else
                         {
-                            if(object1Heat.GetHeatValue() < object2Heat.GetHeatValue())
+                            HeatController object1Heat = objectGazed.GetComponent<HeatController>();
+                            HeatController object2Heat = q.transform.gameObject.GetComponent<HeatController>();
+                            if (!object1Heat && object2Heat && q.transform.gameObject.layer != 6)
+                            {
                                 objectGazed = q.transform.gameObject;
+                            }
+                            if (object1Heat && object2Heat)
+                            {
+                                if (object1Heat.GetHeatValue() < object2Heat.GetHeatValue())
+                                    objectGazed = q.transform.gameObject;
+                            }
                         }
                     }
                 }
