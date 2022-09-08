@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
     float originalJoystickSensitivity;
 
     [Header("Tracking")]
+    public Camera spotCamera;
     bool tracking = false;
     GameObject objectGazed = null;
     GameObject objectGazedTracked = null;
@@ -168,15 +169,16 @@ public class CameraController : MonoBehaviour
 
 
         joystickSensitivity = originalJoystickSensitivity / fMagnificationFactor;
-
+        spotCamera.GetComponent<SpotCameraController>().UpdateFOV();
     }
+
     private void GettingTarget()
     {
         if (objectGazed)
             Debug.Log(objectGazed.name);
 
         RaycastHit[] hit = Physics.SphereCastAll(transform.position, spotRadius, transform.forward,float.MaxValue);
-        //RaycastHit[] hit = Physics.RaycastAll(transform.position, transform.forward);
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
 
         if (!ObjectInRayArray(hit, objectGazed))
         {
@@ -188,12 +190,12 @@ public class CameraController : MonoBehaviour
             Debug.DrawLine(transform.position, q.transform.position, Color.green);
             bool onSight = false;
 
-            if(q.transform.GetComponent<Renderer>())
-                onSight = GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(GetComponent<Camera>()),q.transform.GetComponent<Renderer>().bounds);
+            if (q.transform.GetComponent<Renderer>())
+                onSight = GeometryUtility.TestPlanesAABB(planes, q.transform.GetComponent<Renderer>().bounds); ;
 
-            if (!Physics.Linecast(q.transform.position, transform.position))
+            if (!Physics.Linecast(q.transform.position, transform.position) && onSight)
             {
-                if (objectGazed != q.transform.gameObject && onSight)
+                if (objectGazed != q.transform.gameObject)
                 {
                     if (q.transform.gameObject.layer != 6)
                     {
@@ -219,6 +221,7 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+
     private void ToggleTargeting()
     {
             if (tracking)
