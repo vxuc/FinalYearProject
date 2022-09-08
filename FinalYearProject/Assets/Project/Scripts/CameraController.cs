@@ -176,6 +176,7 @@ public class CameraController : MonoBehaviour
             Debug.Log(objectGazed.name);
 
         RaycastHit[] hit = Physics.SphereCastAll(transform.position, spotRadius, transform.forward,float.MaxValue);
+        //RaycastHit[] hit = Physics.RaycastAll(transform.position, transform.forward);
 
         if (!ObjectInRayArray(hit, objectGazed))
         {
@@ -185,10 +186,14 @@ public class CameraController : MonoBehaviour
         foreach (RaycastHit q in hit)
         {
             Debug.DrawLine(transform.position, q.transform.position, Color.green);
+            bool onSight = false;
+
+            if(q.transform.GetComponent<Renderer>())
+                onSight = GeometryUtility.TestPlanesAABB(GeometryUtility.CalculateFrustumPlanes(GetComponent<Camera>()),q.transform.GetComponent<Renderer>().bounds);
 
             if (!Physics.Linecast(q.transform.position, transform.position))
             {
-                if (objectGazed != q.transform.gameObject)
+                if (objectGazed != q.transform.gameObject && onSight)
                 {
                     if (q.transform.gameObject.layer != 6)
                     {
