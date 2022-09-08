@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
     float originalJoystickSensitivity;
 
     [Header("Tracking")]
+    public Camera spotCamera;
     bool tracking = false;
     GameObject objectGazed = null;
     GameObject objectGazedTracked = null;
@@ -168,14 +169,16 @@ public class CameraController : MonoBehaviour
 
 
         joystickSensitivity = originalJoystickSensitivity / fMagnificationFactor;
-
+        spotCamera.GetComponent<SpotCameraController>().UpdateFOV();
     }
+
     private void GettingTarget()
     {
         if (objectGazed)
             Debug.Log(objectGazed.name);
 
         RaycastHit[] hit = Physics.SphereCastAll(transform.position, spotRadius, transform.forward,float.MaxValue);
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
 
         if (!ObjectInRayArray(hit, objectGazed))
         {
@@ -185,8 +188,12 @@ public class CameraController : MonoBehaviour
         foreach (RaycastHit q in hit)
         {
             Debug.DrawLine(transform.position, q.transform.position, Color.green);
+            bool onSight = false;
 
-            if (!Physics.Linecast(q.transform.position, transform.position))
+            if (q.transform.GetComponent<Renderer>())
+                onSight = GeometryUtility.TestPlanesAABB(planes, q.transform.GetComponent<Renderer>().bounds); ;
+
+            if (!Physics.Linecast(q.transform.position, transform.position) && onSight)
             {
                 if (objectGazed != q.transform.gameObject)
                 {
@@ -214,6 +221,7 @@ public class CameraController : MonoBehaviour
             }
         }
     }
+
     private void ToggleTargeting()
     {
             if (tracking)
