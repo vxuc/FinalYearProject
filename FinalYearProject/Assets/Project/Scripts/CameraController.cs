@@ -140,10 +140,10 @@ public class CameraController : MonoBehaviour
         switch (cameraZoom)
         {
             case CameraZoom.x24:
-                fMagnificationFactor = 10f;
+                fMagnificationFactor = 24f;
                 break;
             case CameraZoom.x4:
-                fMagnificationFactor = 5f;
+                fMagnificationFactor = 4f;
                 break;
             default:
                 fMagnificationFactor = 1f;
@@ -190,21 +190,24 @@ public class CameraController : MonoBehaviour
             {
                 if (objectGazed != q.transform.gameObject)
                 {
-                    if (objectGazed == null)
-                        objectGazed = q.transform.gameObject;
-
-                    else
+                    if (q.transform.gameObject.layer != 6)
                     {
-                        HeatController object1Heat = objectGazed.GetComponent<HeatController>();
-                        HeatController object2Heat = q.transform.gameObject.GetComponent<HeatController>();
-                        if (!object1Heat && object2Heat)
-                        {
+                        if (objectGazed == null)
                             objectGazed = q.transform.gameObject;
-                        }
-                        if (object1Heat && object2Heat)
+
+                        else
                         {
-                            if(object1Heat.GetHeatValue() < object2Heat.GetHeatValue())
+                            HeatController object1Heat = objectGazed.GetComponent<HeatController>();
+                            HeatController object2Heat = q.transform.gameObject.GetComponent<HeatController>();
+                            if (!object1Heat && object2Heat && q.transform.gameObject.layer != 6)
+                            {
                                 objectGazed = q.transform.gameObject;
+                            }
+                            if (object1Heat && object2Heat)
+                            {
+                                if (object1Heat.GetHeatValue() < object2Heat.GetHeatValue())
+                                    objectGazed = q.transform.gameObject;
+                            }
                         }
                     }
                 }
