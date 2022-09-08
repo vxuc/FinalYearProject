@@ -14,16 +14,19 @@ public class PlaneMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        desiredPosition = destinations[0].position;
-        transform.position = desiredPosition;
+        if (destinations.Count > 0)
+        {
+            desiredPosition = destinations[0].position;
+            transform.position = desiredPosition;
+        }
     }
-
-  
-
 
     private void FixedUpdate()
     {
-        if(Vector3.Distance(transform.position, desiredPosition) < 5)
+        if (destinations.Count <= 0)
+            return;
+
+        if (Vector3.Distance(transform.position, desiredPosition) < 5)
         {
             index++;
             if (index >= destinations.Count) index = 0;
