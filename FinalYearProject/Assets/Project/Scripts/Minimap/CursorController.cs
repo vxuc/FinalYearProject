@@ -13,13 +13,14 @@ public class CursorController : MonoBehaviour
 
     //Spawn Object
     [SerializeField] GameObject prefab;
+    //[SerializeField] GameObject planeIconPrefab;
+    
 
 
     //LINE RENDERER
     //DOTS
     [Header("Dots")]
     [SerializeField] Transform dotParent;
-    [SerializeField] private GameObject dotPrefab;
 
     //LINES
     [Header("Lines")]
@@ -81,6 +82,7 @@ public class CursorController : MonoBehaviour
             Vector3 pos = new Vector3((pointerData.position.x - 750 * 0.5f) / 750 * 1350000, 50000, (pointerData.position.y - 750 * 0.5f) / 750 * 1350000);
             Debug.Log("World Pos: " + pos);
             Instantiate(prefab, pos, Quaternion.identity);
+           
 
             //Draw a line
             renderLine();

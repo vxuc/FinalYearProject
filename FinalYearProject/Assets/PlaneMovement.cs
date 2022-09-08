@@ -18,8 +18,6 @@ public class PlaneMovement : MonoBehaviour
         transform.position = desiredPosition;
     }
 
-  
-
 
     private void FixedUpdate()
     {
