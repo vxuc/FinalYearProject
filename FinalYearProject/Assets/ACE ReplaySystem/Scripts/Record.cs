@@ -11,6 +11,8 @@ public class Record : MonoBehaviour
         DATA_TRANSFORM,
         DATA_WEATHER,
         DATA_TIME,
+        DATA_CAMERA_ZOOM,
+        DATA_CAMERA_MODE,
         DATA_TOTAL
     }
 
@@ -136,6 +138,12 @@ public class Record : MonoBehaviour
         //record weather data
         RecordWeather(frame);
 
+        //record camera zoom
+        RecordCameraZoom(frame);
+
+        //record camera mode
+        RecordCameraMode(frame);
+
         //Add new frame to the list
         AddFrame(frame);
     }
@@ -207,6 +215,18 @@ public class Record : MonoBehaviour
     void RecordWeather(Frame frame)
     {
         frame.SetWeatherData(Weather.Instance.weatherType);
+    }
+    
+    //Record Camera Zoom
+    void RecordCameraZoom(Frame frame)
+    {
+        frame.SetCameraZoom(Camera.main.fieldOfView);
+    }
+
+    //Record Camera Mode
+    void RecordCameraMode(Frame frame)
+    {
+        frame.SetCameraMode(FindObjectOfType<ThermalController>().GetCameraMode());
     }
 
     //Prepare to record again

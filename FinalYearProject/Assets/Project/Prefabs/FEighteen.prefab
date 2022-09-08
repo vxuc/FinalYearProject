@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6508885190544740918}
   - component: {fileID: 858736273698213191}
   m_Layer: 0
-  m_Name: F18
+  m_Name: FEighteen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10000
+  destinations: []
 --- !u!65 &6508885190544740918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -78,7 +79,7 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
-  prefabName: F18
+  prefabName: FEighteen
 --- !u!1 &7445638060734891937
 GameObject:
   m_ObjectHideFlags: 0

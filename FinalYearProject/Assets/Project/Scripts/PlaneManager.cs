@@ -22,7 +22,9 @@ public class PlaneManager : MonoBehaviour
 
     public void SpawnPlane()
     {
-        Instantiate(planePrefab, Vector3.zero, Quaternion.identity);
+        PlaneMovement plane = Instantiate(planePrefab, Vector3.zero, Quaternion.identity).GetComponent<PlaneMovement>();
+        plane.destinations = FindObjectOfType<CursorController>().currentLine.GetComponent<LineController>().points;
+        FindObjectOfType<CursorController>().currentLine = null;
     }
 
     

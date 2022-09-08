@@ -26,7 +26,7 @@ public class CursorController : MonoBehaviour
     [SerializeField] private GameObject linePrefab;
     [SerializeField] Transform lineParent;
 
-    private LineController currentLine;
+    public LineController currentLine;
 
 
 
