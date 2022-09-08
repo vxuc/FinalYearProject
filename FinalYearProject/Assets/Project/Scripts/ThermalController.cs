@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class ThermalController : MonoBehaviour
 {
-    int mode = 0;
+    public enum CameraModes
+    {
+        Color,
+        ThermalWhite,
+        ThermalBlack
+    };
 
     GameObject[] gameObjectsWithHeat;
 
@@ -15,6 +20,7 @@ public class ThermalController : MonoBehaviour
     [SerializeField] Shader whiteShader;
     [SerializeField] Shader blackShader;
 
+    CameraModes cameraModes;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,32 +33,29 @@ public class ThermalController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ChangeCameraMode(bool init = true)
     {
-
-        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
+        if (init)
         {
-            //Should be 2 later for black IR
-            if (mode < 2)
-                ++mode;
-            else
-                mode = 0;
+            int noOfCameraModes = System.Enum.GetValues(typeof(CameraModes)).Length - 1;
+            int currMode = (int)cameraModes;
+            ++currMode;
+
+            if (currMode > noOfCameraModes)
+                currMode = 0;
+
+            cameraModes = (CameraModes)currMode;
+            Debug.Log(cameraModes.ToString());
         }
-        ToggleInfrared(mode);
-    }
-    public void ToggleInfrared(int mode)
-    {
-       gameObjectsWithHeat = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
-
+        
         //Environment
-        switch (mode)
+        switch (cameraModes)
         {
-            case 1:
+            case CameraModes.ThermalWhite:
                 infraredEnvironmentWhite.SetActive(true);
                 infraredEnvironmentBlack.SetActive(false);
                 break;
-            case 2:
+            case CameraModes.ThermalBlack:
                 infraredEnvironmentWhite.SetActive(false);
                 infraredEnvironmentBlack.SetActive(true);
                 break;
@@ -62,18 +65,19 @@ public class ThermalController : MonoBehaviour
                 break;
         }
 
+        gameObjectsWithHeat = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
         //Shader
         foreach (GameObject gameObject in gameObjectsWithHeat)
         {
             if (gameObject.GetComponent<Renderer>())
             {
                 Renderer renderer = gameObject.GetComponent<Renderer>();
-                switch (mode)
+                switch (cameraModes)
                 {
-                    case 1:
+                    case CameraModes.ThermalWhite:
                         ActivateInfraredWhite(renderer);
                         break;
-                    case 2:
+                    case CameraModes.ThermalBlack:
                         ActivateInfraredBlack(renderer);
                         break;
                     default:
@@ -125,5 +129,16 @@ public class ThermalController : MonoBehaviour
     void SetInfraredHeatValue(Renderer renderer,float value)
     {
         renderer.material.SetFloat("_Temperature", value);
+    }
+
+    public CameraModes GetCameraMode()
+    { 
+        return cameraModes;
+    }
+
+    public void SetCameraMode(CameraModes mode)
+    {
+        cameraModes = mode;
+        ChangeCameraMode(false);
     }
 }
