@@ -2003,7 +2003,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystickSensitivity: 100
   timeToLoseTarget: 0.5
-  spotRadius: 10000
+  spotRadius: 8000
   thermalController: {fileID: 792181177}
 --- !u!1 &164135825
 GameObject:
@@ -15867,7 +15867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1725249641
 Transform:
   m_ObjectHideFlags: 0
