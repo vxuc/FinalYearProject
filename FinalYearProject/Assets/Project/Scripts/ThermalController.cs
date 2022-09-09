@@ -28,7 +28,7 @@ public class ThermalController : MonoBehaviour
 
         foreach (GameObject gameObject in gameObjectsWithHeat)
         {
-            if(gameObject.GetComponent<Renderer>() && gameObject.layer != 8)
+            if(gameObject.GetComponent<Renderer>() && gameObject.layer < 20)
                 gameObject.GetComponent<Renderer>().material.shader = defaultShader;
         }
     }
@@ -69,7 +69,7 @@ public class ThermalController : MonoBehaviour
         //Shader
         foreach (GameObject gameObject in gameObjectsWithHeat)
         {
-            if (gameObject.GetComponent<Renderer>() && gameObject.layer != 8)
+            if (gameObject.GetComponent<Renderer>() && gameObject.layer < 20)
             {
                 Renderer renderer = gameObject.GetComponent<Renderer>();
                 switch (cameraModes)
