@@ -66,7 +66,7 @@ public class Record : MonoBehaviour
     private GameObject deletedGO;
 
     //weather type
-    private Weather.WEATHER_TYPE weatherType;
+    private WeatherController.WEATHER_TYPE weatherType;
 
     [SerializeField] string prefabName;
 
@@ -214,7 +214,7 @@ public class Record : MonoBehaviour
     //Record Weather
     void RecordWeather(Frame frame)
     {
-        frame.SetWeatherData(Weather.Instance.weatherType);
+        frame.SetWeatherData(WeatherController.Instance.weatherType);
     }
     
     //Record Camera Zoom
@@ -332,5 +332,5 @@ public class Record : MonoBehaviour
     public int GetAnimFramesRecorded() { return animFramesRecorded; }
     public AudioSource GetAudioSource() { return null; }
     public ParticleSystem GetParticle() { return null; }
-    public Weather.WEATHER_TYPE GetWeather() { return weatherType; }
+    public WeatherController.WEATHER_TYPE GetWeather() { return weatherType; }
 }

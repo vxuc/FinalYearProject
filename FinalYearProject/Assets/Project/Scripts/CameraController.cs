@@ -8,7 +8,8 @@ public class CameraController : MonoBehaviour
     {
         x1,
         x4,
-        x24
+        x24,
+        TotalZooms
     };
 
     [Header("Camera Movement")]
@@ -113,25 +114,22 @@ public class CameraController : MonoBehaviour
 
     private void CameraZooming()
     {
-        int noOfCameraModes = System.Enum.GetValues(typeof(CameraZoom)).Length - 1;
-        int currZoom = (int)cameraZoom;
 
         float currFOV = GetComponent<Camera>().fieldOfView;
         if (Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
-            if (currZoom < noOfCameraModes )
+            if (cameraZoom < CameraZoom.TotalZooms - 1)
             {
-                ++currZoom;
+                ++cameraZoom;
             }
         }
         else if (Input.GetKeyDown(KeyCode.Joystick1Button3))
         {
-            if (currZoom > 0)
+            if (cameraZoom > 0)
             {
-                --currZoom;
+                --cameraZoom;
             }
         }
-        cameraZoom = (CameraZoom)currZoom;
 
         if (Input.GetKeyDown(KeyCode.Joystick1Button7))
         {

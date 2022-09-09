@@ -162,7 +162,7 @@ public class Frame
     int spawnFrame;
 
     //weather index
-    Weather.WEATHER_TYPE weatherType;
+    WeatherController.WEATHER_TYPE weatherType;
 
     //camera mode
     ThermalController.CameraModes cameraMode;
@@ -203,7 +203,7 @@ public class Frame
     }
     
     //particle set data
-    public void SetWeatherData(Weather.WEATHER_TYPE type)
+    public void SetWeatherData(WeatherController.WEATHER_TYPE type)
     {
         weatherType = type;
     }
@@ -232,7 +232,7 @@ public class Frame
 
     //Particle getter
     public float ParticleTime() { return particleTime; }
-    public Weather.WEATHER_TYPE GetWeatherData() { return weatherType; }
+    public WeatherController.WEATHER_TYPE GetWeatherData() { return weatherType; }
     public float GetCameraZoom() { return cameraZoom; }
     public ThermalController.CameraModes GetCameraMode() { return cameraMode; }
 }

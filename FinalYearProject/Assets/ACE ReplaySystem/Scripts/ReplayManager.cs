@@ -229,7 +229,7 @@ public class ReplayManager : MonoBehaviour
                         {
                             //weather type
                             if (records[i].GetFrameAtIndex(auxIndex) != null)
-                                Weather.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
+                                WeatherController.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
                         }
                         else if (records[i].dataType == Record.DATA_TYPE.DATA_CAMERA_ZOOM)
                         {

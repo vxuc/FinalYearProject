@@ -8,7 +8,8 @@ public class ThermalController : MonoBehaviour
     {
         Color,
         ThermalWhite,
-        ThermalBlack
+        ThermalBlack,
+        TotalModes
     };
 
     GameObject[] gameObjectsWithHeat;
@@ -37,14 +38,11 @@ public class ThermalController : MonoBehaviour
     {
         if (init)
         {
-            int noOfCameraModes = System.Enum.GetValues(typeof(CameraModes)).Length - 1;
-            int currMode = (int)cameraModes;
-            ++currMode;
+            ++cameraModes;
 
-            if (currMode > noOfCameraModes)
-                currMode = 0;
+            if (cameraModes >= CameraModes.TotalModes)
+                cameraModes = 0;
 
-            cameraModes = (CameraModes)currMode;
             Debug.Log(cameraModes.ToString());
         }
         
