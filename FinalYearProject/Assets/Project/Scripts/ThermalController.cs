@@ -13,12 +13,12 @@ public class ThermalController : MonoBehaviour
 
     GameObject[] gameObjectsWithHeat;
 
+    [Header("InfraredEnvironment")]
     public GameObject infraredEnvironmentWhite, infraredEnvironmentBlack;
 
     [Header("Shader")]
-    [SerializeField] Shader defaultShader;
-    [SerializeField] Shader whiteShader;
-    [SerializeField] Shader blackShader;
+    public Shader defaultShader, whiteShader, blackShader;
+
 
     CameraModes cameraModes;
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class ThermalController : MonoBehaviour
 
         foreach (GameObject gameObject in gameObjectsWithHeat)
         {
-            if(gameObject.GetComponent<Renderer>())
+            if(gameObject.GetComponent<Renderer>() && gameObject.layer != 8)
                 gameObject.GetComponent<Renderer>().material.shader = defaultShader;
         }
     }
@@ -69,7 +69,7 @@ public class ThermalController : MonoBehaviour
         //Shader
         foreach (GameObject gameObject in gameObjectsWithHeat)
         {
-            if (gameObject.GetComponent<Renderer>())
+            if (gameObject.GetComponent<Renderer>() && gameObject.layer != 8)
             {
                 Renderer renderer = gameObject.GetComponent<Renderer>();
                 switch (cameraModes)
