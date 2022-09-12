@@ -9,13 +9,14 @@ public class CameraController : MonoBehaviour
         x1,
         x4,
         x24,
-        TotalZooms
+        TOTAL_ZOOMS
     };
 
     [Header("Camera Movement")]
     Vector3 rotation = new Vector3(0, 0, 0);
     [SerializeField] float joystickSensitivity = 100;
     float originalJoystickSensitivity;
+    float overTimeSensitivity = 0;
 
     [Header("Tracking")]
     public Camera spotCamera;
@@ -68,7 +69,7 @@ public class CameraController : MonoBehaviour
             CameraZooming();
         }
 
-        GettingTarget();
+        GettingTargetV2();
     }
 
     private void FixedUpdate()
@@ -92,10 +93,21 @@ public class CameraController : MonoBehaviour
         angleX = (angleX > 180) ? angleX - 360 : angleX;
         float currAngleX = -angleX;
 
+        float timeTaken = 5; 
+        Debug.Log(overTimeSensitivity);
         if (Input.GetJoystickNames() != null)
         {
-            x = Input.GetAxis("Joystick X") * joystickSensitivity;
-            y = Input.GetAxis("Joystick Y") * joystickSensitivity;
+
+            x = Input.GetAxis("Joystick X") * joystickSensitivity* overTimeSensitivity / timeTaken;
+            y = Input.GetAxis("Joystick Y") * joystickSensitivity* overTimeSensitivity / timeTaken;
+        }
+        if(Input.GetAxis("Joystick X") != 0 || Input.GetAxis("Joystick Y") != 0)
+        {
+            overTimeSensitivity += Time.deltaTime;
+        }
+        else
+        {
+            overTimeSensitivity = 0;
         }
 
         if(currAngleX <= -45 && y < 0)
@@ -118,7 +130,7 @@ public class CameraController : MonoBehaviour
         float currFOV = GetComponent<Camera>().fieldOfView;
         if (Input.GetKeyDown(KeyCode.Joystick1Button5))
         {
-            if (cameraZoom < CameraZoom.TotalZooms - 1)
+            if (cameraZoom < CameraZoom.TOTAL_ZOOMS - 1)
             {
                 ++cameraZoom;
             }
@@ -154,7 +166,7 @@ public class CameraController : MonoBehaviour
         {
             switch (thermalController.GetCameraMode())
             {
-                case ThermalController.CameraModes.Color:
+                case ThermalController.CameraModes.COLOR:
                     GetComponent<Camera>().fieldOfView = cameraOriginalFOV / fMagnificationFactor;
                     break;
                 default:
@@ -204,7 +216,7 @@ public class CameraController : MonoBehaviour
                         {
                             HeatController object1Heat = objectGazed.GetComponent<HeatController>();
                             HeatController object2Heat = q.transform.gameObject.GetComponent<HeatController>();
-                            if (!object1Heat && object2Heat && q.transform.gameObject.layer != 6)
+                            if (!object1Heat && object2Heat)
                             {
                                 objectGazed = q.transform.gameObject;
                             }
@@ -212,6 +224,62 @@ public class CameraController : MonoBehaviour
                             {
                                 if (object1Heat.GetHeatValue() < object2Heat.GetHeatValue())
                                     objectGazed = q.transform.gameObject;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void GettingTargetV2()
+    {
+
+        Renderer[] gameObjects = (Renderer[])FindObjectsOfType(typeof(Renderer));
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
+
+        if (objectGazed)
+        {
+            Debug.Log(objectGazed.name);
+            if (!GeometryUtility.TestPlanesAABB(planes, objectGazed.GetComponent<Renderer>().bounds))
+            {
+                objectGazed = null;
+            }
+        }
+
+        foreach (Renderer gameObject in gameObjects)
+        {
+            if(gameObject.gameObject.layer > 20)
+                Debug.DrawLine(transform.position, gameObject.transform.position, Color.green);
+
+            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != 6 && gameObject.gameObject.layer != 7)
+            {
+                bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Renderer>().bounds);
+
+                if (onSight)
+                {
+                    Debug.DrawLine(transform.position, gameObject.transform.position, Color.yellow);
+                }
+                if (!Physics.Linecast(gameObject.transform.position, transform.position) && onSight)
+                {
+                    if (objectGazed != gameObject.transform.gameObject)
+                    {
+                        if (objectGazed == null)
+                            objectGazed = gameObject.transform.gameObject;
+
+                        else
+                        {
+                            HeatController object1Heat = objectGazed.GetComponent<HeatController>();
+                            HeatController object2Heat = gameObject.transform.gameObject.GetComponent<HeatController>();
+
+                            if (!object1Heat && object2Heat)
+                            {
+                                objectGazed = gameObject.transform.gameObject;
+                            }
+                            if (object1Heat && object2Heat)
+                            {
+                                if (object1Heat.GetHeatValue() < object2Heat.GetHeatValue())
+                                    objectGazed = gameObject.transform.gameObject;
                             }
                         }
                     }
@@ -248,7 +316,9 @@ public class CameraController : MonoBehaviour
         //Turning
         float smooth = 15f;
         transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth * Time.deltaTime);
+        
 
+        Debug.DrawLine(transform.position, objectGazedTracked.transform.position, Color.red);
         //Maintaining line of sight
         if (!Physics.Linecast(objectGazedTracked.transform.position, transform.position))
             timer = timeToLoseTarget;

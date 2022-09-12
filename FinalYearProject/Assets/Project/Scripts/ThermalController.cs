@@ -6,10 +6,10 @@ public class ThermalController : MonoBehaviour
 {
     public enum CameraModes
     {
-        Color,
-        ThermalWhite,
-        ThermalBlack,
-        TotalModes
+        COLOR,
+        THERMAL_WHITE,
+        THERMAL_BLACK,
+        TOTAL_MODES
     };
 
     GameObject[] gameObjectsWithHeat;
@@ -40,7 +40,7 @@ public class ThermalController : MonoBehaviour
         {
             ++cameraModes;
 
-            if (cameraModes >= CameraModes.TotalModes)
+            if (cameraModes >= CameraModes.TOTAL_MODES)
                 cameraModes = 0;
 
             Debug.Log(cameraModes.ToString());
@@ -49,11 +49,11 @@ public class ThermalController : MonoBehaviour
         //Environment
         switch (cameraModes)
         {
-            case CameraModes.ThermalWhite:
+            case CameraModes.THERMAL_WHITE:
                 infraredEnvironmentWhite.SetActive(true);
                 infraredEnvironmentBlack.SetActive(false);
                 break;
-            case CameraModes.ThermalBlack:
+            case CameraModes.THERMAL_BLACK:
                 infraredEnvironmentWhite.SetActive(false);
                 infraredEnvironmentBlack.SetActive(true);
                 break;
@@ -72,10 +72,10 @@ public class ThermalController : MonoBehaviour
                 Renderer renderer = gameObject.GetComponent<Renderer>();
                 switch (cameraModes)
                 {
-                    case CameraModes.ThermalWhite:
+                    case CameraModes.THERMAL_WHITE:
                         ActivateInfraredWhite(renderer);
                         break;
-                    case CameraModes.ThermalBlack:
+                    case CameraModes.THERMAL_BLACK:
                         ActivateInfraredBlack(renderer);
                         break;
                     default:
