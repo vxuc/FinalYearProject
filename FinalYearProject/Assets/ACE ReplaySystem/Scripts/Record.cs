@@ -10,7 +10,7 @@ public class Record : MonoBehaviour
     {
         DATA_TRANSFORM,
         DATA_WEATHER,
-        DATA_TIME,
+        DATA_TIMEOFDAY,
         DATA_CAMERA_ZOOM,
         DATA_CAMERA_MODE,
         DATA_TOTAL
@@ -138,6 +138,9 @@ public class Record : MonoBehaviour
         //record weather data
         RecordWeather(frame);
 
+        //record time of day data
+        RecordTimeOfDay(frame);
+
         //record camera zoom
         RecordCameraZoom(frame);
 
@@ -215,6 +218,11 @@ public class Record : MonoBehaviour
     void RecordWeather(Frame frame)
     {
         frame.SetWeatherData(WeatherController.Instance.weatherType);
+    }
+    
+    void RecordTimeOfDay(Frame frame)
+    {
+        frame.SetTimeOfDayData(TimeOfDay.Instance.currTimeOfDay);
     }
     
     //Record Camera Zoom

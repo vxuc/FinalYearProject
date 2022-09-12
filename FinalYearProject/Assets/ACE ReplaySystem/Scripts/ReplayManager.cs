@@ -231,6 +231,12 @@ public class ReplayManager : MonoBehaviour
                             if (records[i].GetFrameAtIndex(auxIndex) != null)
                                 WeatherController.Instance.weatherType = records[i].GetFrameAtIndex(auxIndex).GetWeatherData();
                         }
+                        else if (records[i].dataType == Record.DATA_TYPE.DATA_TIMEOFDAY)
+                        {
+                            //weather type
+                            if (records[i].GetFrameAtIndex(auxIndex) != null)
+                                TimeOfDay.Instance.currTimeOfDay = records[i].GetFrameAtIndex(auxIndex).GetTimeOfDayData();
+                        }
                         else if (records[i].dataType == Record.DATA_TYPE.DATA_CAMERA_ZOOM)
                         {
                             //weather type
