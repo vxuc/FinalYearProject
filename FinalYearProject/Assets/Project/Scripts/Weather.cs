@@ -16,7 +16,7 @@ public class Weather : MonoBehaviour
         WEATHER_TOTAL
     }
 
-    public WEATHER_TYPE weatherType;
+    public WEATHER_TYPE weatherType = WEATHER_TYPE.WEATHER_CLEAR;
 
     void Awake()
     {
@@ -28,17 +28,20 @@ public class Weather : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        text.text = "Weather: " + weatherType.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        text.text = "Weather: " + weatherType.ToString();
         if (Input.GetKeyDown(KeyCode.R))
         {
             weatherType++;
             if (weatherType >= WEATHER_TYPE.WEATHER_TOTAL)
                 weatherType = 0;
+
+            text.text = "Weather: " + weatherType.ToString();
         }
     }
 }
