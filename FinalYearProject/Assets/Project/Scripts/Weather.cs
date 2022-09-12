@@ -41,7 +41,7 @@ public class Weather : MonoBehaviour
             if (weatherType >= WEATHER_TYPE.WEATHER_TOTAL)
                 weatherType = 0;
 
-            text.text = "Weather: " + weatherType.ToString();
         }
+        text.text = "Weather: " + weatherType.ToString();
     }
 }

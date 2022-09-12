@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 11579.34, g: 10341.273, b: 8669.195, a: 1}
+  m_IndirectSpecularColor: {r: 224.61548, g: 526.509, b: 1034.1027, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -16676,6 +16676,7 @@ GameObject:
   - component: {fileID: 1748098282}
   - component: {fileID: 1748098281}
   - component: {fileID: 1748098283}
+  - component: {fileID: 1748098284}
   m_Layer: 8
   m_Name: TimeOfDayManager
   m_TagString: Untagged
@@ -16741,6 +16742,26 @@ MonoBehaviour:
   groundTints: []
   horizonTints: []
   text: {fileID: 547934849}
+--- !u!114 &1748098284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748098280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7d38d1299d9684497a66e978ef8c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replay: {fileID: 0}
+  replayManagerName: ReplayManager
+  scripts:
+  - {fileID: 1748098283}
+  - {fileID: 1748098281}
+  dataType: 2
+  frames: []
+  prefabName: 
 --- !u!1 &1755407412
 GameObject:
   m_ObjectHideFlags: 0

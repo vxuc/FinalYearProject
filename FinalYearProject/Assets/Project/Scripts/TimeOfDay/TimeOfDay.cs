@@ -75,7 +75,6 @@ public class TimeOfDay : MonoBehaviour
         VolumeProfile profile = volume.sharedProfile;
         if (!profile.TryGet<PhysicallyBasedSky>(out var sky))
         {
-            Debug.Log("UNFOUND");
             sky = profile.Add<PhysicallyBasedSky>(false);
         }
 
@@ -87,13 +86,13 @@ public class TimeOfDay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            Debug.Log("CHANGE TIME");
             currTimeOfDay++;
             if (currTimeOfDay >= TIMEOFDAY.TIME_TOTAL)
                 currTimeOfDay = 0;
-
-            UpdateTimeOfDay();
-            text.text = "Time: " + currTimeOfDay.ToString();
         }
+
+        volume.enabled = true;
+        UpdateTimeOfDay();
+        text.text = "Time: " + currTimeOfDay.ToString();
     }
 }

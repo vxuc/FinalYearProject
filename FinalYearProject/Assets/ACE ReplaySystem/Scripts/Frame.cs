@@ -164,6 +164,9 @@ public class Frame
     //weather index
     Weather.WEATHER_TYPE weatherType;
 
+    //time of day index
+    TimeOfDay.TIMEOFDAY timeOfDay;
+
     //camera mode
     ThermalController.CameraModes cameraMode;
 
@@ -206,6 +209,11 @@ public class Frame
     public void SetWeatherData(Weather.WEATHER_TYPE type)
     {
         weatherType = type;
+    } 
+    
+    public void SetTimeOfDayData(TimeOfDay.TIMEOFDAY type)
+    {
+        timeOfDay = type;
     }
     
     public void SetCameraZoom(float zoom)
@@ -233,6 +241,7 @@ public class Frame
     //Particle getter
     public float ParticleTime() { return particleTime; }
     public Weather.WEATHER_TYPE GetWeatherData() { return weatherType; }
+    public TimeOfDay.TIMEOFDAY GetTimeOfDayData() { return timeOfDay; }
     public float GetCameraZoom() { return cameraZoom; }
     public ThermalController.CameraModes GetCameraMode() { return cameraMode; }
 }
