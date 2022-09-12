@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1024319088}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -124,6 +124,103 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &361631053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 361631057}
+  - component: {fileID: 361631056}
+  - component: {fileID: 361631055}
+  - component: {fileID: 361631054}
+  m_Layer: 8
+  m_Name: TimeOfDayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &361631054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361631053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7d38d1299d9684497a66e978ef8c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  replay: {fileID: 0}
+  replayManagerName: ReplayManager
+  scripts:
+  - {fileID: 361631055}
+  - {fileID: 361631056}
+  dataType: 2
+  frames: []
+  prefabName: 
+--- !u!114 &361631055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361631053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbc4a07383214d4981de50bd1ca7932, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currTimeOfDay: 0
+  DawnGroundTint: {r: 0.40000004, g: 0.2509804, b: 0.14901961, a: 0}
+  MorningGroundTint: {r: 1, g: 1, b: 1, a: 0}
+  EveningGroundTint: {r: 0.59607846, g: 0.56078434, b: 0.5294118, a: 0}
+  DuskGroundTint: {r: 0, g: 0, b: 0, a: 0}
+  NightGroundTint: {r: 0, g: 0, b: 0, a: 0}
+  DawnHorizonTint: {r: 0.9803922, g: 0.93725497, b: 0.7607844, a: 0}
+  MorningHorizonTint: {r: 1, g: 1, b: 1, a: 0}
+  EveningHorizonTint: {r: 1, g: 0.6313726, b: 0.5882353, a: 0}
+  DuskHorizonTint: {r: 0.28235295, g: 0.5568628, b: 0.7372549, a: 0}
+  NightHorizonTint: {r: 0, g: 0.18823531, b: 0.30980393, a: 1}
+  groundTints: []
+  horizonTints: []
+  text: {fileID: 0}
+--- !u!114 &361631056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361631053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: b660b5c8b5f4d4948a4fc60eac546abd, type: 2}
+--- !u!4 &361631057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 361631053}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2343.2773, y: 49969, z: 54361.312}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &462173583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -953,10 +1050,10 @@ MonoBehaviour:
   uiCamera: {fileID: 2018271276}
   prefab: {fileID: 1261193265}
   dotParent: {fileID: 723950677}
-  dotPrefab: {fileID: 1261193265}
   linePrefab: {fileID: 3803256447485463771, guid: 839fdc8fc7c3ca74d879bc59c579c02c,
     type: 3}
   lineParent: {fileID: 628859693}
+  currentLine: {fileID: 0}
 --- !u!1 &1261193265 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3577819586816937143, guid: 24c873ce4b81b624eaca9011f69c79be,
@@ -1104,6 +1201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planePrefab: {fileID: 5603353903959242992, guid: 1c4ff80eec7a1984da0eeb6453a42ef7,
     type: 3}
+  planeIconPrefab: {fileID: 0}
 --- !u!4 &1621274467
 Transform:
   m_ObjectHideFlags: 0
