@@ -23,6 +23,13 @@ public class ViewCamera : MonoBehaviour
 
     void Update()
     {
+        if (target == null)
+        {
+            if (AircraftInfoManager.Instance.currentAircraft != null)
+                target = AircraftInfoManager.Instance.currentAircraft.transform;
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.R))
             ResetTransform();
 

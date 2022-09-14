@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5082536602517480010}
   - component: {fileID: -9188588151553638329}
   - component: {fileID: 858736273698213191}
+  - component: {fileID: 6474704564840802232}
   m_Layer: 0
   m_Name: FEighteen
   m_TagString: Untagged
@@ -69,7 +70,21 @@ MonoBehaviour:
   scripts: []
   dataType: 0
   frames: []
-  prefabName: F18
+  prefabName: FEighteen
+--- !u!114 &6474704564840802232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5603353903959242992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec81a31beabbd7a478b28c2a122edfd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aircraftName: F18
+  prefabName: FEighteen
 --- !u!1 &7445638060734891937
 GameObject:
   m_ObjectHideFlags: 0
