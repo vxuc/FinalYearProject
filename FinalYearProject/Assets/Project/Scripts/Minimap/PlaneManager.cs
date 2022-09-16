@@ -9,6 +9,9 @@ public class PlaneManager : MonoBehaviour
     public GameObject planePrefab;
     public GameObject planeIconPrefab;
 
+    public GameObject markerPrefab;
+    public GameObject markerCanvas;
+
     //WorldSpace
 
 
@@ -33,8 +36,14 @@ public class PlaneManager : MonoBehaviour
         GameObject planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity);
         planeIcon.transform.parent = plane.transform;
 
+        GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity);
+        marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
+        marker.transform.parent = markerCanvas.transform;
+
         FindObjectOfType<CursorController>().currentLine = null;
     }
+
+
 
     
 }
