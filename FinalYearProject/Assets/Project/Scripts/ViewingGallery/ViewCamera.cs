@@ -11,10 +11,27 @@ public class ViewCamera : MonoBehaviour
     [SerializeField] [Range(0, 100)] float zoomSpeed = 10;
 
     Vector3 previousPosition;
+    Vector3 resetPosition;
+    Quaternion resetRotation;
     [SerializeField] Vector3 offset;
+
+    private void Start()
+    {
+        resetPosition = transform.position;
+        resetRotation = transform.rotation;
+    }
 
     void Update()
     {
+        if (target == null)
+        {
+            if (AircraftInfoManager.Instance.currentAircraft != null)
+                target = AircraftInfoManager.Instance.currentAircraft.transform;
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+            ResetTransform();
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -48,5 +65,12 @@ public class ViewCamera : MonoBehaviour
         }
 
         cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, 5f, 100f);
+    }
+
+    void ResetTransform()
+    {
+        transform.position = resetPosition;
+        transform.rotation = resetRotation;
+        cam.fieldOfView = 60;
     }
 }
