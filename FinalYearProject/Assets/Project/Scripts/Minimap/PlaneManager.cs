@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class PlaneManager : MonoBehaviour
 {
+    //Minimap
     public static PlaneManager Instance;
     public GameObject planePrefab;
     public GameObject planeIconPrefab;
+
+    public GameObject markerPrefab;
+    public GameObject markerCanvas;
+
+    //WorldSpace
+
 
     private void Awake()
     {
@@ -24,15 +31,19 @@ public class PlaneManager : MonoBehaviour
     public void SpawnPlane()
     {
         PlaneMovement plane = Instantiate(planePrefab, Vector3.zero, Quaternion.identity).GetComponent<PlaneMovement>();
-        //PlaneMovement planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity).GetComponent<PlaneMovement>();
         plane.destinations = FindObjectOfType<CursorController>().currentLine.GetComponent<LineController>().points;
-        //planeIcon.destinations = FindObjectOfType<CursorController>().currentLine.GetComponent<LineController>().points;
 
         GameObject planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity);
         planeIcon.transform.parent = plane.transform;
 
+        GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity);
+        marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
+        marker.transform.parent = markerCanvas.transform;
+
         FindObjectOfType<CursorController>().currentLine = null;
     }
+
+
 
     
 }
