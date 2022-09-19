@@ -12,8 +12,6 @@ public class PlaneManager : MonoBehaviour
     public GameObject markerPrefab;
     public GameObject markerCanvas;
 
-    //WorldSpace
-
 
     private void Awake()
     {
@@ -26,6 +24,13 @@ public class PlaneManager : MonoBehaviour
         {
             SpawnPlane();
         }
+
+        if (Input.GetKeyDown(KeyCode.B))
+            markerCanvas.SetActive(false);
+   
+        else if (Input.GetKeyUp(KeyCode.B))
+            markerCanvas.SetActive(true);
+
     }
 
     public void SpawnPlane()
