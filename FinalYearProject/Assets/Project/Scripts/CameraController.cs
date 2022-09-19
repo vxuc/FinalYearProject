@@ -37,6 +37,9 @@ public class CameraController : MonoBehaviour
     [Header("Thermal")]
     public ThermalController thermalController;
 
+    [Header("Modes")]
+    public InformationController informationController;
+
 
     // Start is called before the first frame update
     void Start()
@@ -56,31 +59,47 @@ public class CameraController : MonoBehaviour
     void Update()
     {
 
-        if (objectGazed || tracking)
+        if (informationController.GetRDRMode())
         {
-            if (Input.GetKeyDown(KeyCode.JoystickButton0))
-            {
+            if (isTracking())
                 ToggleTargeting();
-            }
         }
-
-        if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button7))
+        else
         {
-            CameraZooming();
-        }
+            if (objectGazed || tracking)
+            {
+                if (Input.GetKeyDown(KeyCode.JoystickButton0))
+                {
+                    ToggleTargeting();
+                }
+            }
 
-        GettingTargetV2();
+            if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button7))
+            {
+                CameraZooming();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Joystick1Button10))
+            {
+                ResetCameraAxis();
+            }
+
+            GettingTargetV2();
+        }
     }
 
     private void FixedUpdate()
     {
-        if (!tracking)
+        if (!informationController.GetRDRMode())
         {
-            CameraRotation();
-        }
-        else
-        {
-            FollowingTarget();
+            if (!tracking)
+            {
+                CameraRotation();
+            }
+            else
+            {
+                FollowingTarget();
+            }
         }
     }
 
@@ -180,7 +199,10 @@ public class CameraController : MonoBehaviour
 
 
         joystickSensitivity = originalJoystickSensitivity / fMagnificationFactor;
+
+        //Spot Camera
         spotCamera.GetComponent<SpotCameraController>().UpdateFOV();
+        spotCamera.GetComponent<SpotCameraController>().UpdateClipping((int)fMagnificationFactor);
     }
 
     private void GettingTarget()
@@ -325,7 +347,8 @@ public class CameraController : MonoBehaviour
 
         Debug.DrawLine(transform.position, objectGazedTracked.transform.position, Color.red);
         //Maintaining line of sight
-        if (!Physics.Linecast(objectGazedTracked.transform.position, transform.position))
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
+        if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Renderer>().bounds))
             timer = timeToLoseTarget;
 
         else //Loses sight of target
@@ -342,6 +365,10 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private void ResetCameraAxis()
+    {
+        rotation = new Vector3(0, 0, 0);
+    }
     private bool ObjectInRayArray(RaycastHit[] array, GameObject gameObject)
     {
         for (int i = 0; i < array.Length; i++)

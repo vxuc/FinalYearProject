@@ -27,7 +27,7 @@ public class WeatherController : MonoBehaviour
     float minCloudSize;
     int additionalCloud;
 
-    float cloudMaxDistance = 1600000;
+    [SerializeField] float cloudMaxDistance = 1600000;
 
     bool valueChange = false;
     public CloudsController cloudsController;

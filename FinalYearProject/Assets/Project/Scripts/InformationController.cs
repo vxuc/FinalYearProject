@@ -47,7 +47,10 @@ public class InformationController : MonoBehaviour
 
         if (pinkDot && cameraController)
         {
-            DisplayPinkDot();
+            if (Input.GetKeyDown(KeyCode.Joystick1Button1))
+            {
+                DisplayPinkDot();
+            }
         }
 
         if(trackingDots && cameraController)
@@ -65,7 +68,11 @@ public class InformationController : MonoBehaviour
 
     private void updateRotationText()
     {
-        float az = userCamera.rotation.eulerAngles.y;
+        float az;
+        if (userCamera.rotation.eulerAngles.y > 359)
+            az = 0;
+        else
+            az = userCamera.rotation.eulerAngles.y;
         //string az = (userCamera.rotation.y * Mathf.Rad2Deg).ToString("F0");
         //string el = userCamera.rotation.eulerAngles.x.ToString("F1");
         float angle = userCamera.rotation.eulerAngles.x;
@@ -119,7 +126,7 @@ public class InformationController : MonoBehaviour
 
     private void DisplayPinkDot()
     {
-        if(Input.GetKeyDown(KeyCode.Joystick1Button1) && cameraController.isTracking())
+        if(cameraController.isTracking())
         {
             if (pinkDot.gameObject.activeInHierarchy)
                 pinkDot.gameObject.SetActive(false);
@@ -140,4 +147,8 @@ public class InformationController : MonoBehaviour
             trackingDots.gameObject.SetActive(false);
     }
 
+    public bool GetRDRMode()
+    {
+        return !firstHalf;
+    }
 }
