@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AircraftInfoManager : MonoBehaviour
 {
+    public TextAsset textJSON;
     public static AircraftInfoManager Instance;
-    public List<GameObject> aircrafts = new List<GameObject>();
     [SerializeField] Transform aircraftInfoContent;
     [SerializeField] GameObject aircraftInfoPanelPrefab;
+    [SerializeField] TextMeshProUGUI descriptionText;
 
     public GameObject currentAircraft;
 
@@ -23,14 +25,32 @@ public class AircraftInfoManager : MonoBehaviour
         }
     }
 
+    [System.Serializable]
+    public class Aircraft
+    {
+        public string name;
+        public string prefab;
+        public string description;
+    }
+
+    [System.Serializable]
+    public class AircraftList
+    {
+        public Aircraft[] aircraft;
+    }
+
+    public AircraftList list = new AircraftList();
     // Start is called before the first frame update
     void Start()
     {
-        foreach (GameObject go in aircrafts)
+        list = JsonUtility.FromJson<AircraftList>(textJSON.text);
+
+        foreach (Aircraft aircraft in list.aircraft)
         {
             AircraftInfoPanel newInfo = Instantiate(aircraftInfoPanelPrefab, aircraftInfoContent).GetComponent<AircraftInfoPanel>();
-            newInfo.aircraftName = go.GetComponent<AircraftInfo>().aircraftName;
-            newInfo.prefabName = go.GetComponent<AircraftInfo>().prefabName;
+            newInfo.aircraftName = aircraft.name;
+            newInfo.prefabName = aircraft.prefab;
+            newInfo.description = aircraft.description;
         }
     }
 
@@ -39,14 +59,12 @@ public class AircraftInfoManager : MonoBehaviour
         if (currentAircraft != null)
             Destroy(currentAircraft);
 
-        foreach (GameObject go in aircrafts)
-        {
-            if (go.GetComponent<AircraftInfo>().prefabName == name)
-            {
-                GameObject newGO = Instantiate(go, Vector3.zero, Quaternion.identity);
-                newGO.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
-                currentAircraft = newGO;
-            }
-        }
+        if (Resources.Load("Models/" + name) == null)
+            return;
+
+        GameObject newGO = Instantiate(Resources.Load("Models/" + name) as GameObject, Vector3.zero, Quaternion.identity);
+        newGO.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+        currentAircraft = newGO;
     }
 }
+
