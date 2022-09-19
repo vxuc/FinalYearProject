@@ -93,17 +93,18 @@ public class CameraController : MonoBehaviour
         angleX = (angleX > 180) ? angleX - 360 : angleX;
         float currAngleX = -angleX;
 
-        float timeTaken = 5; 
-        Debug.Log(overTimeSensitivity);
+        float maxOverTimeSensitivity = 5; 
+
         if (Input.GetJoystickNames() != null)
         {
 
-            x = Input.GetAxis("Joystick X") * joystickSensitivity* overTimeSensitivity / timeTaken;
-            y = Input.GetAxis("Joystick Y") * joystickSensitivity* overTimeSensitivity / timeTaken;
+            x = Input.GetAxis("Joystick X") * joystickSensitivity* overTimeSensitivity / maxOverTimeSensitivity;
+            y = Input.GetAxis("Joystick Y") * joystickSensitivity* overTimeSensitivity / maxOverTimeSensitivity;
         }
         if(Input.GetAxis("Joystick X") != 0 || Input.GetAxis("Joystick Y") != 0)
         {
-            overTimeSensitivity += Time.deltaTime;
+            if(overTimeSensitivity < maxOverTimeSensitivity)
+                overTimeSensitivity += Time.deltaTime;
         }
         else
         {
@@ -249,17 +250,21 @@ public class CameraController : MonoBehaviour
 
         foreach (Renderer gameObject in gameObjects)
         {
-            if(gameObject.gameObject.layer > 20)
+            if(gameObject.gameObject.layer < 20)
                 Debug.DrawLine(transform.position, gameObject.transform.position, Color.green);
 
             if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != 6 && gameObject.gameObject.layer != 7)
             {
                 bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Renderer>().bounds);
 
-                if (onSight)
+                if (objectGazed != null)
                 {
-                    Debug.DrawLine(transform.position, gameObject.transform.position, Color.yellow);
+                    if (onSight)
+                    {
+                        Debug.DrawLine(transform.position, gameObject.transform.position, Color.yellow);
+                    }
                 }
+
                 if (!Physics.Linecast(gameObject.transform.position, transform.position) && onSight)
                 {
                     if (objectGazed != gameObject.transform.gameObject)
@@ -298,7 +303,7 @@ public class CameraController : MonoBehaviour
                 tracking = false;
                 Debug.Log("Letting go a target");
             }
-            else
+            else if (!Physics.Linecast(objectGazed.transform.position, transform.position))
             {
                 objectGazedTracked = objectGazed;
                 tracking = true;
@@ -322,6 +327,7 @@ public class CameraController : MonoBehaviour
         //Maintaining line of sight
         if (!Physics.Linecast(objectGazedTracked.transform.position, transform.position))
             timer = timeToLoseTarget;
+
         else //Loses sight of target
         {
             timer -= Time.deltaTime;

@@ -10,10 +10,17 @@ public class AircraftInfoPanel : MonoBehaviour
     [SerializeField] Button button;
     public string aircraftName;
     public string prefabName;
+    public string description;
 
     private void Start()
     {
         button.onClick.AddListener(delegate { AircraftInfoManager.Instance.ChangeAircraft(prefabName); });
+        button.onClick.AddListener(delegate { ChangeDescription(); });
         nameText.text = aircraftName;
+    }
+
+    public void ChangeDescription()
+    {
+        GameObject.Find("DescriptionText").GetComponent<TextMeshProUGUI>().text = description;
     }
 }

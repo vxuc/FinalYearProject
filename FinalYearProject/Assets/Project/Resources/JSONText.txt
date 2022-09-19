@@ -1,0 +1,19 @@
+{
+	"aircraft": [
+		{
+			"name": "F18",
+			"prefab": "F18Model",
+			"description": "THIS IS AMAZING"
+		},
+		{
+			"name": "F19",
+			"prefab": "F19Model",
+			"description": "THAT IS AMAZING"
+		},
+		{
+			"name": "F20",
+			"prefab": "F20Model",
+			"description": "THERE IS AMAZING"
+		}
+	]
+}
