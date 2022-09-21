@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatValue: 100
+  heatValue: 200
 --- !u!65 &1438293220816692506
 BoxCollider:
   m_ObjectHideFlags: 0
