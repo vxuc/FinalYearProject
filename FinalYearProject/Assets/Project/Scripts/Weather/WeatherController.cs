@@ -17,14 +17,12 @@ public class WeatherController : MonoBehaviour
 
     public WEATHER_TYPE weatherType;
 
+    [Header("Weather")]
     public static WeatherController Instance;
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI weatherText;
 
     [Header("Clouds")]
-    public ParticleSystem cloudSystem;
     public Slider cloudSlider;
-    int minCloudParticles;
-    float minCloudSize;
     int additionalCloud;
 
     [SerializeField] float cloudMaxDistance = 1600000;
@@ -47,23 +45,18 @@ public class WeatherController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        minCloudParticles = 0;
-        minCloudSize = 100;
     }
 
     // Update is called once per frame
     void Update()
     {
-        text.text = "Weather: " + weatherType.ToString();
+        weatherText.text = "Weather: " + weatherType.ToString();
         if (Input.GetKeyDown(KeyCode.R))
         {
             weatherType++;
             if (weatherType >= WEATHER_TYPE.WEATHER_TOTAL)
                 weatherType = 0;
-            if(cloudSystem)
-                cloudSystem.Clear();
-
-            UpdateCloudV2();
+            UpdateCloud();
         }
         
         if(cloudSlider)
@@ -95,11 +88,6 @@ public class WeatherController : MonoBehaviour
             valueChange = false;
         }
 
-        if (cloudSlider && cloudSystem)
-        {
-            UpdateCloud();
-        }
-
         UpdateRain();
     }
 
@@ -127,42 +115,6 @@ public class WeatherController : MonoBehaviour
     }
 
     void UpdateCloud()
-    {
-        var main = cloudSystem.main;
-
-        switch (weatherType)
-        {
-            case WEATHER_TYPE.WEATHER_RAIN:
-                minCloudParticles = 100;
-                minCloudSize = 60000;
-                break;
-            case WEATHER_TYPE.WEATHER_CLOUDY:
-                minCloudParticles = 40;
-                minCloudSize = 30000;
-                break;
-            case WEATHER_TYPE.WEATHER_DRIZZLE:
-                minCloudParticles = 40;
-                minCloudSize = 25000;
-                break;
-            default:
-                minCloudParticles = 0;
-                minCloudSize = 10000;
-                break;
-
-        }
-
-        cloudSlider.onValueChanged.AddListener
-        (delegate
-        {
-            cloudSystem.Clear();
-        }
-        );
-
-        main.maxParticles = 40 * Mathf.RoundToInt(cloudSlider.value) + minCloudParticles;
-        main.startSize = 10000 * Mathf.RoundToInt(cloudSlider.value) + minCloudSize;
-    }
-
-    void UpdateCloudV2()
     {
         switch (weatherType)
         {
