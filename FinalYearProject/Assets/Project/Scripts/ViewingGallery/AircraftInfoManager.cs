@@ -30,6 +30,7 @@ public class AircraftInfoManager : MonoBehaviour
     {
         public string name;
         public string prefab;
+        public int scale;
         public string description;
     }
 
@@ -62,8 +63,17 @@ public class AircraftInfoManager : MonoBehaviour
         if (Resources.Load("Models/" + name) == null)
             return;
 
+        int scale = 0;
+        foreach (Aircraft aircraft in list.aircraft)
+        {
+            if (aircraft.prefab == name)
+            {
+                scale = aircraft.scale;
+            }
+        }
+
         GameObject newGO = Instantiate(Resources.Load("Models/" + name) as GameObject, Vector3.zero, Quaternion.identity);
-        newGO.transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+        newGO.transform.localScale = new Vector3(0.001f * scale, 0.001f * scale, 0.001f * scale);
         currentAircraft = newGO;
     }
 }
