@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlaneManager : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class PlaneManager : MonoBehaviour
     public GameObject markerPrefab;
     public GameObject markerCanvas;
 
-    //WorldSpace
+ 
 
 
     private void Awake()

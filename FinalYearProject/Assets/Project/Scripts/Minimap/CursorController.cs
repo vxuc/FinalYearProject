@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class CursorController : MonoBehaviour
 {
@@ -29,11 +30,21 @@ public class CursorController : MonoBehaviour
 
     public LineController currentLine;
 
+    //Plane Height Slider
+    [Header("Slider")]
+    public Slider PlaneHeightSlider;
+    public TextMeshProUGUI sliderValue;
+
 
 
 
     private void Awake()
     {
+        PlaneHeightSlider.onValueChanged.AddListener((v) =>
+        {
+            sliderValue.text = v.ToString("0" + "ft");
+        });
+
         controls = new CursorControls();
     }
 
@@ -79,7 +90,7 @@ public class CursorController : MonoBehaviour
             Debug.Log("Mouse Pos: " + pointerData.position);
 
             //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
-            Vector3 pos = new Vector3((pointerData.position.x - 750 * 0.5f) / 750 * 1350000, 50000, (pointerData.position.y - 750 * 0.5f) / 750 * 1350000);
+            Vector3 pos = new Vector3((pointerData.position.x - 750 * 0.5f) / 750 * 1350000, PlaneHeightSlider.value, (pointerData.position.y - 750 * 0.5f) / 750 * 1350000);
             Debug.Log("World Pos: " + pos);
             Instantiate(prefab, pos, Quaternion.identity);
            
