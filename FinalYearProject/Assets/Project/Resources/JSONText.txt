@@ -3,17 +3,14 @@
 		{
 			"name": "F18",
 			"prefab": "F18Model",
+			"scale": 1,
 			"description": "THIS IS AMAZING"
 		},
 		{
-			"name": "F19",
-			"prefab": "F19Model",
+			"name": "BAESystemsHawk",
+			"prefab": "BAESystemsHawkModel",
+			"scale": 100,
 			"description": "THAT IS AMAZING"
-		},
-		{
-			"name": "F20",
-			"prefab": "F20Model",
-			"description": "THERE IS AMAZING"
 		}
 	]
 }
