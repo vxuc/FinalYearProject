@@ -26,7 +26,7 @@ public class WeatherController : MonoBehaviour
     int additionalCloud;
 
     [SerializeField] float cloudMaxDistance = 1600000;
-
+    [SerializeField] TextMeshProUGUI cloudText;
     bool valueChange = false;
     public CloudsController cloudsController;
 
@@ -72,6 +72,7 @@ public class WeatherController : MonoBehaviour
         if (valueChange)
         {
             cloudsController.ClearCloud();
+            cloudText.text = cloudSlider.value.ToString() + " Oktas";
             if (cloudSlider.value != 0)
             {
                 if (weatherType == WEATHER_TYPE.WEATHER_CLEAR)
