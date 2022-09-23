@@ -9285,6 +9285,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2297880836160957790, guid: f62e5507aba51d0448a9de5f1db39fec,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 182635136}
+    - target: {fileID: 2297880836160957790, guid: f62e5507aba51d0448a9de5f1db39fec,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SpawnPlane
+      objectReference: {fileID: 0}
     - target: {fileID: 2297880836460504770, guid: f62e5507aba51d0448a9de5f1db39fec,
         type: 3}
       propertyPath: m_AnchorMax.y
