@@ -14,6 +14,8 @@ public class PlaneManager : MonoBehaviour
     public GameObject markerPrefab;
     public GameObject markerCanvas;
 
+    public GameObject spawnButton;
+
  
 
 
