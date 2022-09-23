@@ -8,17 +8,24 @@ public class CloudsController : MonoBehaviour
 
     public void AddCloud(int cloudIntensity,float maxDistance)
     {
-        float maxSize = 2 + cloudIntensity;
+        float maxSize = 50 + cloudIntensity;
         float randPosX, randPosY, randPosZ;
-        for (int i = 0; i < cloudIntensity * 30; ++i)
+        for (int i = 0; i < cloudIntensity * 20; ++i)
         {
             float randSize = Random.Range(1, maxSize);
-            randPosX = Random.Range(-maxDistance, maxDistance) / cloudIntensity;
             if (cloudIntensity != 8)
+            {
+                randPosX = Random.Range(-maxDistance, maxDistance) / cloudIntensity;
                 randPosY = Random.Range(20000, 30000);
+                randPosZ = Random.Range(-maxDistance, maxDistance) / cloudIntensity;
+            }
             else
+            {
+                randSize = Random.Range(maxSize * 0.5f, maxSize);
+                randPosX = Random.Range(-maxDistance * 2.0f, maxDistance * 2.0f) / cloudIntensity;
                 randPosY = Random.Range(25000, 30000);
-            randPosZ = Random.Range(-maxDistance, maxDistance) / cloudIntensity;
+                randPosZ = Random.Range(-maxDistance * 2.0f, maxDistance * 2.0f) / cloudIntensity;
+            }
 
             Vector3 toRotate = new Vector3(randPosX,randPosY,randPosZ) - transform.position;
             toRotate.Normalize();
@@ -26,7 +33,7 @@ public class CloudsController : MonoBehaviour
 
 
             var cloudVariant = Instantiate(cloudPrefab, new Vector3(randPosX,randPosY,randPosZ), desiredRotation);
-            cloudVariant.transform.localScale = Vector3.one * randSize;
+            cloudVariant.transform.localScale = new Vector3(randSize, randSize, randSize);//.one * randSize;
             cloudVariant.transform.parent = transform;
         }
 

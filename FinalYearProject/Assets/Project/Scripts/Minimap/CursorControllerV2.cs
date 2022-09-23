@@ -35,7 +35,7 @@ public class CursorControllerV2 : MonoBehaviour
     public Slider PlaneHeightSlider;
     public TextMeshProUGUI sliderValue;
 
-
+    public TextMeshProUGUI text;
     private void Awake()
     {
         PlaneHeightSlider.onValueChanged.AddListener((v) =>
@@ -81,6 +81,7 @@ public class CursorControllerV2 : MonoBehaviour
         GetComponent<GraphicRaycaster>().Raycast(pointerData, results);
 
         //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+        text.text = "Results = " + results.Count + "[" + pointerData.position.x + ", " + pointerData.position.y;
         foreach (RaycastResult result in results)
         {
             Debug.Log("Hit " + result.gameObject.name);
