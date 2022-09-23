@@ -9,9 +9,9 @@ public class WeatherController : MonoBehaviour
     public enum WEATHER_TYPE
     { 
         WEATHER_CLEAR,
-        WEATHER_RAIN,
-        WEATHER_DRIZZLE,
         WEATHER_CLOUDY,
+        WEATHER_DRIZZLE,
+        WEATHER_RAIN,
         WEATHER_TOTAL
     }
 
@@ -125,11 +125,11 @@ public class WeatherController : MonoBehaviour
                 break;
             case WEATHER_TYPE.WEATHER_CLOUDY:
                 additionalCloud = 15;
-                cloudSlider.value = 2;
+                cloudSlider.value = 1;
                 break;
             case WEATHER_TYPE.WEATHER_DRIZZLE:
                 additionalCloud = 10;
-                cloudSlider.value = 1;
+                cloudSlider.value = 2;
                 break;
             default:
                 cloudSlider.value = 0;
@@ -137,5 +137,11 @@ public class WeatherController : MonoBehaviour
                 break;
 
         }
+    }
+
+    public void SetWeather(int weather)
+    {
+        this.weatherType = (WEATHER_TYPE)weather;
+        UpdateCloud();
     }
 }
