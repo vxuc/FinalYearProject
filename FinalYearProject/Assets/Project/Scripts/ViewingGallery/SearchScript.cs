@@ -37,7 +37,7 @@ public class SearchScript : MonoBehaviour
 
             if (ele.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Length >= searchTextLength)
             {
-                if (searchText.ToLower() == ele.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.Substring(0, searchTextLength).ToLower())
+                if (ele.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.ToLower().Contains(searchText.ToLower()))
                 {
                     ele.SetActive(true);
                 }
