@@ -11,6 +11,8 @@ public class SearchScript : MonoBehaviour
 
     public GameObject searchBar;
 
+    public TMP_Dropdown dropdown;
+
     public int totalElements;
 
     // Start is called before the first frame update
@@ -22,6 +24,8 @@ public class SearchScript : MonoBehaviour
 
         for (int i = 0; i < totalElements; i++)
             Element[i] = contentHolder.transform.GetChild(i).gameObject;
+
+        Init();
     }
 
     public void Search()
@@ -39,11 +43,48 @@ public class SearchScript : MonoBehaviour
             {
                 if (ele.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.ToLower().Contains(searchText.ToLower()))
                 {
-                    ele.SetActive(true);
+                    if (ele.GetComponent<AircraftInfoPanel>().type == GetCurrentType())
+                        ele.SetActive(true);
                 }
                 else
                     ele.SetActive(false);
             }
         }
+    }
+
+    public void Init()
+    {
+        List<string> types = new List<string>();
+        foreach (GameObject ele in Element)
+        {
+            if (!types.Contains(ele.GetComponent<AircraftInfoPanel>().type))
+                types.Add(ele.GetComponent<AircraftInfoPanel>().type);
+        }
+
+        dropdown.AddOptions(types);
+        dropdown.onValueChanged.AddListener(delegate { Select(); });
+
+        Select();
+    }
+
+    public void Select()
+    {
+        int index = dropdown.value;
+        string type = dropdown.options[index].text;
+
+        foreach (GameObject ele in Element)
+        {
+            if (ele.GetComponent<AircraftInfoPanel>().type == type)
+            {
+                ele.SetActive(true);
+            }
+            else
+                ele.SetActive(false);
+        }
+    }
+
+    public string GetCurrentType()
+    {
+        return dropdown.options[dropdown.value].text;
     }
 }

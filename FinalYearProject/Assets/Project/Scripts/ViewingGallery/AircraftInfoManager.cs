@@ -29,6 +29,7 @@ public class AircraftInfoManager : MonoBehaviour
     public class Aircraft
     {
         public string name;
+        public string type;
         public string prefab;
         public int scale;
         public string description;
@@ -51,6 +52,7 @@ public class AircraftInfoManager : MonoBehaviour
             AircraftInfoPanel newInfo = Instantiate(aircraftInfoPanelPrefab, aircraftInfoContent).GetComponent<AircraftInfoPanel>();
             newInfo.aircraftName = aircraft.name;
             newInfo.prefabName = aircraft.prefab;
+            newInfo.type = aircraft.type;
             newInfo.description = aircraft.description;
         }
     }
