@@ -18,6 +18,8 @@ public class CameraController : MonoBehaviour
     float originalJoystickSensitivity;
     float overTimeSensitivity = 0;
 
+    bool resetting = false;
+
     [Header("Tracking")]
     public Camera spotCamera;
     bool tracking = false;
@@ -26,6 +28,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] float timeToLoseTarget = 0;
     float timer = 0;
     [SerializeField] float spotRadius = 1f;
+    [SerializeField] float timeToTrackTarget = 0;
+    float smoothTimer;
 
     [Header("Zoom")]
     float cameraOriginalFOV;
@@ -46,6 +50,7 @@ public class CameraController : MonoBehaviour
     {
         originalJoystickSensitivity = joystickSensitivity;
         timer = timeToLoseTarget;
+        smoothTimer = timeToTrackTarget;
 
         if (GetComponent<Camera>())
             cameraOriginalFOV = GetComponent<Camera>().fieldOfView;
@@ -79,9 +84,9 @@ public class CameraController : MonoBehaviour
                 CameraZooming();
             }
 
-            if (Input.GetKeyDown(KeyCode.Joystick1Button10))
+            if (Input.GetKeyDown(KeyCode.Joystick1Button10) && !tracking)
             {
-                ResetCameraAxis();
+                resetting = true;
             }
 
             GettingTargetV2();
@@ -92,13 +97,18 @@ public class CameraController : MonoBehaviour
     {
         if (!informationController.GetRDRMode())
         {
-            if (!tracking)
+            if (!tracking && !resetting)
             {
                 CameraRotation();
             }
-            else
+            else if (tracking)
             {
                 FollowingTarget();
+            }
+
+            else if(resetting)
+            {
+                ResetCameraAxis();
             }
         }
     }
@@ -263,7 +273,6 @@ public class CameraController : MonoBehaviour
 
         if (objectGazed)
         {
-            Debug.Log(objectGazed.name);
             if (!GeometryUtility.TestPlanesAABB(planes, objectGazed.GetComponent<Renderer>().bounds))
             {
                 objectGazed = null;
@@ -317,20 +326,21 @@ public class CameraController : MonoBehaviour
 
     private void ToggleTargeting()
     {
-            if (tracking)
-            {
-                rotation = transform.rotation.eulerAngles;
-                timer = timeToLoseTarget;
-                objectGazedTracked = null;
-                tracking = false;
-                Debug.Log("Letting go a target");
-            }
-            else if (!Physics.Linecast(objectGazed.transform.position, transform.position))
-            {
-                objectGazedTracked = objectGazed;
-                tracking = true;
-                Debug.Log("Locking on a target");
-            }
+        if (tracking)
+        {
+            rotation = transform.rotation.eulerAngles;
+            timer = timeToLoseTarget;
+            smoothTimer = timeToTrackTarget;
+            objectGazedTracked = null;
+            tracking = false;
+            Debug.Log("Letting go a target");
+        }
+        else if (!Physics.Linecast(objectGazed.transform.position, transform.position))
+        {
+            objectGazedTracked = objectGazed;
+            tracking = true;
+            Debug.Log("Locking on a target");
+        }
     }
     private void FollowingTarget()
     {
@@ -341,9 +351,18 @@ public class CameraController : MonoBehaviour
         Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
 
         //Turning
-        float smooth = 15f;
+        float smooth;
+
+        if(smoothTimer > 0)
+        {
+            smoothTimer -= Time.deltaTime;
+            smooth = 20f * 1f / smoothTimer;
+        }
+        else
+        {
+            smooth = 20f;
+        }
         transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth * Time.deltaTime);
-        
 
         Debug.DrawLine(transform.position, objectGazedTracked.transform.position, Color.red);
         //Maintaining line of sight
@@ -362,12 +381,19 @@ public class CameraController : MonoBehaviour
             objectGazedTracked = null;
             tracking = false;
             timer = timeToLoseTarget;
+            smoothTimer = timeToTrackTarget;
         }
     }
 
     private void ResetCameraAxis()
     {
-        rotation = new Vector3(0, 0, 0);
+        rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(0,0,0)), 4.5f * Time.deltaTime).eulerAngles;
+        transform.rotation = Quaternion.Euler(rotation);
+        Debug.Log(rotation.x + "," +rotation.y);
+
+        float degree = 1f;
+        if (Mathf.Abs(transform.rotation.eulerAngles.x) <= degree && Mathf.Abs(transform.rotation.eulerAngles.y) <= degree)
+            resetting = false;
     }
     private bool ObjectInRayArray(RaycastHit[] array, GameObject gameObject)
     {
@@ -381,5 +407,10 @@ public class CameraController : MonoBehaviour
     public bool isTracking()
     {
         return tracking;
+    }
+
+    public GameObject GetTrackedGameObject()
+    {
+        return objectGazedTracked;
     }
 }
