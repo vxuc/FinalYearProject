@@ -20,6 +20,10 @@ public class InformationController : MonoBehaviour
     bool firstHalf = true; //TC/RDR
     bool secondHalf = true; //Central/Autonomous
 
+    bool error = false;
+    string toSay = "Error";
+    float errorTimer = 3;
+
 
     void Start()
     {
@@ -37,9 +41,11 @@ public class InformationController : MonoBehaviour
         if (timeText)
             updateTimeText();
 
+ 
+
         if (modesText)
         {
-            if (Input.GetKeyDown(KeyCode.Joystick1Button9) || Input.GetKeyDown(KeyCode.Joystick1Button8))
+            if ((Input.GetKeyDown(KeyCode.Joystick1Button9) || Input.GetKeyDown(KeyCode.Joystick1Button8)) && !error)
             {
                 UpdateModes();
             }
@@ -57,6 +63,22 @@ public class InformationController : MonoBehaviour
         {
             DisplayTrackingDots();
         }
+
+        if (error)
+        {
+            if (errorTimer > 0)
+            {
+                errorTimer -= Time.deltaTime;
+            }
+            else
+            {
+                error = false;
+                errorTimer = 3;
+                modesText.color = Color.white;
+                UpdateModesText();
+            }
+        }
+
     }
 
     private void updateTimeText()
@@ -93,6 +115,11 @@ public class InformationController : MonoBehaviour
             else
                 firstHalf = true;
         }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button9) && !secondHalf)
+        {
+            error = true;
+            toSay = " Can't Comply - RDR";
+        }
 
         if(Input.GetKeyDown(KeyCode.Joystick1Button8) && firstHalf)
         {
@@ -100,6 +127,11 @@ public class InformationController : MonoBehaviour
                 secondHalf = false;
             else
                 secondHalf = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button8) && !firstHalf)
+        {
+            error = true;
+            toSay = " Can't Comply - Autonomous";
         }
         UpdateModesText();
     }
@@ -120,7 +152,13 @@ public class InformationController : MonoBehaviour
             secondText = "Autonomous";
 
 
-        modesText.text = firstText + " | " + secondText; 
+        modesText.text = firstText + " | " + secondText;
+
+        if (error)
+        {
+            modesText.text += toSay;
+            modesText.color = Color.red;
+        }
 
     }
 
@@ -143,8 +181,12 @@ public class InformationController : MonoBehaviour
     {
         if (cameraController.isTracking())
         {
-            if(cameraController.GetTrackedGameObject().transform.Find("Pivot"))
-            trackingDots.GetComponent<TargetUi>().SetTarget(cameraController.GetTrackedGameObject().transform.Find("Pivot"));
+            if (cameraController.GetTrackedGameObject().transform.Find("Pivot"))
+            {
+                TargetUi targetUi = trackingDots.GetComponent<TargetUi>();
+                targetUi.SetTarget(cameraController.GetTrackedGameObject().transform.Find("Pivot"));
+                targetUi.SetPosition(cameraController.GetTrackedGameObject().transform.Find("Pivot"));
+            }
             trackingDots.gameObject.SetActive(true);
         }
         else
