@@ -71,11 +71,7 @@ public class CursorControllerV2 : MonoBehaviour
         //Right Click on Map
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("right click is pressed");
-
-            //Right Clicking on Plane Icon shows a new window of options
-
-
+            DetectObject();
         }
 
     }
@@ -85,6 +81,7 @@ public class CursorControllerV2 : MonoBehaviour
     //Code to insert waypoints and spawn in map
     private void DetectObject()
     {
+
         PointerEventData pointerData = new PointerEventData(EventSystem.current);
         List<RaycastResult> results = new List<RaycastResult>();
 
@@ -92,29 +89,54 @@ public class CursorControllerV2 : MonoBehaviour
         pointerData.position = controls.Mouse.Position.ReadValue<Vector2>();
         GetComponent<GraphicRaycaster>().Raycast(pointerData, results);
 
-        //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
-        text.text = "Results = " + results.Count + "[" + pointerData.position.x + ", " + pointerData.position.y;
-        foreach (RaycastResult result in results)
+
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Hit " + result.gameObject.name);
-            Debug.Log("Mouse Pos: " + pointerData.position);
+            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+            foreach (RaycastResult result in results)
+            {
+                Debug.Log("Hit " + result.gameObject.name);
+                Debug.Log("Mouse Pos: " + pointerData.position);
 
-            //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
-            Vector3 pos = new Vector3(((pointerData.position.x - transform.position.x + 375) - GetComponent<RectTransform>().rect.width * 0.5f) / GetComponent<RectTransform>().rect.width * 1350000,
-                PlaneHeightSlider.value,
-                ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
-            Debug.Log("World Pos: " + pos);
-            Instantiate(prefab, pos, Quaternion.identity);
+                //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
+                Vector3 pos = new Vector3(((pointerData.position.x - transform.position.x + 375) - GetComponent<RectTransform>().rect.width * 0.5f) / GetComponent<RectTransform>().rect.width * 1350000,
+                    PlaneHeightSlider.value,
+                    ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
+                Debug.Log("World Pos: " + pos);
+                Instantiate(prefab, pos, Quaternion.identity);
 
 
-            //Draw a line
-            renderLine();
+                //Draw a line
+                renderLine();
 
-            currentLine.AddPoint(Instantiate(prefab, pos, Quaternion.identity).transform);
+                currentLine.AddPoint(Instantiate(prefab, pos, Quaternion.identity).transform);
+            }
         }
 
-        
+        //Right Click on Map
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("right click is pressed");
 
+            foreach (RaycastResult result in results)
+            {
+                Debug.Log("Hit " + result.gameObject.name);
+
+                //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
+                Vector3 pos = new Vector3(((pointerData.position.x - transform.position.x + 375) - GetComponent<RectTransform>().rect.width * 0.5f) / GetComponent<RectTransform>().rect.width * 1350000,
+                    PlaneHeightSlider.value,
+                    ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
+
+                Collider[] hitCollider = Physics.OverlapSphere(pos, 10);
+                foreach(var hitcollider in hitCollider)
+                {
+                    Debug.Log("Hit " + hitcollider.gameObject.name);
+                }
+
+            }
+
+
+        }
     }
 
     void renderLine()
