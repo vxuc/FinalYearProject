@@ -344,7 +344,7 @@ public class CameraController : MonoBehaviour
     }
     private void FollowingTarget()
     {
-        Vector3 toRotate = objectGazedTracked.transform.position - transform.position;
+        Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position - transform.position;
 
         toRotate.Normalize();
 
@@ -364,7 +364,7 @@ public class CameraController : MonoBehaviour
         }
         transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth * Time.deltaTime);
 
-        Debug.DrawLine(transform.position, objectGazedTracked.transform.position, Color.red);
+        Debug.DrawLine(transform.position, objectGazedTracked.transform.Find("Pivot").position, Color.red);
         //Maintaining line of sight
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
         if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Renderer>().bounds))
