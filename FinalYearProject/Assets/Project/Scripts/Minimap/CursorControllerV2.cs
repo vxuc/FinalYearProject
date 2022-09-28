@@ -67,7 +67,19 @@ public class CursorControllerV2 : MonoBehaviour
         //    OnEnable();
         //}      
 
+
+        //Right Click on Map
+        if (Input.GetMouseButtonDown(1))
+        {
+            Debug.Log("right click is pressed");
+
+            //Right Clicking on Plane Icon shows a new window of options
+
+
+        }
+
     }
+    
 
 
     //Code to insert waypoints and spawn in map
@@ -100,6 +112,8 @@ public class CursorControllerV2 : MonoBehaviour
 
             currentLine.AddPoint(Instantiate(prefab, pos, Quaternion.identity).transform);
         }
+
+        
 
     }
 
