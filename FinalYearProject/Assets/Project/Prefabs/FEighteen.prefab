@@ -126,7 +126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8790025278760726081
 RectTransform:
   m_ObjectHideFlags: 0
@@ -494,7 +494,7 @@ PrefabInstance:
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
       propertyPath: lengthInSec
-      value: 0.7
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
@@ -514,7 +514,7 @@ PrefabInstance:
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 0.7
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
@@ -574,12 +574,12 @@ PrefabInstance:
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
-      value: 0.2432518
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[2].value
-      value: 0.9054044
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
@@ -654,7 +654,7 @@ PrefabInstance:
     - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
         type: 3}
       propertyPath: lengthInSec
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
         type: 3}
@@ -679,7 +679,12 @@ PrefabInstance:
     - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 0.5
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.09803922
       objectReference: {fileID: 0}
     - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
         type: 3}
@@ -784,7 +789,7 @@ PrefabInstance:
     - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
         type: 3}
       propertyPath: lengthInSec
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
         type: 3}
@@ -809,7 +814,12 @@ PrefabInstance:
     - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 0.5
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.a
+      value: 0.09803922
       objectReference: {fileID: 0}
     - target: {fileID: 6654089145050564696, guid: 45a8455872de03a4a901f5b5eb61b4e8,
         type: 3}
@@ -979,7 +989,7 @@ PrefabInstance:
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
       propertyPath: lengthInSec
-      value: 0.7
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
@@ -1044,7 +1054,7 @@ PrefabInstance:
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 0.7
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
@@ -1159,12 +1169,12 @@ PrefabInstance:
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
-      value: 0.2432518
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[2].value
-      value: 0.9054044
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 7927493308796780819, guid: 247fb06b87266c9429d7047f5007eb48,
         type: 3}
