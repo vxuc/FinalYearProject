@@ -15,6 +15,7 @@ public class InformationController : MonoBehaviour
     public TextMeshProUGUI modesText;
     public Image trackingDots;
     public Image pinkDot;
+    public Image pinkSpike;
 
     [Header("ModesText")]
     bool firstHalf = true; //TC/RDR
@@ -23,6 +24,7 @@ public class InformationController : MonoBehaviour
     bool error = false;
     string toSay = "Error";
     float errorTimer = 3;
+    float spikeTimer = 3;
 
 
     void Start()
@@ -57,6 +59,18 @@ public class InformationController : MonoBehaviour
             {
                 DisplayPinkDot();
             }
+            
+            if (pinkDot.gameObject.activeSelf)
+            {
+                spikeTimer -= Time.deltaTime;
+                if (spikeTimer <= 0)
+                    pinkSpike.gameObject.SetActive(true);
+            }
+            else
+            {
+                spikeTimer = 3;
+                pinkSpike.gameObject.SetActive(false);
+            }
         }
 
         if(trackingDots && cameraController)
@@ -78,7 +92,6 @@ public class InformationController : MonoBehaviour
                 UpdateModesText();
             }
         }
-
     }
 
     private void updateTimeText()
@@ -181,6 +194,7 @@ public class InformationController : MonoBehaviour
     {
         if (cameraController.isTracking())
         {
+            
             if (cameraController.GetTrackedGameObject().transform.Find("Pivot"))
             {
                 TargetUi targetUi = trackingDots.GetComponent<TargetUi>();
@@ -190,7 +204,9 @@ public class InformationController : MonoBehaviour
             trackingDots.gameObject.SetActive(true);
         }
         else
+        {
             trackingDots.gameObject.SetActive(false);
+        }
     }
 
     public bool GetRDRMode()
