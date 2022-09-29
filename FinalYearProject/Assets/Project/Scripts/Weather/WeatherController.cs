@@ -139,6 +139,11 @@ public class WeatherController : MonoBehaviour
         }
     }
 
+    public void UpdateCloudByArea(int buttonNo)
+    {
+
+    }
+
     public void SetWeather(int weather)
     {
         this.weatherType = (WEATHER_TYPE)weather;

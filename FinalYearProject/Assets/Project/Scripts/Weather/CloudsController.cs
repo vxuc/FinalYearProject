@@ -13,7 +13,7 @@ public class CloudsController : MonoBehaviour
         for (int i = 0; i < cloudIntensity * 20; ++i)
         {
             float randSize = Random.Range(1, maxSize);
-            if (cloudIntensity != 8)
+            if (cloudIntensity < 8)
             {
                 randPosX = Random.Range(-maxDistance, maxDistance) / cloudIntensity;
                 randPosY = Random.Range(20000, 30000);
@@ -50,7 +50,7 @@ public class CloudsController : MonoBehaviour
         for (int i = 0; i < additionalCloud; ++i)
         {
             float randSize = Random.Range(1, maxSize);
-            if (cloudIntensity != 8)
+            if (cloudIntensity < 8)
             {
                 randPosY = Random.Range(20000, 30000);
             }
