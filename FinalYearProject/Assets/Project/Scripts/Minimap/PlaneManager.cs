@@ -14,11 +14,6 @@ public class PlaneManager : MonoBehaviour
     public GameObject markerPrefab;
     public GameObject markerCanvas;
 
-    public GameObject spawnButton;
-
- 
-
-
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -26,10 +21,10 @@ public class PlaneManager : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            SpawnPlane();
-        }
+        //if(Input.GetKeyDown(KeyCode.N))
+        //{
+        //    SpawnPlane();
+        //}
 
         if (Input.GetKeyDown(KeyCode.B))
             markerCanvas.SetActive(false);
@@ -48,7 +43,6 @@ public class PlaneManager : MonoBehaviour
 
         GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity);
         marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
-        //marker.transform.parent = markerCanvas.transform;
         marker.transform.SetParent(markerCanvas.transform);
 
         FindObjectOfType<CursorControllerV2>().currentLine = null;
