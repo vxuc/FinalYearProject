@@ -23,7 +23,7 @@ public class CloudsController : MonoBehaviour
             {
                 randSize = Random.Range(maxSize * 0.5f, maxSize);
                 randPosX = Random.Range(-maxDistance * 2.0f, maxDistance * 2.0f) / cloudIntensity;
-                randPosY = Random.Range(25000, 30000);
+                randPosY = Random.Range(25000, 40000);
                 randPosZ = Random.Range(-maxDistance * 2.0f, maxDistance * 2.0f) / cloudIntensity;
             }
 
@@ -37,7 +37,7 @@ public class CloudsController : MonoBehaviour
             cloudVariant.transform.parent = transform;
         }
 
-        AddAdditionalCloud(10, 100000, cloudIntensity);
+        AddAdditionalCloud((int)1.5f * cloudIntensity, 10000, cloudIntensity);
     }
 
     public void AddAdditionalCloud(int additionalCloud,float maxDistance,int cloudIntensity)

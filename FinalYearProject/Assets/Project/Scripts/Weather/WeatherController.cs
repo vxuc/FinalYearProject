@@ -72,7 +72,7 @@ public class WeatherController : MonoBehaviour
         if (valueChange)
         {
             cloudsController.ClearCloud();
-            cloudText.text = cloudSlider.value.ToString() + " Oktas";
+            cloudText.text = cloudSlider.value.ToString() + " Cloud Intenstity";
             if (cloudSlider.value != 0)
             {
                 if (weatherType == WEATHER_TYPE.WEATHER_CLEAR)

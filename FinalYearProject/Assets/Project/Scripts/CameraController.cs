@@ -351,18 +351,17 @@ public class CameraController : MonoBehaviour
         Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
 
         //Turning
-        float smooth;
+        float smooth = 60f;
 
-        if(smoothTimer > 0)
+        if(smoothTimer > 1)
         {
             smoothTimer -= Time.deltaTime;
-            smooth = 20f * 1f / smoothTimer;
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.deltaTime);
         }
         else
         {
-            smooth = 20f;
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth * Time.deltaTime);
         }
-        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth * Time.deltaTime);
 
         Debug.DrawLine(transform.position, objectGazedTracked.transform.Find("Pivot").position, Color.red);
         //Maintaining line of sight
