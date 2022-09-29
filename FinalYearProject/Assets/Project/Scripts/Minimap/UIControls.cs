@@ -34,7 +34,6 @@ public class UIControls : MonoBehaviour
         }
     }
 
-
     private void OnEnable()
     {
         controls.Enable();

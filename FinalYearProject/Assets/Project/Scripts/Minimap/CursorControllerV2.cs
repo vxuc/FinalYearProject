@@ -35,12 +35,19 @@ public class CursorControllerV2 : MonoBehaviour
     public Slider PlaneHeightSlider;
     public TextMeshProUGUI sliderValue;
 
+    //Detail Page
+    [Header("Detail Page")]
+    [SerializeField] GameObject detailPagePrefab;
+    [SerializeField]  GameObject statsCanvas;
+
+    //Debugging
+    [Header("DEBUGGING")]
     public TextMeshProUGUI text;
     private void Awake()
     {
         PlaneHeightSlider.onValueChanged.AddListener((v) =>
         {
-            sliderValue.text = v.ToString("0" + "ft");
+            sliderValue.text = (v / 30.48).ToString("0" + "ft");
         });
 
         controls = new CursorControls();
@@ -55,19 +62,7 @@ public class CursorControllerV2 : MonoBehaviour
 
     void Update()
     {
-        ////Enables cursor only when UI is open
-        //if (!UIControls.openMenu)
-        //{
-        //    Cursor.visible = false;
-        //    OnDisable();
-        //}
-        //else if(UIControls.openMenu)
-        //{
-        //    Cursor.visible = true;
-        //    OnEnable();
-        //}      
-
-
+    
         //Right Click on Map
         if (Input.GetMouseButtonDown(1))
         {
@@ -124,19 +119,31 @@ public class CursorControllerV2 : MonoBehaviour
 
                 //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
                 Vector3 pos = new Vector3(((pointerData.position.x - transform.position.x + 375) - GetComponent<RectTransform>().rect.width * 0.5f) / GetComponent<RectTransform>().rect.width * 1350000,
-                    PlaneHeightSlider.value,
+                    9147000,
                     ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
 
-                Collider[] hitCollider = Physics.OverlapSphere(pos, 10);
-                foreach(var hitcollider in hitCollider)
+                //Collider[] hitColliders = Physics.OverlapSphere(pos, 30);
+                RaycastHit[] hitColliders = Physics.RaycastAll(pos, Vector3.down,float.MaxValue);
+                foreach (var hitCollider in hitColliders)
                 {
-                    Debug.Log("Hit " + hitcollider.gameObject.name);
+                    if(hitCollider.transform.gameObject.name == "PlaneIcon(Clone)")
+                    {
+                        Debug.Log("Hit " + hitCollider.transform.gameObject.name);
+                        var statInfo = Instantiate(detailPagePrefab, new Vector3(1571, 407, 1), Quaternion.identity);
+                        statInfo.GetComponent<DetailsPage>().SetPlane(hitCollider.transform.gameObject);
+                        statInfo.transform.SetParent(statsCanvas.transform);
+                    }
                 }
 
             }
 
 
         }
+    }
+
+    public float GetHeightSliderValue()
+    {
+        return PlaneHeightSlider.value;
     }
 
     void renderLine()
