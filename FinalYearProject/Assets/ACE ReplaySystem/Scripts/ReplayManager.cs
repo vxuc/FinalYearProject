@@ -791,10 +791,10 @@ public class ReplayManager : MonoBehaviour
             records.Remove(r);
         recordsToDelete.Clear();
 
-        Invoke(nameof(gff), 1f);
+        Invoke(nameof(InitReplay), 1f);
     }
 
-    void gff()
+    void InitReplay()
     {
         BinaryFormatter formatter = new BinaryFormatter();
 
