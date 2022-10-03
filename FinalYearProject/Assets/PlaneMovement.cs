@@ -7,7 +7,7 @@ public class PlaneMovement : MonoBehaviour
     Rigidbody rb;
     Vector3 desiredPosition = Vector3.zero;
     int index = 0;
-    [SerializeField] float movementSpeed;
+    public float movementSpeed;
 
     public List<Transform> destinations;
 

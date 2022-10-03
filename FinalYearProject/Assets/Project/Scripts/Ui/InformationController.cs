@@ -29,13 +29,20 @@ public class InformationController : MonoBehaviour
     [Header("CrossHair")]
     public Image Border;
 
+    [Header("Zoom")]
+    public TextMeshProUGUI zoomText;
+    public int currZoomLevel;
+
 
     void Start()
     {
         modesText.text = "TC | Central";
 
         if (userCamera.GetComponent<CameraController>())
+        {
             cameraController = userCamera.GetComponent<CameraController>();
+            currZoomLevel = cameraController.GetCameraZoomLevel();
+        }
     }
 
     // Update is called once per frame
@@ -99,6 +106,15 @@ public class InformationController : MonoBehaviour
         if(Border)
         {
             DisplayBorder();
+        }
+
+        if(zoomText)
+        {
+            if(currZoomLevel != cameraController.GetCameraZoomLevel())
+            {
+                UpdateZoomText();
+                currZoomLevel = cameraController.GetCameraZoomLevel();
+            }
         }
     }
 
@@ -225,6 +241,24 @@ public class InformationController : MonoBehaviour
             Border.gameObject.SetActive(false);
     }
 
+    private void UpdateZoomText()
+    {
+        string text;
+        switch(cameraController.GetCameraZoomLevel())
+        {
+            default:
+                text = "W";
+                break;
+            case 1:
+                text = "M";
+                break;
+            case 2:
+                text = "N";
+                break;
+        }
+        zoomText.text = text;
+    }
+    
     public bool GetRDRMode()
     {
         return !firstHalf;
