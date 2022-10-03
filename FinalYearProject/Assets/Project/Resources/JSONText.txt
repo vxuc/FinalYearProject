@@ -2,15 +2,15 @@
 	"aircraft": [
 		{
 			"name": "F18",
-			"type": "Airplane",
 			"prefab": "F18Model",
+			"type": "Airplane",
 			"scale": 1,
 			"description": "THIS IS AMAZING"
 		},
 		{
 			"name": "BAESystemsHawk",
-			"type": "Helicopter",
 			"prefab": "BAESystemsHawkModel",
+			"type": "Helicopter",
 			"scale": 100,
 			"description": "THAT IS AMAZING"
 		}

@@ -43,7 +43,7 @@ public class SearchScript : MonoBehaviour
             {
                 if (ele.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text.ToLower().Contains(searchText.ToLower()))
                 {
-                    if (ele.GetComponent<AircraftInfoPanel>().type == GetCurrentType())
+                    if (ele.GetComponent<AircraftInfoPanel>().type == GetCurrentType() || GetCurrentType() == "All")
                         ele.SetActive(true);
                 }
                 else
@@ -55,6 +55,7 @@ public class SearchScript : MonoBehaviour
     public void Init()
     {
         List<string> types = new List<string>();
+        types.Add("All");
         foreach (GameObject ele in Element)
         {
             if (!types.Contains(ele.GetComponent<AircraftInfoPanel>().type))
@@ -74,6 +75,11 @@ public class SearchScript : MonoBehaviour
 
         foreach (GameObject ele in Element)
         {
+            if (type == "All")
+            {
+                ele.SetActive(true);
+                continue;
+            }
             if (ele.GetComponent<AircraftInfoPanel>().type == type)
             {
                 ele.SetActive(true);
