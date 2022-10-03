@@ -25,7 +25,7 @@ public class WeatherController : MonoBehaviour
     public Slider cloudSlider;
     int additionalCloud;
 
-    [SerializeField] float cloudMaxDistance = 1600000;
+    [SerializeField] float cloudMaxDistance;
     [SerializeField] TextMeshProUGUI cloudText;
     bool valueChange = false;
     public CloudsController cloudsController;
@@ -141,7 +141,8 @@ public class WeatherController : MonoBehaviour
 
     public void UpdateCloudByArea(int buttonNo)
     {
-
+        float maxDistance = cloudMaxDistance / 3f;
+        cloudsController.AddCloudWithButton(50, maxDistance,buttonNo);
     }
 
     public void SetWeather(int weather)

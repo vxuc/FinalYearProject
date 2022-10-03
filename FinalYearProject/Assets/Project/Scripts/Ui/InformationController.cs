@@ -26,6 +26,9 @@ public class InformationController : MonoBehaviour
     float errorTimer = 3;
     float spikeTimer = 3;
 
+    [Header("CrossHair")]
+    public Image Border;
+
 
     void Start()
     {
@@ -91,6 +94,11 @@ public class InformationController : MonoBehaviour
                 modesText.color = Color.white;
                 UpdateModesText();
             }
+        }
+
+        if(Border)
+        {
+            DisplayBorder();
         }
     }
 
@@ -177,14 +185,14 @@ public class InformationController : MonoBehaviour
 
     private void DisplayPinkDot()
     {
-        if(cameraController.isTracking())
+        if(cameraController.IsTracking())
         {
             if (pinkDot.gameObject.activeInHierarchy)
                 pinkDot.gameObject.SetActive(false);
             else
                 pinkDot.gameObject.SetActive(true);
         }
-        else if(!cameraController.isTracking())
+        else if(!cameraController.IsTracking())
         {
             pinkDot.gameObject.SetActive(false);
         }
@@ -192,7 +200,7 @@ public class InformationController : MonoBehaviour
 
     private void DisplayTrackingDots()
     {
-        if (cameraController.isTracking())
+        if (cameraController.IsTracking())
         {
             
             if (cameraController.GetTrackedGameObject().transform.Find("Pivot"))
@@ -207,6 +215,14 @@ public class InformationController : MonoBehaviour
         {
             trackingDots.gameObject.SetActive(false);
         }
+    }
+
+    private void DisplayBorder()
+    {
+        if (cameraController.GetCameraZoomLevel() < 2)
+            Border.gameObject.SetActive(true);
+        else
+            Border.gameObject.SetActive(false);
     }
 
     public bool GetRDRMode()

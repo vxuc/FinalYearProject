@@ -45,11 +45,11 @@ public class CloudsController : MonoBehaviour
         if (cloudIntensity <= 0)
             additionalCloud = 0;
             
-        float maxSize = 5;
+        float maxSize = 50;
         float randPosX, randPosY, randPosZ;
         for (int i = 0; i < additionalCloud; ++i)
         {
-            float randSize = Random.Range(1, maxSize);
+            float randSize = Random.Range(maxSize/2, maxSize);
             if (cloudIntensity < 8)
             {
                 randPosY = Random.Range(20000, 30000);
@@ -73,6 +73,43 @@ public class CloudsController : MonoBehaviour
         }
     }
 
+    public void AddCloudWithButton(int additionalCloud, float maxDistance,int buttonNo)
+    {
+
+        float maxSize = 70;
+        float randPosX, randPosY, randPosZ;
+
+        for (int i = 0; i < additionalCloud; ++i)
+        {
+            float randSize = Random.Range(maxSize * 0.5f, maxSize);
+
+            randPosX = Random.Range(-maxDistance, maxDistance);
+            randPosY = Random.Range(25000, 30000);
+            randPosZ = Random.Range(-maxDistance, maxDistance);
+            
+
+            Vector3 toRotate = new Vector3(randPosX, randPosY, randPosZ) - transform.position;
+            toRotate.Normalize();
+            Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
+
+
+            var cloudVariant = Instantiate(cloudPrefab, new Vector3(randPosX, randPosY, randPosZ), desiredRotation);
+            if (buttonNo <= 3)
+            {
+                cloudVariant.transform.position += new Vector3(0, 0, maxDistance);
+                if(buttonNo == 1)
+                {
+                    cloudVariant.transform.position += new Vector3(-maxDistance,0, 0);
+                }
+                else if (buttonNo == 3)
+                {
+                    cloudVariant.transform.position += new Vector3(maxDistance, 0, 0);
+                }
+            }
+            cloudVariant.transform.localScale = Vector3.one * randSize;
+            cloudVariant.transform.parent = transform;
+        }
+    }
     public void ClearCloud()
     {
         foreach(Transform cloud in this.transform)
