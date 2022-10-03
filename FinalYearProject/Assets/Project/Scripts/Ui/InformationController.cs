@@ -246,7 +246,7 @@ public class InformationController : MonoBehaviour
             Border.gameObject.SetActive(false);
     }
 
-    private void UpdateZoomText()
+    public void UpdateZoomText()
     {
         string text;
         switch(cameraController.GetCameraZoomLevel())

@@ -173,7 +173,7 @@ public class Frame
     //record data
     public RECORD_DATA record_data;
 
-    float cameraZoom;
+    int cameraZoom;
 
     bool cameraTracking;
 
@@ -218,7 +218,7 @@ public class Frame
         timeOfDay = type;
     }
     
-    public void SetCameraZoom(float zoom)
+    public void SetCameraZoom(int zoom)
     {
         cameraZoom = zoom;
     }
@@ -249,7 +249,7 @@ public class Frame
     public float ParticleTime() { return particleTime; }
     public WeatherController.WEATHER_TYPE GetWeatherData() { return weatherType; }
     public TimeOfDay.TIMEOFDAY GetTimeOfDayData() { return timeOfDay; }
-    public float GetCameraZoom() { return cameraZoom; }
+    public int GetCameraZoom() { return cameraZoom; }
     public bool GetCameraTracking() { return cameraTracking; }
     public ThermalController.CameraModes GetCameraMode() { return cameraMode; }
 }

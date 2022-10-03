@@ -428,6 +428,13 @@ public class CameraController : MonoBehaviour
     {
         return (int)cameraZoom;
     }
+
+    public void SetCameraZoomLevel(int level)
+    {
+        cameraZoom = (CameraZoom)level;
+        CameraZooming();
+    }
+
     public GameObject GetTrackedGameObject()
     {
         return objectGazedTracked;

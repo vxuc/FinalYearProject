@@ -249,7 +249,7 @@ public class ReplayManager : MonoBehaviour
                             //weather type
                             if (records[i].GetFrameAtIndex(auxIndex) != null)
                             {
-                                Camera.main.fieldOfView = records[i].GetFrameAtIndex(auxIndex).GetCameraZoom();
+                                FindObjectOfType<CameraController>().SetCameraZoomLevel(records[i].GetFrameAtIndex(auxIndex).GetCameraZoom());
                             }
                         }
                         else if (records[i].dataType == Record.DATA_TYPE.DATA_CAMERA_MODE)
