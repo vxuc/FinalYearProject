@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlaneManager : MonoBehaviour
 {
@@ -12,9 +14,6 @@ public class PlaneManager : MonoBehaviour
     public GameObject markerPrefab;
     public GameObject markerCanvas;
 
-    //WorldSpace
-
-
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -22,10 +21,10 @@ public class PlaneManager : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            SpawnPlane();
-        }
+        //if(Input.GetKeyDown(KeyCode.N))
+        //{
+        //    SpawnPlane();
+        //}
 
         if (Input.GetKeyDown(KeyCode.B))
             markerCanvas.SetActive(false);
@@ -37,16 +36,16 @@ public class PlaneManager : MonoBehaviour
     public void SpawnPlane()
     {
         PlaneMovement plane = Instantiate(planePrefab, Vector3.zero, Quaternion.identity).GetComponent<PlaneMovement>();
-        plane.destinations = FindObjectOfType<CursorController>().currentLine.GetComponent<LineController>().points;
+        plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
 
         GameObject planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity);
         planeIcon.transform.parent = plane.transform;
 
         GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity);
         marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
-        marker.transform.parent = markerCanvas.transform;
+        marker.transform.SetParent(markerCanvas.transform);
 
-        FindObjectOfType<CursorController>().currentLine = null;
+        FindObjectOfType<CursorControllerV2>().currentLine = null;
     }
 
 
