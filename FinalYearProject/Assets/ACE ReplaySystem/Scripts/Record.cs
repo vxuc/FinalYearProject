@@ -160,6 +160,7 @@ public class Record : MonoBehaviour
         }
 
         frames.Add(frame);
+        numberFirstFrame = frames[0].record_data.spawnFrame;
     }
 
     //Record RB velocities

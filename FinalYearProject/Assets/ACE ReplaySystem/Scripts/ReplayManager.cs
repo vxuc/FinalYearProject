@@ -150,8 +150,15 @@ public class ReplayManager : MonoBehaviour
 
                 if (frameIndex < recordMaxLength - 1 && frameIndex < timeLine.maxValue - 1)
                 {
+                    List<Record> recordsToRemove = new List<Record>();
                     for (int i = 0; i < records.Count; i++)
                     {
+                        if (records[i] == null)
+                        {
+                            recordsToRemove.Add(records[i]);
+                            continue;
+                        }
+
                         int auxIndex = frameIndex - records[i].GetFirstFrameIndex();
                         HandleDeletedObjects(records[i], frameIndex);
                         HandleInstantiatedObjects(records[i], auxIndex);
@@ -259,6 +266,10 @@ public class ReplayManager : MonoBehaviour
                         //        DestroyGO(records[i].gameObject);
                     }
 
+                    foreach (Record r in recordsToRemove)
+                        records.Remove(r);
+                    recordsToRemove.Clear();
+
                     if (interpolation)
                     {
                         replayTimer += speeds[speedIndex];
@@ -357,16 +368,25 @@ public class ReplayManager : MonoBehaviour
     //-------------- FUNCTIONS TO ACTIVATE AND DEACTIVATE GAMEOBJECTS (FOR INSTANTIATION AND DELETION) ----------------//
 
     //This function is responsible for activating and deactivating instantiated GO, dependenig on the current time of the replay 
-    void HandleInstantiatedObjects(Record rec, int index)
+    bool HandleInstantiatedObjects(Record rec, int index, bool delete = false)
     {
         //get hierarchy highest parent, as it will be the instantiated GO
         GameObject go = rec.GetGameObject().transform.root.gameObject;
+        Debug.Log(index + go.name + Time.realtimeSinceStartup);
 
         //it has not been instantiated yet
         if (index < 0)
         {
             if (go.activeInHierarchy == true)
-                go.SetActive(false);
+            {
+                //Debug.Log(index + go.name + Time.realtimeSinceStartup);
+                //Destroy(go);
+                if (delete)
+                    Destroy(go);
+                else
+                    go.SetActive(false);
+                return true;
+            }
         }
         else
         {
@@ -416,6 +436,7 @@ public class ReplayManager : MonoBehaviour
 
             }
         }
+        return false;
     }
 
     //Function to activate and deactivate GameObjects that were deleted during the recording phase to simulate the deletion of them
@@ -608,6 +629,8 @@ public class ReplayManager : MonoBehaviour
     void InterpolateTransforms(Record rec, int index, float value)
     {
         GameObject go = rec.GetGameObject();
+        if (go == null)
+            return;
 
         Frame actual = rec.GetFrameAtIndex(index);
         Frame next = rec.GetFrameAtIndex(index + 1);
@@ -755,6 +778,24 @@ public class ReplayManager : MonoBehaviour
     //Load Saved Replay
     public void LoadReplay()
     {
+        List<Record> recordsToDelete = new List<Record>();
+        foreach (Record record in FindObjectsOfType<Record>())
+        {
+            int auxIndex = 0 - record.GetFirstFrameIndex();
+            HandleDeletedObjects(record, frameIndex);
+            if (HandleInstantiatedObjects(record, auxIndex, true))
+                recordsToDelete.Add(record);
+        }
+
+        foreach (Record r in recordsToDelete)
+            records.Remove(r);
+        recordsToDelete.Clear();
+
+        Invoke(nameof(gff), 1f);
+    }
+
+    void gff()
+    {
         BinaryFormatter formatter = new BinaryFormatter();
 
         int i = 0;
@@ -785,15 +826,16 @@ public class ReplayManager : MonoBehaviour
 
                     index--;
                 }
-                
+
                 string final = frames[0].objName.Substring(0, frames[0].objName.Length - s.Length);
+                Debug.Log("final: " + final + " " + record.gameObject.name + Time.realtimeSinceStartup);
                 if (final == record.gameObject.name)
                 {
                     record.frames = frames;
                     exist = true;
                 }
             }
-            
+
             if (!exist)
             {
                 Debug.Log("UNFOUND " + frames[0].objName);
@@ -809,8 +851,6 @@ public class ReplayManager : MonoBehaviour
         //start replay mode
         EnterReplayMode();
     }
-
-
     // Start replay mode
     public void EnterReplayMode()
     {

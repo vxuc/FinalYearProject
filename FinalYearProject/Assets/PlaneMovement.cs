@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlaneMovement : MonoBehaviour
 {
     Rigidbody rb;
-    Vector3 desiredPosition;
+    Vector3 desiredPosition = Vector3.zero;
     int index = 0;
     [SerializeField] float movementSpeed;
 
@@ -14,13 +14,17 @@ public class PlaneMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        desiredPosition = destinations[0].position;
+        if (destinations.Count > 0)
+            desiredPosition = destinations[0].position;
         transform.position = desiredPosition;
     }
 
 
     private void FixedUpdate()
     {
+        if (destinations.Count == 0)
+            return;
+
         if(Vector3.Distance(transform.position, desiredPosition) < 5)
         {
             index++;
