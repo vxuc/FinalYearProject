@@ -218,8 +218,7 @@ public class InformationController : MonoBehaviour
     {
         if (cameraController.IsTracking())
         {
-            
-            if (cameraController.GetTrackedGameObject().transform.Find("Pivot"))
+            if (cameraController.GetTrackedGameObject()?.transform.Find("Pivot"))
             {
                 TargetUi targetUi = trackingDots.GetComponent<TargetUi>();
                 targetUi.SetTarget(cameraController.GetTrackedGameObject().transform.Find("Pivot"));
@@ -231,6 +230,12 @@ public class InformationController : MonoBehaviour
         {
             trackingDots.gameObject.SetActive(false);
         }
+    }
+
+    public void SetTrackingDots(bool set)
+    {
+        cameraController.SetIsTracking(set);
+        trackingDots.gameObject.SetActive(set);
     }
 
     private void DisplayBorder()
@@ -262,5 +267,9 @@ public class InformationController : MonoBehaviour
     public bool GetRDRMode()
     {
         return !firstHalf;
+    }
+    public CameraController GetCameraController()
+    {
+        return cameraController;
     }
 }

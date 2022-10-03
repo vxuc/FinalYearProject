@@ -344,7 +344,7 @@ public class CameraController : MonoBehaviour
     }
     private void FollowingTarget()
     {
-        if (objectGazedTracked.transform.Find("Pivot"))
+        if (objectGazedTracked?.transform.Find("Pivot"))
         {
             //Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position + (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * 0.5f - transform.position;
 
@@ -417,6 +417,11 @@ public class CameraController : MonoBehaviour
     public bool IsTracking()
     {
         return tracking;
+    }
+
+    public void SetIsTracking(bool track)
+    {
+        tracking = track;
     }
 
     public int GetCameraZoomLevel()

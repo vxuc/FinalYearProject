@@ -175,6 +175,8 @@ public class Frame
 
     float cameraZoom;
 
+    bool cameraTracking;
+
     //Constructor
     public Frame(Vector3 position, Quaternion rotation, Vector3 scale_, string _objName, string _prefabName, int _frameIndex)
     {
@@ -220,6 +222,11 @@ public class Frame
     {
         cameraZoom = zoom;
     }
+    
+    public void SetCameraTracking(bool track)
+    {
+        cameraTracking = track;
+    }
 
     public void SetCameraMode(ThermalController.CameraModes mode)
     {
@@ -243,5 +250,6 @@ public class Frame
     public WeatherController.WEATHER_TYPE GetWeatherData() { return weatherType; }
     public TimeOfDay.TIMEOFDAY GetTimeOfDayData() { return timeOfDay; }
     public float GetCameraZoom() { return cameraZoom; }
+    public bool GetCameraTracking() { return cameraTracking; }
     public ThermalController.CameraModes GetCameraMode() { return cameraMode; }
 }

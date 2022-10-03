@@ -260,6 +260,14 @@ public class ReplayManager : MonoBehaviour
                                 FindObjectOfType<ThermalController>().SetCameraMode(records[i].GetFrameAtIndex(auxIndex).GetCameraMode());
                             }
                         }
+                        else if (records[i].dataType == Record.DATA_TYPE.DATA_CAMERA_TRACKING)
+                        {
+                            //weather type
+                            if (records[i].GetFrameAtIndex(auxIndex) != null)
+                            {
+                                FindObjectOfType<InformationController>().SetTrackingDots(records[i].GetFrameAtIndex(auxIndex).GetCameraTracking());
+                            }
+                        }
 
                         //if (timer2 >= records[i].frames[0].record_data.despawnFrame)
                         //    if (timer2 < records[i].frames[records[i].frames.Count - 1].record_data.spawnFrame)

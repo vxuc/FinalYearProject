@@ -14,6 +14,9 @@ public class PlaneWaypoint : MonoBehaviour
     
     void Update()
     {
+        if (target == null)
+            return;
+
         if (img.transform.position.y <= 0 || img.transform.position.x <= 0)
         {
             img.enabled = false;

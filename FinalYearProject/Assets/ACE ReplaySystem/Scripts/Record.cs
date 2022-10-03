@@ -13,6 +13,7 @@ public class Record : MonoBehaviour
         DATA_TIMEOFDAY,
         DATA_CAMERA_ZOOM,
         DATA_CAMERA_MODE,
+        DATA_CAMERA_TRACKING,
         DATA_TOTAL
     }
 
@@ -144,6 +145,9 @@ public class Record : MonoBehaviour
         //record camera zoom
         RecordCameraZoom(frame);
 
+        //record camera tracking
+        RecordCameraTracking(frame);
+
         //record camera mode
         RecordCameraMode(frame);
 
@@ -230,6 +234,12 @@ public class Record : MonoBehaviour
     void RecordCameraZoom(Frame frame)
     {
         frame.SetCameraZoom(Camera.main.fieldOfView);
+    }
+
+    //Record Camera Tracking
+    void RecordCameraTracking(Frame frame)
+    {
+        frame.SetCameraTracking(FindObjectOfType<InformationController>().GetCameraController().IsTracking());
     }
 
     //Record Camera Mode
