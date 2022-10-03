@@ -346,24 +346,24 @@ public class CameraController : MonoBehaviour
     {
         if (objectGazedTracked.transform.Find("Pivot"))
         {
-            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position - transform.position;
+            //Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position + (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * 0.5f - transform.position;
 
-            toRotate.Normalize();
+            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position +
+                (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed/25000
+                - transform.position;
+
 
             Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
 
             //Turning
-            float smooth = 60f;
+            float smooth = 90f;
 
-            if (smoothTimer > 1)
+            if (smoothTimer > 0.5f)
             {
                 smoothTimer -= Time.deltaTime;
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.deltaTime);
             }
-            else
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth * Time.deltaTime);
-            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.fixedDeltaTime);
+
 
             Debug.DrawLine(transform.position, objectGazedTracked.transform.Find("Pivot").position, Color.red);
             //Maintaining line of sight
