@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8853513015008250169}
   - component: {fileID: 5474201269063019949}
   - component: {fileID: 3741840679188806158}
-  m_Layer: 22
+  - component: {fileID: 836252236325647562}
+  m_Layer: 24
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 257
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cc24a388e009341488b763317f0a2033, type: 2}
+  - {fileID: 2100000, guid: 9dabebe4c37ae0d4d893df266d156714, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,6 +99,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: 4a9a07e90b25b9349b228d42ad7b4988, type: 3}
+--- !u!114 &836252236325647562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3223731876923532104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &5850515594562116497
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6519774387194970411}
   - component: {fileID: 6129429906991147475}
-  m_Layer: 22
+  m_Layer: 24
   m_Name: Cloud
   m_TagString: Untagged
   m_Icon: {fileID: 0}

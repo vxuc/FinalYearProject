@@ -69,12 +69,17 @@ public class InformationController : MonoBehaviour
             {
                 DisplayPinkDot();
             }
+            if((!firstHalf && secondHalf) && pinkDot.gameObject.activeSelf)
+            {
+                pinkDot.gameObject.SetActive(false);
+            }
             
             if (pinkDot.gameObject.activeSelf)
             {
                 spikeTimer -= Time.deltaTime;
                 if (spikeTimer <= 0)
                     pinkSpike.gameObject.SetActive(true);
+
             }
             else
             {
@@ -201,14 +206,14 @@ public class InformationController : MonoBehaviour
 
     private void DisplayPinkDot()
     {
-        if(cameraController.IsTracking())
+        if (cameraController.IsTracking())
         {
             if (pinkDot.gameObject.activeInHierarchy)
                 pinkDot.gameObject.SetActive(false);
             else
                 pinkDot.gameObject.SetActive(true);
         }
-        else if(!cameraController.IsTracking())
+        else if (!cameraController.IsTracking())
         {
             pinkDot.gameObject.SetActive(false);
         }

@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 4
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4403.382, g: 2767.671, b: 1986.752, a: 1}
+  m_IndirectSpecularColor: {r: 4905.878, g: 3101.4727, b: 2076.957, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1222,7 +1222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 106573888}
   - component: {fileID: 106573889}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: InfraredEnvironmentNormal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2056,7 +2056,7 @@ MonoBehaviour:
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 8388609
+    m_Bits: 8912897
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 0
   SMAAQuality: 2
@@ -2255,7 +2255,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 29360375
+    m_Bits: 29884663
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 1
@@ -2274,9 +2274,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148582794}
-  m_LocalRotation: {x: -0.024432095, y: 0, z: 0, w: 0.9997015}
+  m_LocalRotation: {x: -0.024432095, y: -0, z: -0, w: 0.9997015}
   m_LocalPosition: {x: 145.9, y: 390, z: 134}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 743742956}
@@ -12798,7 +12798,7 @@ GameObject:
   - component: {fileID: 792181178}
   - component: {fileID: 792181177}
   - component: {fileID: 792181179}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: ThermalManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12823,6 +12823,12 @@ MonoBehaviour:
   whiteShader: {fileID: -6465566751694194690, guid: 32849bf9c8b70dc4ea4b4dce3cb447ea,
     type: 3}
   blackShader: {fileID: -6465566751694194690, guid: 8fc7b73653f188247b242e7ddc843a9e,
+    type: 3}
+  cloudDefaultShader: {fileID: -6465566751694194690, guid: 4522418b4e815ff499a4caea5b966587,
+    type: 3}
+  cloudDefaultshaderWhite: {fileID: -6465566751694194690, guid: 5cdd3e35c29c27e46b734a08a32522cf,
+    type: 3}
+  cloudDefaultshaderBlack: {fileID: -6465566751694194690, guid: ad8e55f121c449f40a77beef0640be94,
     type: 3}
 --- !u!4 &792181178
 Transform:
@@ -19190,7 +19196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1388661119}
   - component: {fileID: 1388661120}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: InfraredEnvironmentBlack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34264,7 +34270,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1833036365}
   - component: {fileID: 1833036364}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: InfraredEnvironmentWhite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42085,7 +42091,7 @@ MonoBehaviour:
   clearDepth: 1
   volumeLayerMask:
     serializedVersion: 2
-    m_Bits: 8388609
+    m_Bits: 8912897
   volumeAnchorOverride: {fileID: 0}
   antialiasing: 0
   SMAAQuality: 2
@@ -42232,7 +42238,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 12583159
+    m_Bits: 29884663
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
