@@ -18,7 +18,7 @@ public class ThermalController : MonoBehaviour
     public GameObject infraredEnvironmentWhite, infraredEnvironmentBlack;
 
     [Header("Shader")]
-    public Shader defaultShader, whiteShader, blackShader;
+    public Shader defaultShader,textureShader, whiteShader, blackShader;
 
     [Header("Cloud")]
     public Shader cloudDefaultShader,cloudDefaultshaderWhite, cloudDefaultshaderBlack;
@@ -27,19 +27,24 @@ public class ThermalController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObjectsWithHeat = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
+        //gameObjectsWithHeat = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
 
-        foreach (GameObject gameObject in gameObjectsWithHeat)
-        {
-            if(gameObject.GetComponent<Renderer>())
-            {
-                if (gameObject.layer < 20)
-                    gameObject.GetComponent<Renderer>().material.shader = defaultShader;
-                else if (gameObject.layer == 24) // Cloud
-                    gameObject.GetComponent<Renderer>().material.shader = cloudDefaultShader;
-
-            }
-        }
+        //foreach (GameObject gameObject in gameObjectsWithHeat)
+        //{
+        //    if(gameObject.GetComponent<Renderer>())
+        //    {
+        //        if (gameObject.layer < 20)
+        //            gameObject.GetComponent<Renderer>().material.shader = defaultShader;
+        //        else if (gameObject.layer < 20)
+        //            gameObject.GetComponent<Renderer>().material.shader = defaultShader;
+        //        else if (gameObject.layer == LayerMask.NameToLayer("Cloud")) // Cloud
+        //            gameObject.GetComponent<Renderer>().material.shader = cloudDefaultShader;
+        //    }
+        //    if(gameObject.layer == LayerMask.NameToLayer("Particles"))
+        //    {
+        //        gameObject.SetActive(true);
+        //    }
+        //}
     }
 
     public void ChangeCameraMode(bool init = true)
@@ -89,11 +94,14 @@ public class ThermalController : MonoBehaviour
                             ActivateInfraredBlack(renderer);
                             break;
                         default:
-                            ActivateDefault(renderer);
+                            if (gameObject.layer == LayerMask.NameToLayer("ObjectsWithTexture"))
+                                ActivateTextureDefault(renderer);
+                            else
+                                ActivateDefault(renderer);
                             break;
                     }
                 }
-                else if (gameObject.layer == 24) // Cloud
+                else if (gameObject.layer == LayerMask.NameToLayer("Cloud")) // Cloud
                 {
                     Renderer renderer = gameObject.GetComponent<Renderer>();
                     switch (cameraModes)
@@ -109,6 +117,19 @@ public class ThermalController : MonoBehaviour
                             break;
                     }
                 }
+                else if (gameObject.layer == LayerMask.NameToLayer("Particles"))
+                {
+                    switch (cameraModes)
+                    {
+                        default:
+                            gameObject.SetActive(true);
+                            break;
+                        case CameraModes.THERMAL_WHITE:
+                        case CameraModes.THERMAL_BLACK:
+                            gameObject.SetActive(false);
+                            break;
+                    }
+                }
             }
         }
     }
@@ -118,6 +139,13 @@ public class ThermalController : MonoBehaviour
         if(renderer.material.shader != defaultShader)
         {
             renderer.material.shader = defaultShader;
+        }
+    }
+    private void ActivateTextureDefault(Renderer renderer)
+    {
+        if (renderer.material.shader != textureShader)
+        {
+            renderer.material.shader = textureShader;
         }
     }
     private void ActivateCloudDefault(Renderer renderer)

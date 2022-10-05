@@ -240,7 +240,7 @@ public class CameraController : MonoBehaviour
             {
                 if (objectGazed != q.transform.gameObject)
                 {
-                    if (q.transform.gameObject.layer != 6)
+                    if (q.transform.gameObject.layer != LayerMask.NameToLayer("Spyder"))
                     {
                         if (objectGazed == null)
                             objectGazed = q.transform.gameObject;
@@ -284,7 +284,7 @@ public class CameraController : MonoBehaviour
             if(gameObject.gameObject.layer < 20)
                 Debug.DrawLine(transform.position, gameObject.transform.position, Color.green);
 
-            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != 6 && gameObject.gameObject.layer != 7)
+            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("Spyder") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane"))
             {
                 bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Renderer>().bounds);
 
