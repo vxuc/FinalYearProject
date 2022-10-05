@@ -15,16 +15,28 @@ public class PlaneWaypoint : MonoBehaviour
     void Update()
     {
         if (target == null)
+        {
             return;
-
-        if (img.transform.position.y <= 0 || img.transform.position.x <= 0)
+        }
+        else if (!target.gameObject.activeInHierarchy)
         {
             img.enabled = false;
+            meter.enabled = false;
         }
         else
         {
-            img.enabled = true;
+            meter.enabled = true;
+            if (img.transform.position.y <= 0 || img.transform.position.x <= 0)
+            {
+                img.enabled = false;
+            }
+            else
+            {
+                img.enabled = true;
+            }
         }
+
+
 
         img.transform.position = Camera.main.WorldToScreenPoint(target.position);
         Debug.DrawLine(img.transform.position, Camera.main.transform.position);

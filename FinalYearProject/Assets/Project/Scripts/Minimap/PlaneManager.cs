@@ -35,17 +35,18 @@ public class PlaneManager : MonoBehaviour
 
     public void SpawnPlane()
     {
-        PlaneMovement plane = Instantiate(planePrefab, Vector3.zero, Quaternion.identity).GetComponent<PlaneMovement>();
+        CursorControllerV2 cursorController = FindObjectOfType<CursorControllerV2>();
+
+        PlaneMovement plane = Instantiate(planePrefab, Vector3.zero, Quaternion.identity,cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
         plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
 
-        GameObject planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity);
-        planeIcon.transform.parent = plane.transform;
+        GameObject planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity,plane.transform);
 
-        GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity);
+        GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity,markerCanvas.transform);
         marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
-        marker.transform.SetParent(markerCanvas.transform);
 
-        FindObjectOfType<CursorControllerV2>().currentLine = null;
+
+        cursorController.currentLine = null;
     }
 
 

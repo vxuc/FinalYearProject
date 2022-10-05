@@ -14,7 +14,6 @@ public class CursorControllerV2 : MonoBehaviour
 
     //Spawn Object
     [SerializeField] GameObject prefab;
-    //[SerializeField] GameObject planeIconPrefab;
     
 
     
@@ -29,7 +28,9 @@ public class CursorControllerV2 : MonoBehaviour
     [SerializeField] Transform lineParent;
 
     public LineController currentLine;
-
+    [Header("Waypoint")]
+    [SerializeField] Transform PlanePathParent;
+    GameObject PlanePath;
     //Plane Height Slider
     [Header("Slider")]
     public Slider PlaneHeightSlider;
@@ -87,6 +88,8 @@ public class CursorControllerV2 : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (currentLine == null)
+                PlanePath = Instantiate(PlanePathParent.gameObject, Vector3.zero, Quaternion.identity);
             //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
             foreach (RaycastResult result in results)
             {
@@ -98,13 +101,16 @@ public class CursorControllerV2 : MonoBehaviour
                     PlaneHeightSlider.value,
                     ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
                 Debug.Log("World Pos: " + pos);
-                Instantiate(prefab, pos, Quaternion.identity);
+                //Instantiate(prefab, pos, Quaternion.identity);
 
 
                 //Draw a line
                 renderLine();
 
-                currentLine.AddPoint(Instantiate(prefab, pos, Quaternion.identity).transform);
+                //Instantiates the Waypoints
+                var Point = Instantiate(prefab, pos, Quaternion.identity,PlanePath.transform);
+                currentLine.AddPoint(Point.transform);
+                
             }
         }
 
@@ -126,9 +132,10 @@ public class CursorControllerV2 : MonoBehaviour
                 RaycastHit[] hitColliders = Physics.RaycastAll(pos, Vector3.down,float.MaxValue);
                 foreach (var hitCollider in hitColliders)
                 {
-                    if(hitCollider.transform.gameObject.name == "PlaneIcon(Clone)")
+                    //Tag is on the plane icon as icon is on top of the plane
+                    if(hitCollider.transform.gameObject.CompareTag("Planes"))
                     {
-                        Debug.Log("Hit " + hitCollider.transform.gameObject.name);
+                        Debug.Log("Hit " + hitCollider.transform.gameObject.tag);
                         var statInfo = Instantiate(detailPagePrefab, new Vector3(1571, 407, 1), Quaternion.identity);
                         statInfo.GetComponent<DetailsPage>().SetPlane(hitCollider.transform.gameObject);
                         statInfo.transform.SetParent(statsCanvas.transform);
@@ -150,7 +157,7 @@ public class CursorControllerV2 : MonoBehaviour
     {
         if(currentLine == null)
         {
-            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, PlanePath.transform).GetComponent<LineController>();
         }
     }    
 
@@ -171,4 +178,10 @@ public class CursorControllerV2 : MonoBehaviour
     {
         controls.Disable();
     }
+
+    public Transform GetPlanePathParent()
+    {
+        return PlanePath.transform;
+    }
+
 }
