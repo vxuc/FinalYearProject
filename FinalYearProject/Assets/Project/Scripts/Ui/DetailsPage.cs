@@ -14,8 +14,11 @@ public class DetailsPage : MonoBehaviour
     public TextMeshProUGUI distanceText;
     public TextMeshProUGUI heightText;
 
+    [Header("Deleting Plane")]
+    [SerializeField] GameObject planePathParent;
+
     //Current Plane
-    GameObject plane;
+    public GameObject plane;
 
     public void Update()
     {
@@ -46,6 +49,7 @@ public class DetailsPage : MonoBehaviour
     //Delete a plane on minimap
     public void deletePlane()
     {
-        //Delete Plane, Lines, Icons
+        ReplayManager.Instance.DestroyRecordedGO(plane.transform.parent.transform.parent.gameObject);
+        Destroy(pageToClose);
     }
 }

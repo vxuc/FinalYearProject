@@ -8,7 +8,7 @@ public class CloudsController : MonoBehaviour
 
     public void AddCloud(int cloudIntensity,float maxDistance)
     {
-        float maxSize = 30 + cloudIntensity;
+        float maxSize = 15 + cloudIntensity;
         float randPosX, randPosY, randPosZ;
         for (int i = 0; i < cloudIntensity * 20; ++i)
         {
@@ -45,7 +45,7 @@ public class CloudsController : MonoBehaviour
         if (cloudIntensity <= 0)
             additionalCloud = 0;
             
-        float maxSize = 30;
+        float maxSize = 15;
         float randPosX, randPosY, randPosZ;
         for (int i = 0; i < additionalCloud; ++i)
         {

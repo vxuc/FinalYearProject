@@ -349,7 +349,7 @@ public class CameraController : MonoBehaviour
             //Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position + (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * 0.5f - transform.position;
 
             Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position +
-                (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed/25000
+                (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed/15000
                 - transform.position;
 
 

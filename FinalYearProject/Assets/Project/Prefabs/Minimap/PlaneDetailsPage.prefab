@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 984823609573762943}
   - component: {fileID: 3589959451742038122}
   - component: {fileID: 904129850671900606}
+  - component: {fileID: 3082888590142126323}
   m_Layer: 5
   m_Name: DeleteButton
   m_TagString: Untagged
@@ -393,7 +394,37 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3589959451742038122}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1785080037391371345}
+        m_TargetAssemblyTypeName: DetailsPage, Assembly-CSharp
+        m_MethodName: deletePlane
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3082888590142126323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3844240036482314866}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28a2a58cefc65c45b8c299c8c88252d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pageToClose: {fileID: 0}
+  distanceText: {fileID: 0}
+  heightText: {fileID: 0}
+  planePathParent: {fileID: 8047765760033182529, guid: 74feea6956f64d74eab750b1e26b68e4,
+    type: 3}
+  plane: {fileID: 0}
 --- !u!1 &3862943830650331283
 GameObject:
   m_ObjectHideFlags: 0
@@ -639,9 +670,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28a2a58cefc65c45b8c299c8c88252d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pageToClose: {fileID: 0}
+  pageToClose: {fileID: 5155863857494922818}
   distanceText: {fileID: 885186982875525907}
   heightText: {fileID: 2813066381558519162}
+  planePathParent: {fileID: 8047765760033182529, guid: 74feea6956f64d74eab750b1e26b68e4,
+    type: 3}
+  plane: {fileID: 0}
 --- !u!1 &6520286189587059280
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,7 +688,6 @@ GameObject:
   - component: {fileID: 5789066798111266716}
   - component: {fileID: 6420951372634203719}
   - component: {fileID: 1330258623885352974}
-  - component: {fileID: 5269284837469903991}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -765,7 +798,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5269284837469903991}
+      - m_Target: {fileID: 1785080037391371345}
         m_TargetAssemblyTypeName: DetailsPage, Assembly-CSharp
         m_MethodName: closePage
         m_Mode: 1
@@ -777,21 +810,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5269284837469903991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6520286189587059280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b28a2a58cefc65c45b8c299c8c88252d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pageToClose: {fileID: 5155863857494922818}
-  distanceText: {fileID: 0}
-  heightText: {fileID: 0}
 --- !u!1 &8234918496560353424
 GameObject:
   m_ObjectHideFlags: 0
