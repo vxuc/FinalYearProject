@@ -8,6 +8,7 @@ public class InformationController : MonoBehaviour
 {
     public Transform userCamera;
     CameraController cameraController;
+    public GameObject spyder;
 
     [Header("Ui")]
     public TextMeshProUGUI rotationText;
@@ -133,19 +134,23 @@ public class InformationController : MonoBehaviour
     private void updateRotationText()
     {
         float az;
-        if (userCamera.rotation.eulerAngles.y > 359)
+        
+        if (userCamera.transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y > 359)
             az = 0;
         else
-            az = userCamera.rotation.eulerAngles.y;
+            az = userCamera.transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y;
+        az = (az < 0) ? az + 360: az;
         //string az = (userCamera.rotation.y * Mathf.Rad2Deg).ToString("F0");
         //string el = userCamera.rotation.eulerAngles.x.ToString("F1");
-        float angle = userCamera.rotation.eulerAngles.x;
+        float angle = userCamera.transform.rotation.eulerAngles.x - spyder.transform.rotation.eulerAngles.x;
         angle = (angle > 180) ? angle - 360 : angle;
         float el = -angle;
         if(el > 0)
             rotationText.text = "TL :\nAZ : +" + az.ToString("F0") + "°\nEL : +" + el.ToString("F1") + "°";
         else
             rotationText.text = "TL :\nAZ : +" + az.ToString("F0") + "°\nEL : " + el.ToString("F1") + "°";
+
+        Debug.Log(userCamera.transform.rotation.eulerAngles.y);
     }
 
     private void UpdateModes()

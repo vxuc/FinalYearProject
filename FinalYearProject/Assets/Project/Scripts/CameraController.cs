@@ -17,6 +17,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float joystickSensitivity = 100;
     float originalJoystickSensitivity;
     float overTimeSensitivity = 0;
+    public GameObject spyder;
 
     bool resetting = false;
 
@@ -58,6 +59,8 @@ public class CameraController : MonoBehaviour
             cameraOriginalFOV = 70;
 
         cameraThermalOriginalFOV = cameraOriginalFOV * 24 / 17;
+
+        rotation += spyder.transform.rotation.eulerAngles;
     }
 
     // Update is called once per frame
@@ -118,7 +121,7 @@ public class CameraController : MonoBehaviour
         float x = 0;
         float y = 0;
 
-        float angleX = transform.rotation.eulerAngles.x;
+        float angleX = transform.rotation.eulerAngles.x + spyder.transform.rotation.eulerAngles.x;
         angleX = (angleX > 180) ? angleX - 360 : angleX;
         float currAngleX = -angleX;
 
@@ -397,12 +400,12 @@ public class CameraController : MonoBehaviour
 
     private void ResetCameraAxis()
     {
-        rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(0,0,0)), 4.5f * Time.deltaTime).eulerAngles;
+        rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(spyder.transform.rotation.eulerAngles.y, 0, 0)), 4.5f * Time.deltaTime).eulerAngles;
         transform.rotation = Quaternion.Euler(rotation);
-        Debug.Log(rotation.x + "," +rotation.y);
+        Debug.Log(rotation.x + "," + rotation.y);
 
-        float degree = 1f;
-        if (Mathf.Abs(transform.rotation.eulerAngles.x) <= degree && Mathf.Abs(transform.rotation.eulerAngles.y) <= degree)
+        float degree = 0.5f;
+        if (Mathf.Abs(transform.rotation.eulerAngles.x - spyder.transform.rotation.eulerAngles.x) <= degree && Mathf.Abs(transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y) <= degree) 
             resetting = false;
     }
     private bool ObjectInRayArray(RaycastHit[] array, GameObject gameObject)
