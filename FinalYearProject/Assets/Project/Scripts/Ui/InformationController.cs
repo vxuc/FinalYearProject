@@ -149,8 +149,6 @@ public class InformationController : MonoBehaviour
             rotationText.text = "TL :\nAZ : +" + az.ToString("F0") + "°\nEL : +" + el.ToString("F1") + "°";
         else
             rotationText.text = "TL :\nAZ : +" + az.ToString("F0") + "°\nEL : " + el.ToString("F1") + "°";
-
-        Debug.Log(userCamera.transform.rotation.eulerAngles.y);
     }
 
     private void UpdateModes()
