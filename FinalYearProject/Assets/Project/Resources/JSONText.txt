@@ -3,16 +3,70 @@
 		{
 			"name": "F18",
 			"prefab": "F18Model",
-			"type": "Airplane",
+			"type": "Jet",
 			"scale": 1,
-			"description": "THIS IS AMAZING"
+			"description": "F-18 Hornet is a twin engine fighter designed as a multi-role, land and carrier-borne fighter with all weather and day / night strike capabilities.",
+			
+			"category1": "Wing Specs",
+			"wingMount": "High",
+			"dihedral": "Horizontal",
+			"taper": "Backward tapered, wing root extension until front of cockpit",
+			"tip": "Square with missile pylon at tip",
+			
+			"category2": "Fuselage Specs",
+			"nose": "Pointed",
+			"cockpit": "Bubble",
+			"midSection": "Bulging",
+			"rearSection": "Tapered",
+
+			"category3": "Engine Specs",
+			"engineNumber": "2",
+			"engineType": "Turbo Jet",
+			"engineMount": "Internally mounted",
+			"intakeNumber": "2",
+			"intakeShape": "Semi-circular",
+			"intakeLocation": "Below Wings",
+			"exhaustNumber": "2",
+			"exhaustLocation": "Protruding after tail unit",
+
+			"category4": "Tail Specs",
+			"shape": "V-Shaped",
+			"tailFin": "Twin backswept tapered with square tips",
+			"tailPlane": "Backswept tapered with square tips"
 		},
 		{
 			"name": "BAESystemsHawk",
 			"prefab": "BAESystemsHawkModel",
-			"type": "Helicopter",
+			"type": "Jet",
 			"scale": 100,
-			"description": "THAT IS AMAZING"
+			"description": "Hawk is a single engine fighter designed as a basic and advanced jet trainer with operational air defence and attack roles.",
+			
+			"category1": "Wing Specs",
+			"wingMount": "Low",
+			"dihedral": "Horizontal",
+			"taper": "Backswept Tapered",
+			"tip": "Curved",
+			
+			"category2": "Fuselage Specs",
+			"nose": "Short rounded",
+			"cockpit": "Stepped",
+			"midSection": "Bulging",
+			"rearSection": "Tapered",
+
+			"category3": "Engine Specs",
+			"engineNumber": "1",
+			"engineType": "Turbofan",
+			"engineMount": "Internally mounted",
+			"intakeNumber": "2",
+			"intakeShape": "Semi-circular",
+			"intakeLocation": "Sides of fuselage",
+			"exhaustNumber": "1",
+			"exhaustLocation": "Protruding after tail unit",
+
+			"category4": "Tail Specs",
+			"shape": "Inverted-Y",
+			"tailFin": "Backswept tapered with curved tip",
+			"tailPlane": "Backswept tapered with slight curved tips"
 		}
 	]
 }

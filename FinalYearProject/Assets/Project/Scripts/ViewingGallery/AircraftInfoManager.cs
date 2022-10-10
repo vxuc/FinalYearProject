@@ -33,8 +33,34 @@ public class AircraftInfoManager : MonoBehaviour
         public string prefab;
         public int scale;
         public string description;
-    }
 
+        public string category1;
+        public string wingMount;
+        public string dihedral;
+        public string taper;
+        public string tip;
+
+        public string category2;
+        public string nose;
+        public string cockpit;
+        public string midSection;
+        public string rearSection;
+
+        public string category3;
+        public string engineNumber;
+        public string engineType;
+        public string engineMount;
+        public string intakeNumber;
+        public string intakeShape;
+        public string intakeLocation;
+        public string exhaustNumber;
+        public string exhaustLocation;
+
+        public string category4;
+        public string shape;
+        public string tailFin;
+        public string tailPlane;
+    }
     [System.Serializable]
     public class AircraftList
     {
@@ -53,7 +79,16 @@ public class AircraftInfoManager : MonoBehaviour
             newInfo.aircraftName = aircraft.name;
             newInfo.prefabName = aircraft.prefab;
             newInfo.type = aircraft.type;
-            newInfo.description = aircraft.description;
+
+            string specs = "";
+            foreach (var property in aircraft.GetType().GetFields())
+            {
+                if (property.Name.Contains("category"))
+                    specs += "\n" + property.GetValue(aircraft).ToString().ToUpper() + "\n";
+                else
+                    specs += property.Name + ": " + property.GetValue(aircraft) + "\n";
+            }
+            newInfo.description = aircraft.description + specs;
         }
     }
 
