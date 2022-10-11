@@ -14,6 +14,8 @@ public class PlaneManager : MonoBehaviour
     public GameObject markerPrefab;
     public GameObject markerCanvas;
 
+    public int spawnCount = 0;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -21,32 +23,43 @@ public class PlaneManager : MonoBehaviour
     }
     private void Update()
     {
-        //if(Input.GetKeyDown(KeyCode.N))
-        //{
-        //    SpawnPlane();
-        //}
-
         if (Input.GetKeyDown(KeyCode.B))
             markerCanvas.SetActive(false);
 
         else if (Input.GetKeyUp(KeyCode.B))
             markerCanvas.SetActive(true);
+
+        //Spawn Counter
+        Debug.Log("Spawn Count: " + spawnCount);
     }
 
     public void SpawnPlane()
     {
-        CursorControllerV2 cursorController = FindObjectOfType<CursorControllerV2>();
+        if(spawnCount < 16 && FindObjectOfType<CursorControllerV2>().currentLine)
+        {
+            if (FindObjectOfType<CursorControllerV2>().currentLine.points.Count >= 2)
+            {
 
-        PlaneMovement plane = Instantiate(planePrefab, Vector3.zero, Quaternion.identity,cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
-        plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
+                spawnCount++;
 
-        GameObject planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity,plane.transform);
+                CursorControllerV2 cursorController = FindObjectOfType<CursorControllerV2>();
 
-        GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity,markerCanvas.transform);
-        marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
+                PlaneMovement plane = Instantiate(planePrefab, Vector3.zero, Quaternion.identity, cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
+                plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
 
+                GameObject planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity, plane.transform);
 
-        cursorController.currentLine = null;
+                GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity, markerCanvas.transform);
+                marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
+
+                cursorController.currentLine = null;
+            }
+            }
+
+            else
+        {
+            Debug.Log("MAX SPAWN COUNT REACHED");
+        }
     }
 
 

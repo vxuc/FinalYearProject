@@ -66,5 +66,7 @@ public class DetailsPage : MonoBehaviour
     {
         ReplayManager.Instance.DestroyRecordedGO(plane.transform.parent.transform.parent.gameObject);
         Destroy(pageToClose);
+        PlaneManager.Instance.spawnCount--;
+        Debug.Log("Spawn Count DELETE: " + PlaneManager.Instance.spawnCount);
     }
 }

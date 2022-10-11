@@ -88,28 +88,30 @@ public class CursorControllerV2 : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
-            foreach (RaycastResult result in results)
+            if(PlaneManager.Instance.spawnCount < 16)
             {
-                Debug.Log("Hit " + result.gameObject.name);
-                Debug.Log("Mouse Pos: " + pointerData.position);
-                if (currentLine == null)
-                    PlanePath = Instantiate(PlanePathParent.gameObject, Vector3.zero, Quaternion.identity);
+                //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
+                foreach (RaycastResult result in results)
+                {
+                    Debug.Log("Hit " + result.gameObject.name);
+                    Debug.Log("Mouse Pos: " + pointerData.position);
+                    if (currentLine == null)
+                        PlanePath = Instantiate(PlanePathParent.gameObject, Vector3.zero, Quaternion.identity);
 
-                //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
-                Vector3 pos = new Vector3(((pointerData.position.x - transform.position.x + 375) - GetComponent<RectTransform>().rect.width * 0.5f) / GetComponent<RectTransform>().rect.width * 1350000,
-                    PlaneHeightSlider.value,
-                    ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
-                Debug.Log("World Pos: " + pos);
-                //Instantiate(prefab, pos, Quaternion.identity);
+                    //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
+                    Vector3 pos = new Vector3(((pointerData.position.x - transform.position.x + 375) - GetComponent<RectTransform>().rect.width * 0.5f) / GetComponent<RectTransform>().rect.width * 1350000,
+                        PlaneHeightSlider.value,
+                        ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
+                    Debug.Log("World Pos: " + pos);
+                    //Instantiate(prefab, pos, Quaternion.identity);
 
 
-                //Draw a line
-                renderLine();
-                //Instantiates the Waypoints
-                var Point = Instantiate(prefab, pos, Quaternion.identity,PlanePath.transform);
-                currentLine.AddPoint(Point.transform);
-                
+                    //Draw a line
+                    renderLine();
+                    //Instantiates the Waypoints
+                    var Point = Instantiate(prefab, pos, Quaternion.identity, PlanePath.transform);
+                    currentLine.AddPoint(Point.transform);
+                }
             }
         }
 
