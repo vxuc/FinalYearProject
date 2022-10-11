@@ -26,10 +26,7 @@ public class DetailsPage : MonoBehaviour
 
         if (plane != null)
         {
-            Debug.Log(plane.name);
-           
-            float camToPlaneDist = Vector3.Distance(plane.transform.position, Camera.main.transform.position) / 100000;
-            distanceText.text = camToPlaneDist.ToString("Distance: " + "0") + "km";
+            Debug.Log(plane.name);        
             heightText.text = (plane.transform.position.y / 30.48).ToString("Height: " + "0") + "ft";
         }
 
@@ -38,6 +35,24 @@ public class DetailsPage : MonoBehaviour
     {
         this.plane = Plane;
     }
+
+    public void MertricConverter(int val)
+    {
+        float camToPlaneDist = Vector3.Distance(plane.transform.position, Camera.main.transform.position) / 100000;
+
+        //KM
+        if (val == 1)
+        {
+            distanceText.text = camToPlaneDist.ToString("Distance: " + "0") + "km";
+        }
+
+        //NM
+        if(val == 2)
+        {
+            distanceText.text = (camToPlaneDist / 1.852).ToString("Distance: " + "0") + "nm";
+        }
+    }
+
 
 
     //Close the page
