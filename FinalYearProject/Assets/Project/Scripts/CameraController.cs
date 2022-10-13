@@ -371,7 +371,7 @@ public class CameraController : MonoBehaviour
             Debug.DrawLine(transform.position, objectGazedTracked.transform.Find("Pivot").position, Color.red);
             //Maintaining line of sight
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
-            if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Renderer>().bounds))
+            if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Renderer>().bounds) && !Physics.Linecast(objectGazedTracked.transform.position,gameObject.transform.position))
                 timer = timeToLoseTarget;
 
             else //Loses sight of target

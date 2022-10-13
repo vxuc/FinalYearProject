@@ -215,7 +215,7 @@ Shader "Custom/HeavyRainDrop" {
 
 				#ifdef HAS_HEART
 				col = lerp(pow(col, float3(1.2, 1.2, 1.2)), col, heart);
-				fade *= S(102., 97., T);
+				fade *= (102., 97., 1);
 				#endif
 
 				col *= fade;										// composite start and end fade
