@@ -133,16 +133,13 @@ public class InformationController : MonoBehaviour
 
     private void updateRotationText()
     {
-        float az;
+        float az = userCamera.transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y;
         
-        if (userCamera.transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y > 359)
-            az = 0;
-        else
-            az = userCamera.transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y;
         az = (az < 0) ? az + 360: az;
-        //string az = (userCamera.rotation.y * Mathf.Rad2Deg).ToString("F0");
-        //string el = userCamera.rotation.eulerAngles.x.ToString("F1");
-        float angle = userCamera.transform.rotation.eulerAngles.x - spyder.transform.rotation.eulerAngles.x;
+        az = (az > 359) ? az = 0 : az;
+            //string az = (userCamera.rotation.y * Mathf.Rad2Deg).ToString("F0");
+            //string el = userCamera.rotation.eulerAngles.x.ToString("F1");
+            float angle = userCamera.transform.rotation.eulerAngles.x - spyder.transform.rotation.eulerAngles.x;
         angle = (angle > 180) ? angle - 360 : angle;
         float el = -angle;
         if(el > 0)
