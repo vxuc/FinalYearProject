@@ -233,7 +233,7 @@ public class Record : MonoBehaviour
     //Record Camera Zoom
     void RecordCameraZoom(Frame frame)
     {
-        frame.SetCameraZoom(FindObjectOfType<CameraController>().GetCameraZoomLevel());
+        frame.SetCameraZoom((int)FindObjectOfType<CameraController>().GetCameraZoomLevel());
     }
 
     //Record Camera Tracking

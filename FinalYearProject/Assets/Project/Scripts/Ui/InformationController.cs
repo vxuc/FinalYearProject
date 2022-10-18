@@ -32,7 +32,7 @@ public class InformationController : MonoBehaviour
 
     [Header("Zoom")]
     public TextMeshProUGUI zoomText;
-    public int currZoomLevel;
+    CameraController.CameraZoom currZoomLevel;
 
 
     void Start()
@@ -245,7 +245,7 @@ public class InformationController : MonoBehaviour
 
     private void DisplayBorder()
     {
-        if (cameraController.GetCameraZoomLevel() < 2)
+        if (cameraController.GetCameraZoomLevel() < CameraController.CameraZoom.x24)
             Border.gameObject.SetActive(true);
         else
             Border.gameObject.SetActive(false);
@@ -259,10 +259,10 @@ public class InformationController : MonoBehaviour
             default:
                 text = "W";
                 break;
-            case 1:
+            case CameraController.CameraZoom.x4:
                 text = "M";
                 break;
-            case 2:
+            case CameraController.CameraZoom.x24:
                 text = "N";
                 break;
         }

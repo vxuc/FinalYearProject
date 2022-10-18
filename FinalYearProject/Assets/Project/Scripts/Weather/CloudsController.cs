@@ -5,26 +5,29 @@ using UnityEngine;
 public class CloudsController : MonoBehaviour
 {
     public GameObject cloudPrefab;
+    [SerializeField] float cloudMaxSize;
 
     public void AddCloud(int cloudIntensity,float maxDistance)
     {
-        float maxSize = 15 + cloudIntensity;
         float randPosX, randPosY, randPosZ;
+
+        float maxSize = cloudMaxSize + cloudIntensity * 2;
+
         for (int i = 0; i < cloudIntensity * 20; ++i)
         {
             float randSize = Random.Range(1, maxSize);
             if (cloudIntensity < 8)
             {
-                randPosX = Random.Range(-maxDistance, maxDistance) / cloudIntensity;
+                randPosX = Random.Range(-maxDistance, maxDistance);
                 randPosY = Random.Range(20000, 30000);
-                randPosZ = Random.Range(-maxDistance, maxDistance) / cloudIntensity;
+                randPosZ = Random.Range(-maxDistance, maxDistance);
             }
             else
             {
                 randSize = Random.Range(maxSize * 0.5f, maxSize);
-                randPosX = Random.Range(-maxDistance * 2.0f, maxDistance * 2.0f) / cloudIntensity;
+                randPosX = Random.Range(-maxDistance * 2.0f, maxDistance * 2.0f);
                 randPosY = Random.Range(25000, 40000);
-                randPosZ = Random.Range(-maxDistance * 2.0f, maxDistance * 2.0f) / cloudIntensity;
+                randPosZ = Random.Range(-maxDistance * 2.0f, maxDistance * 2.0f);
             }
 
             Vector3 toRotate = new Vector3(randPosX,randPosY,randPosZ) - transform.position;
@@ -44,12 +47,13 @@ public class CloudsController : MonoBehaviour
     {
         if (cloudIntensity <= 0)
             additionalCloud = 0;
-            
-        float maxSize = 15;
+
+        float maxSize = cloudMaxSize + cloudIntensity;
+
         float randPosX, randPosY, randPosZ;
         for (int i = 0; i < additionalCloud; ++i)
         {
-            float randSize = Random.Range(maxSize/2, maxSize);
+            float randSize = Random.Range(maxSize / 2, maxSize);
             if (cloudIntensity < 8)
             {
                 randPosY = Random.Range(20000, 30000);
@@ -75,13 +79,11 @@ public class CloudsController : MonoBehaviour
 
     public void AddCloudWithButton(int additionalCloud, float maxDistance,int buttonNo)
     {
-
-        float maxSize = 70;
         float randPosX, randPosY, randPosZ;
 
         for (int i = 0; i < additionalCloud; ++i)
         {
-            float randSize = Random.Range(maxSize * 0.5f, maxSize);
+            float randSize = Random.Range(cloudMaxSize * 0.5f, cloudMaxSize);
 
             randPosX = Random.Range(-maxDistance, maxDistance);
             randPosY = Random.Range(25000, 30000);

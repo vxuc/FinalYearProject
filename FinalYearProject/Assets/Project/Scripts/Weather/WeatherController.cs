@@ -33,8 +33,6 @@ public class WeatherController : MonoBehaviour
     [Header("Rains")]
     public ParticleSystem rainSystem;
     public GameObject rainOnLens;
-    public GameObject heavyRainOnLens;
-    public GameObject drizzlingRainOnLens;
 
 
 
@@ -103,8 +101,6 @@ public class WeatherController : MonoBehaviour
             case WEATHER_TYPE.WEATHER_RAIN:
                 main.simulationSpeed = 100;
                 rainOnLens.SetActive(true);
-                heavyRainOnLens.SetActive(true);
-                drizzlingRainOnLens.SetActive(false);
                 break;
             case WEATHER_TYPE.WEATHER_CLOUDY:
                 rainSystem.Clear();
@@ -114,8 +110,6 @@ public class WeatherController : MonoBehaviour
             case WEATHER_TYPE.WEATHER_DRIZZLE:
                 main.simulationSpeed = 10;
                 rainOnLens.SetActive(true);
-                heavyRainOnLens.SetActive(false);
-                drizzlingRainOnLens.SetActive(true);
                 break;
             default:
                 rainSystem.Clear();
@@ -160,5 +154,10 @@ public class WeatherController : MonoBehaviour
     {
         this.weatherType = (WEATHER_TYPE)weather;
         UpdateCloud();
+    }
+
+    public WEATHER_TYPE GetWeatherType()
+    {
+        return weatherType;
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4905.8516, g: 3101.5605, b: 2077.0352, a: 1}
+  m_IndirectSpecularColor: {r: 4403.382, g: 2767.671, b: 1986.752, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -189,7 +189,6 @@ MonoBehaviour:
   pinkSpike: {fileID: 35997858}
   Border: {fileID: 101159061}
   zoomText: {fileID: 1455458086}
-  currZoomLevel: 0
 --- !u!1 &21184207
 GameObject:
   m_ObjectHideFlags: 0
@@ -7476,13 +7475,11 @@ MonoBehaviour:
   weatherType: 0
   weatherText: {fileID: 1960252080}
   cloudSlider: {fileID: 937583111035236544}
-  cloudMaxDistance: 9000000
+  cloudMaxDistance: 1000000
   cloudText: {fileID: 937583110118434491}
   cloudsController: {fileID: 1731128910}
   rainSystem: {fileID: 154975112}
   rainOnLens: {fileID: 1168193686}
-  heavyRainOnLens: {fileID: 1104463782}
-  drizzlingRainOnLens: {fileID: 385106389}
 --- !u!114 &164135827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8140,12 +8137,12 @@ GameObject:
   - component: {fileID: 224187674}
   - component: {fileID: 224187673}
   m_Layer: 22
-  m_Name: Quad
+  m_Name: Drizzling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &224187672
 Transform:
   m_ObjectHideFlags: 0
@@ -8154,12 +8151,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224187671}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 16, y: 9, z: 1}
+  m_LocalPosition: {x: -0.35786772, y: -3.4726562, z: 8.916748}
+  m_LocalScale: {x: 17.776, y: 9.999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 385106390}
-  m_RootOrder: 0
+  m_Father: {fileID: 1168193687}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &224187673
 MeshRenderer:
@@ -9496,7 +9493,7 @@ GameObject:
   - component: {fileID: 360921704}
   - component: {fileID: 360921703}
   m_Layer: 22
-  m_Name: RainCamera (1)
+  m_Name: RainCameraTrainee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9701,38 +9698,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &385106389
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 385106390}
-  m_Layer: 22
-  m_Name: Drizzling
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &385106390
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 385106389}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.35786772, y: -3.4725475, z: 8.916748}
-  m_LocalScale: {x: 1.111, y: 1.111, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 224187672}
-  m_Father: {fileID: 1168193687}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &385469891
 GameObject:
   m_ObjectHideFlags: 0
@@ -10714,7 +10679,7 @@ GameObject:
   - component: {fileID: 492436904}
   - component: {fileID: 492436908}
   m_Layer: 22
-  m_Name: RainCamera
+  m_Name: RainCameraTrainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16279,38 +16244,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098987516}
   m_CullTransparentMesh: 1
---- !u!1 &1104463782
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1104463783}
-  m_Layer: 22
-  m_Name: HeavyRain
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1104463783
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104463782}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.35786772, y: -3.4725475, z: 8.916748}
-  m_LocalScale: {x: 1.111, y: 1.111, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1798354810}
-  m_Father: {fileID: 1168193687}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1111517142
 GameObject:
   m_ObjectHideFlags: 0
@@ -17005,13 +16938,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1168193687}
+  - component: {fileID: 1168193688}
   m_Layer: 0
   m_Name: RainOnLensSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1168193687
 Transform:
   m_ObjectHideFlags: 0
@@ -17027,11 +16961,27 @@ Transform:
   - {fileID: 1536926596}
   - {fileID: 492436907}
   - {fileID: 360921702}
-  - {fileID: 1104463783}
-  - {fileID: 385106390}
+  - {fileID: 1798354810}
+  - {fileID: 224187672}
   m_Father: {fileID: 164135828}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1168193688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168193686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6318601b742474549a80eb2250b03549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderTextureCamera: {fileID: 148582802}
+  cameraZoom: 0
+  heavyRainOnLens: {fileID: 1798354809}
+  drizzlingRainOnLens: {fileID: 224187671}
 --- !u!1 &1183629073
 GameObject:
   m_ObjectHideFlags: 3
@@ -18381,7 +18331,7 @@ Light:
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 2
-  m_AreaSize: {x: 1, y: 1}
+  m_AreaSize: {x: 0.5, y: 0.5}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 1
@@ -21689,7 +21639,6 @@ MonoBehaviour:
   pinkSpike: {fileID: 315936034}
   Border: {fileID: 251779171}
   zoomText: {fileID: 163976404}
-  currZoomLevel: 0
 --- !u!1 &1522179396
 GameObject:
   m_ObjectHideFlags: 0
@@ -29291,6 +29240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cloudPrefab: {fileID: 5850515594562116497, guid: fd23366ec2331094aad50f66079c70e9,
     type: 3}
+  cloudMaxSize: 5
 --- !u!1 &1731450750
 GameObject:
   m_ObjectHideFlags: 0
@@ -35337,12 +35287,12 @@ GameObject:
   - component: {fileID: 1798354812}
   - component: {fileID: 1798354811}
   m_Layer: 22
-  m_Name: Quad
+  m_Name: HeavyRain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1798354810
 Transform:
   m_ObjectHideFlags: 0
@@ -35351,12 +35301,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1798354809}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 16, y: 9, z: 1}
+  m_LocalPosition: {x: -0.35786772, y: -3.4726562, z: 8.916748}
+  m_LocalScale: {x: 17.776, y: 9.999, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1104463783}
-  m_RootOrder: 0
+  m_Father: {fileID: 1168193687}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1798354811
 MeshRenderer:

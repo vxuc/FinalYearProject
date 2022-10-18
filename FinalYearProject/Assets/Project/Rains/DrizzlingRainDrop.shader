@@ -3,8 +3,9 @@
 // countfrolic@gmail.com
 // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
 
-Shader "Custom/DrizzlingRainDrop" {
-	Properties {
+Shader "Custom/HeavyRainDrop" {
+	Properties{
+		_cameraZoom("_cameraZoom",Range(0.0,1.0)) = 1
 		iChannel0("Albedo (RGB)", 2D) = "white" {}
 	}
 	SubShader {
@@ -16,7 +17,7 @@ Shader "Custom/DrizzlingRainDrop" {
 			#pragma fragment frag
 
 			#include "UnityCG.cginc"
-
+			uniform float _cameraZoom;
 			sampler2D iChannel0;
 
 			#define S(a, b, t) smoothstep(a, b, t)
@@ -125,8 +126,9 @@ Shader "Custom/DrizzlingRainDrop" {
 				float T = _Time.y + M.x*2.;
 
 				#ifdef HAS_HEART
+				/*T = fmod(_Time.y, 102.);
+				T = lerp(T, M.x*102., M.z>0. ? 1. : 0.);*/
 				T = fmod(_Time.y, 102.);
-				T = lerp(T, M.x*102., M.z>0. ? 1. : 0.);
 				#endif
 
 
@@ -156,14 +158,14 @@ Shader "Custom/DrizzlingRainDrop" {
 
 				float2 hv = uv - float2(.0, -.1);				// build heart
 				hv.x *= .5;
-				float s = S(1100., 70., 2000);				// heart gets smaller and fades towards the end
+				float s = S(110., 70., 1000);			// heart gets smaller and fades towards the end with S
 				hv.y -= sqrt(abs(hv.x))*.5*s;
 				heart = length(hv);
-				heart = S(.100*s, .100*s, 90000)*s;
+				heart = (.100*s, .100*s, 1)*s;
 				rainAmount = heart/4;						// the rain is where the heart is
 
 				maxBlur -= heart;							// inside the heart slighly less foggy
-				uv *= 1.5;								// zoom out a bit more
+				uv *= _cameraZoom;								// zoom out a bit more
 				t *= .25;
 				#else
 				float zoom = -cos(T*.2);
@@ -171,7 +173,8 @@ Shader "Custom/DrizzlingRainDrop" {
 				
 				#endif
 				//UV = (UV - .5)*(.9 + zoom*.1) + .5;
-				UV = (UV - 0.5) * (1.) + .5;
+				
+				UV = (UV - 0.5) * (1. ) + .5;
 
 				float staticDrops = S(-.5, 1., rainAmount)*2.;
 				float layer1 = S(.25, .75, rainAmount);
@@ -190,8 +193,8 @@ Shader "Custom/DrizzlingRainDrop" {
 
 
 				#ifdef HAS_HEART
-				n *= 1. - S(60., 85., T);
-				c.y *= 1. - S(80., 100., T)*.8;
+				n *= 1. - S(60., 85., 1);
+				c.y *= 1. - S(80., 100., 1)*.8;
 				#endif
 
 				float focus = lerp(maxBlur - c.y, minBlur, S(.1, .2, c.x));
@@ -207,7 +210,7 @@ Shader "Custom/DrizzlingRainDrop" {
 				float colFade = sin(t*.2)*.5 + .5 + story;
 				//col *= lerp(float3(1., 1., 1.), float3(.8, .9, 1.3), colFade);	// subtle color shift
 				col *= lerp(float3(1., 1., 1.), float3(.8, .9, 1.3), 0);
-				float fade = S(0., 0., 0);							// fade in at the start
+				float fade = S(1., 1., 1);							// fade in at the start
 				//float lightning = sin(t*sin(t*10.));				// lighting flicker
 				//lightning *= pow(max(0., sin(t + sin(t))), 10.);		// lightning flash
 				//col *= 1. + lightning*fade*lerp(1., .1, story*story);	// composite lightning
@@ -215,7 +218,7 @@ Shader "Custom/DrizzlingRainDrop" {
 
 				#ifdef HAS_HEART
 				col = lerp(pow(col, float3(1.2, 1.2, 1.2)), col, heart);
-				fade *= (102., 97., 1);
+				fade *= S(102., 97., 1000);
 				#endif
 
 				col *= fade;										// composite start and end fade

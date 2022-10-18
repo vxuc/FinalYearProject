@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    enum CameraZoom
+    public enum CameraZoom
     {
         x1,
         x4,
@@ -427,9 +427,9 @@ public class CameraController : MonoBehaviour
         tracking = track;
     }
 
-    public int GetCameraZoomLevel()
+    public CameraZoom GetCameraZoomLevel()
     {
-        return (int)cameraZoom;
+        return cameraZoom;
     }
 
     public void SetCameraZoomLevel(int level)
