@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6001845873473161345}
   - component: {fileID: 7583782451899791274}
   - component: {fileID: 5453856437557835006}
+  - component: {fileID: 5381023343522061387}
   m_Layer: 0
   m_Name: pCube4
   m_TagString: Untagged
@@ -83,6 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5381023343522061387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746846741041391002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &1884042123926052408
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +108,7 @@ GameObject:
   - component: {fileID: 3502474395560253097}
   - component: {fileID: 3668270501316169212}
   - component: {fileID: 6729849225622125287}
+  - component: {fileID: 7584053233646853296}
   m_Layer: 0
   m_Name: pPlane2
   m_TagString: Untagged
@@ -166,6 +181,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7584053233646853296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884042123926052408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &2082006104840921797
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +205,7 @@ GameObject:
   - component: {fileID: 8053761738248524816}
   - component: {fileID: 970372184106205234}
   - component: {fileID: 3952062366028516294}
+  - component: {fileID: 6960497578239015479}
   m_Layer: 0
   m_Name: pCube6
   m_TagString: Untagged
@@ -249,6 +278,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6960497578239015479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082006104840921797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &3032312349950918423
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,6 +302,7 @@ GameObject:
   - component: {fileID: 5422845433217061277}
   - component: {fileID: 4249452343362194660}
   - component: {fileID: 3666050474819072342}
+  - component: {fileID: 5399544271600275697}
   m_Layer: 0
   m_Name: pCube2
   m_TagString: Untagged
@@ -332,6 +375,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5399544271600275697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3032312349950918423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &3729615698392170417
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +399,7 @@ GameObject:
   - component: {fileID: 5185945062406099807}
   - component: {fileID: 5332922085411037489}
   - component: {fileID: 6425768699454047246}
+  - component: {fileID: 1069988677359236618}
   m_Layer: 0
   m_Name: pCylinder8
   m_TagString: Untagged
@@ -415,6 +472,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1069988677359236618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3729615698392170417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &3996300275174420425
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +496,7 @@ GameObject:
   - component: {fileID: 7538606016169719976}
   - component: {fileID: 7864467583472178698}
   - component: {fileID: 4960191763900323758}
+  - component: {fileID: 6557299248491502393}
   m_Layer: 0
   m_Name: pCube8
   m_TagString: Untagged
@@ -498,6 +569,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6557299248491502393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996300275174420425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &4085850005906763575
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +593,7 @@ GameObject:
   - component: {fileID: 3492557692427321265}
   - component: {fileID: 4895068860055392924}
   - component: {fileID: 350140929176917564}
+  - component: {fileID: 393055411676143992}
   m_Layer: 0
   m_Name: pCube7
   m_TagString: Untagged
@@ -581,6 +666,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &393055411676143992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4085850005906763575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &6192255509106625129
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,6 +690,7 @@ GameObject:
   - component: {fileID: 9174228854837052670}
   - component: {fileID: 1855965148368307111}
   - component: {fileID: 3089055552973526025}
+  - component: {fileID: 3013484050758947223}
   m_Layer: 0
   m_Name: pPlane1
   m_TagString: Untagged
@@ -664,6 +763,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3013484050758947223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6192255509106625129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &6862247273301697913
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,6 +787,7 @@ GameObject:
   - component: {fileID: 8988144692827318853}
   - component: {fileID: 926942040259669841}
   - component: {fileID: 8272139138577032885}
+  - component: {fileID: 6672645667571420044}
   m_Layer: 0
   m_Name: pPlane3
   m_TagString: Untagged
@@ -747,6 +860,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6672645667571420044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6862247273301697913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &8054327390940663588
 GameObject:
   m_ObjectHideFlags: 0
@@ -799,6 +925,7 @@ GameObject:
   - component: {fileID: 2199991458095349102}
   - component: {fileID: 6991902902457037494}
   - component: {fileID: 3674273965108723203}
+  - component: {fileID: 2642889767887769345}
   m_Layer: 0
   m_Name: pCube5
   m_TagString: Untagged
@@ -871,3 +998,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2642889767887769345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8691878973470985327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100

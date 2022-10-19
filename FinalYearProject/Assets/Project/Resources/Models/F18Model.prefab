@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2252789710028191491}
   - component: {fileID: 1839804652455898461}
   - component: {fileID: 4984094373047201669}
+  - component: {fileID: 6489579608148855480}
   m_Layer: 0
   m_Name: side1
   m_TagString: Untagged
@@ -83,6 +84,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6489579608148855480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917025985962043901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694a3b6d03d386749a1526809eabe44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatValue: 100
 --- !u!1 &2751359247477593772
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,4 +143,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aircraftName: F18
+  type: 
   prefabName: F18Model
