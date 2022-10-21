@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.IO;
+using System;
 
 public class Login : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class Login : MonoBehaviour
     public TextAsset textJSON;
     public UserList list = new UserList();
 
+    public TextMeshProUGUI debugText;
 
     public TMP_InputField loginNameInput;
     public TMP_InputField loginPasswordInput;
@@ -41,8 +43,12 @@ public class Login : MonoBehaviour
     {
         if (Verify(loginNameInput.text, loginPasswordInput.text))
         {
-            Debug.Log("Login Success");
+            StartCoroutine(DebugText("Login Success", 1, false));
             SceneManager.LoadScene(1);
+        }
+        else
+        {
+            StartCoroutine(DebugText("Incorrect Username or Password"));
         }
     }
     
@@ -50,14 +56,18 @@ public class Login : MonoBehaviour
     {
         foreach (User user in list.users)
         {
-            if (registerNameInput.text == user.username)
+            if (registerNameInput.text.ToLower() == user.username.ToLower())
             {
-                Debug.Log("Username has to be unique");
+                StartCoroutine(DebugText("Username has to be unique"));
+                return;
             }
         }
 
         if (registerPasswordInput.text != registerConfirmPasswordInput.text)
-            Debug.Log("Passwords do not match");
+        {
+            StartCoroutine(DebugText("Passwords do not match"));
+            return;
+        }
 
         User newUser = new User();
         newUser.username = registerNameInput.text;
@@ -67,6 +77,8 @@ public class Login : MonoBehaviour
 
         string json = JsonUtility.ToJson(list, true);
         File.WriteAllText(Application.dataPath + "/Project/Resources/LoginCredentials.txt", json);
+
+        StartCoroutine(DebugText("Register Success", 1, false));
     }
 
     public bool Verify(string username, string password)
@@ -78,11 +90,21 @@ public class Login : MonoBehaviour
                 if (password == Encrypt.Decrypt(user.password))
                 {
                     PlayerPrefs.SetString("Username", username);
+                    PlayerPrefs.SetInt("IsOperator", Convert.ToInt32(user.op));
                     return true;
                 }
             }
         }
 
         return false;
+    }
+
+    IEnumerator DebugText(string text, float time = 2f, bool redColorText = true)
+    {
+        debugText.text = text;
+        debugText.color = redColorText ? Color.red : Color.green;
+        Debug.Log(text);
+        yield return new WaitForSeconds(time);
+        debugText.text = "";
     }
 }

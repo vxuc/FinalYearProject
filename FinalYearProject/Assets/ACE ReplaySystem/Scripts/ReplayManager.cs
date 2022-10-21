@@ -761,12 +761,12 @@ public class ReplayManager : MonoBehaviour
     // Save Replay Mode
     public void SaveReplay()
     {
-        if (!Directory.Exists("Replays/" + DataManager.Instance.replayName))
-            Directory.CreateDirectory("Replays/" + DataManager.Instance.replayName);
+        if (!Directory.Exists("Replays/" + PlayerPrefs.GetString("Username") + "/" + DataManager.Instance.replayName))
+            Directory.CreateDirectory("Replays/" + PlayerPrefs.GetString("Username") + "/" + DataManager.Instance.replayName);
         else
         {
-            Directory.Delete("Replays/" + DataManager.Instance.replayName, true);
-            Directory.CreateDirectory("Replays/" + DataManager.Instance.replayName);
+            Directory.Delete("Replays/" + PlayerPrefs.GetString("Username") + "/" + DataManager.Instance.replayName, true);
+            Directory.CreateDirectory("Replays/" + PlayerPrefs.GetString("Username") + "/" + DataManager.Instance.replayName);
         }
 
         BinaryFormatter formatter = new BinaryFormatter();
@@ -774,7 +774,7 @@ public class ReplayManager : MonoBehaviour
         int i = 0;
         foreach (Record record in records)
         {
-            FileStream file = File.Create("Replays/" + DataManager.Instance.replayName + "/replay" + i + ".bin");
+            FileStream file = File.Create("Replays/" + PlayerPrefs.GetString("Username") + "/" + DataManager.Instance.replayName + "/replay" + i + ".bin");
 
             formatter.Serialize(file, record.frames);
 
@@ -810,13 +810,13 @@ public class ReplayManager : MonoBehaviour
         bool found = true;
         while (found)
         {
-            if (!File.Exists("Replays/" + DataManager.Instance.replayName + "/replay" + i + ".bin"))
+            if (!File.Exists("Replays/" + PlayerPrefs.GetString("Username") + "/" + DataManager.Instance.replayName + "/replay" + i + ".bin"))
             {
                 found = false;
                 break;
             }
 
-            FileStream file = File.Open("Replays/" + DataManager.Instance.replayName + "/replay" + i + ".bin", FileMode.Open);
+            FileStream file = File.Open("Replays/" + PlayerPrefs.GetString("Username") + "/" + DataManager.Instance.replayName + "/replay" + i + ".bin", FileMode.Open);
 
             List<Frame> frames = (List<Frame>)formatter.Deserialize(file);
 
