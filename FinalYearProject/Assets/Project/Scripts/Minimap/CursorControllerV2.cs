@@ -88,7 +88,7 @@ public class CursorControllerV2 : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if(PlaneManager.Instance.spawnCount < 16)
+            if (PlaneManager.Instance.spawnCount < 16 && PlaneManager.Instance.planeVal > 0)
             {
                 //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
                 foreach (RaycastResult result in results)
