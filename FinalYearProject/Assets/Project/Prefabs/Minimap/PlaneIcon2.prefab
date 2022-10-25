@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7142954610963515944}
   - component: {fileID: 1339847325873772369}
   - component: {fileID: 1909916657615547107}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pCube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1736420061344211972}
   - component: {fileID: 7750634890992093481}
   - component: {fileID: 3223166929943580041}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pCube7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 8041498062588250346}
   - component: {fileID: 7089604859698756228}
   - component: {fileID: 8164433458868838331}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pCylinder8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 4683616438224921373}
   - component: {fileID: 4991463890854841791}
   - component: {fileID: 7833776591445445659}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pCube8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 8875426543627375412}
   - component: {fileID: 4710219416869760031}
   - component: {fileID: 7191953831899705163}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pCube4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 1799829654450572572}
   - component: {fileID: 1912163948472702537}
   - component: {fileID: 8431921963141456210}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pPlane2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 5162739042732150693}
   - component: {fileID: 2672457789332953991}
   - component: {fileID: 2213947646260367475}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pCube6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,37 +581,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &4922209386375718634
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4263485072564668251}
-  m_Layer: 0
-  m_Name: Pivot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4263485072564668251
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4922209386375718634}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.84, z: -3.13}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5542918307289452075}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5163296131535279249
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,12 +590,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5542918307289452075}
-  - component: {fileID: -4357991286752741687}
-  - component: {fileID: -7512766625290922890}
-  - component: {fileID: 3650692550874652348}
-  m_Layer: 0
-  m_Name: BAE_Systems_Hawk_test_export
-  m_TagString: Untagged
+  - component: {fileID: 7348819852876200577}
+  m_Layer: 21
+  m_Name: PlaneIcon2
+  m_TagString: Planes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -638,9 +605,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5163296131535279249}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0, y: 100000, z: 0}
+  m_LocalScale: {x: 10000, y: 10000, z: 10000}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7142954610963515944}
@@ -653,41 +620,11 @@ Transform:
   - {fileID: 6282634619339349835}
   - {fileID: 1799829654450572572}
   - {fileID: 6115118176707572208}
-  - {fileID: 4263485072564668251}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-4357991286752741687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5163296131535279249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199aee18a853c3749bbc8abecbd828d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 20000
-  destinations: []
---- !u!114 &-7512766625290922890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5163296131535279249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec81a31beabbd7a478b28c2a122edfd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aircraftName: 
-  type: 
-  prefabName: 
---- !u!65 &3650692550874652348
-BoxCollider:
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!135 &7348819852876200577
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -697,8 +634,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 9.835028, y: 3.9496374, z: 13.378436}
-  m_Center: {x: 0.05622101, y: -0.08053112, z: -0.35088015}
+  m_Radius: 6.9007053
+  m_Center: {x: -0, y: 0, z: -0.3112992}
 --- !u!1 &5836330526160738266
 GameObject:
   m_ObjectHideFlags: 0
@@ -710,7 +647,7 @@ GameObject:
   - component: {fileID: 3956129681904903899}
   - component: {fileID: 5289817280232941827}
   - component: {fileID: 1917595400240227766}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pCube5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -793,7 +730,7 @@ GameObject:
   - component: {fileID: 6115118176707572208}
   - component: {fileID: 2647033221882393828}
   - component: {fileID: 6534024693480291584}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pPlane3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -876,7 +813,7 @@ GameObject:
   - component: {fileID: 6282634619339349835}
   - component: {fileID: 3576060513459050514}
   - component: {fileID: 198028399130169276}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: pPlane1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

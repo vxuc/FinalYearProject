@@ -6,15 +6,23 @@ using TMPro;
 
 public class PlaneManager : MonoBehaviour
 {
+    [Header("Plane Icon")]
     //Minimap
     public static PlaneManager Instance;
-    public GameObject planePrefab;
+    //public GameObject planePrefab;
     public GameObject planeIconPrefab;
 
+    [Header("Plane Selection")]
+    //Plane Selection Prefabs
+    public GameObject plane1Prefab;
+    public GameObject plane2Prefab;
+
+    [Header("Marker")]
     public GameObject markerPrefab;
     public GameObject markerCanvas;
 
     public int spawnCount = 0;
+    public int planeVal = 0;
 
     private void Awake()
     {
@@ -33,36 +41,64 @@ public class PlaneManager : MonoBehaviour
         Debug.Log("Spawn Count: " + spawnCount);
     }
 
-    public void SpawnPlane()
+    public void SpawnPlane(int val)
     {
-        if(spawnCount < 16 && FindObjectOfType<CursorControllerV2>().currentLine)
+        if(spawnCount < 16 )
         {
-            if (FindObjectOfType<CursorControllerV2>().currentLine.points.Count >= 2)
+            if (planeVal != 0 && FindObjectOfType<CursorControllerV2>().currentLine)
             {
+                if (FindObjectOfType<CursorControllerV2>().currentLine.points.Count >= 2)
+                {
 
-                spawnCount++;
+                    spawnCount++;
 
-                CursorControllerV2 cursorController = FindObjectOfType<CursorControllerV2>();
+                    CursorControllerV2 cursorController = FindObjectOfType<CursorControllerV2>();
+                    Debug.Log(val);
+                    //SELECTION STATEMENT
+                    if (planeVal == 0)
+                    {
+                        Debug.Log("CHOOSE A PLANE TO SPAWN");
+                    }
 
-                PlaneMovement plane = Instantiate(planePrefab, Vector3.zero, Quaternion.identity, cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
-                plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
+                    if (planeVal == 1)
+                    {
+                        //Plane
+                        PlaneMovement plane = Instantiate(plane1Prefab, Vector3.zero, Quaternion.identity, cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
+                        plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
 
-                GameObject planeIcon = Instantiate(planeIconPrefab, Vector3.zero, Quaternion.identity, plane.transform);
+                        //Plane Icon 
+                        GameObject planeIcon = Instantiate(planeIconPrefab, new Vector3(0, 100000, 0), Quaternion.Euler(new Vector3(0, 180, 0)), plane.transform);
 
-                GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity, markerCanvas.transform);
-                marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
+                        //Waypoint Marker
+                        GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity, markerCanvas.transform);
+                        marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
+                    }
 
-                cursorController.currentLine = null;
+                    if (planeVal == 2)
+                    {
+                        PlaneMovement plane = Instantiate(plane2Prefab, Vector3.zero, Quaternion.identity, cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
+                        plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
+
+                        GameObject planeIcon = Instantiate(planeIconPrefab, new Vector3(0, 100000, 0), Quaternion.Euler(new Vector3(0, 180, 0)), plane.transform);
+
+                        GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity, markerCanvas.transform);
+                        marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
+                    }
+
+                    cursorController.currentLine = null;
+                }
             }
-            }
+        }
 
-            else
+        else
         {
-            Debug.Log("MAX SPAWN COUNT REACHED");
+         Debug.Log("MAX SPAWN COUNT REACHED");
         }
     }
 
-
-
+    public void PlaneSelectionValue(int val)
+    {
+        planeVal = val;
+    }
     
 }

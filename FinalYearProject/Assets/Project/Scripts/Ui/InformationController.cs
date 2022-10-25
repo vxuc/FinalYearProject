@@ -133,7 +133,7 @@ public class InformationController : MonoBehaviour
 
     private void updateRotationText()
     {
-        float az = userCamera.transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y;
+        float az = userCamera.transform.rotation.eulerAngles.y;
         
         az = (az < 0) ? az + 360: az;
         az = (az > 359) ? az = 0 : az;
