@@ -21,7 +21,8 @@ public class ThermalController : MonoBehaviour
     public Shader defaultShader,textureShader, whiteShader, blackShader;
 
     [Header("Cloud")]
-    public Shader cloudDefaultShader,cloudDefaultshaderWhite, cloudDefaultshaderBlack;
+    public Shader cloudDefaultShader,cloudShaderWhite, cloudShaderBlack;
+    public Material cloudDefaultMaterial, cloudWhiteMaterial, cloudBlackMaterial;
 
     CameraModes cameraModes;
     // Start is called before the first frame update
@@ -88,16 +89,16 @@ public class ThermalController : MonoBehaviour
                     switch (cameraModes)
                     {
                         case CameraModes.THERMAL_WHITE:
-                            ActivateInfraredWhite(renderer);
+                            SetShader(renderer, whiteShader);
                             break;
                         case CameraModes.THERMAL_BLACK:
-                            ActivateInfraredBlack(renderer);
+                            SetShader(renderer, blackShader);
                             break;
                         default:
                             if (gameObject.layer == LayerMask.NameToLayer("ObjectsWithTexture"))
-                                ActivateTextureDefault(renderer);
+                                SetShader(renderer, textureShader);
                             else
-                                ActivateDefault(renderer);
+                                SetShader(renderer, defaultShader);
                             break;
                     }
                 }
@@ -107,13 +108,13 @@ public class ThermalController : MonoBehaviour
                     switch (cameraModes)
                     {
                         case CameraModes.THERMAL_WHITE:
-                            ActivateCloudInfraredWhite(renderer);
+                            SetMaterial(renderer, cloudWhiteMaterial);
                             break;
                         case CameraModes.THERMAL_BLACK:
-                            ActivateCloudInfraredBlack(renderer);
+                            SetMaterial(renderer, cloudBlackMaterial);
                             break;
                         default:
-                            ActivateCloudDefault(renderer);
+                            SetMaterial(renderer, cloudDefaultMaterial);
                             break;
                     }
                 }
@@ -134,48 +135,11 @@ public class ThermalController : MonoBehaviour
         }
     }
 
-    private void ActivateDefault(Renderer renderer)
+    private void SetShader(Renderer renderer,Shader shader)
     {
-        if(renderer.material.shader != defaultShader)
+        for (int i = 0; i < renderer.materials.Length; i++)
         {
-            renderer.material.shader = defaultShader;
-        }
-    }
-    private void ActivateTextureDefault(Renderer renderer)
-    {
-        if (renderer.material.shader != textureShader)
-        {
-            renderer.material.shader = textureShader;
-        }
-    }
-    private void ActivateCloudDefault(Renderer renderer)
-    {
-        if (renderer.material.shader != cloudDefaultShader)
-        {
-            renderer.material.shader = cloudDefaultShader;
-        }
-    }
-
-    private void ActivateInfraredWhite(Renderer renderer)
-    {
-        if(renderer.material.shader != whiteShader)
-        {
-            renderer.material.shader = whiteShader;
-
-            if(renderer.gameObject.GetComponent<HeatController>())
-            {
-                SetInfraredHeatValue(renderer, renderer.gameObject.GetComponent<HeatController>().GetHeatValue());
-            }
-            else
-                 SetInfraredHeatValue(renderer, 0);
-        }   
-    }
-    private void ActivateCloudInfraredWhite(Renderer renderer)
-    {
-        if (renderer.material.shader != cloudDefaultshaderWhite)
-        {
-            renderer.material.shader = cloudDefaultshaderWhite;
-
+            renderer.materials[i].shader = shader;
             if (renderer.gameObject.GetComponent<HeatController>())
             {
                 SetInfraredHeatValue(renderer, renderer.gameObject.GetComponent<HeatController>().GetHeatValue());
@@ -184,38 +148,17 @@ public class ThermalController : MonoBehaviour
                 SetInfraredHeatValue(renderer, 0);
         }
     }
-
-    private void ActivateInfraredBlack(Renderer renderer)
+    private void SetMaterial(Renderer renderer,Material material)
     {
-
-        if (renderer.material.shader != blackShader)
+        renderer.material = material;
+        if (renderer.gameObject.GetComponent<HeatController>())
         {
-            renderer.material.shader = blackShader;
-
-            if (renderer.gameObject.GetComponent<HeatController>())
-            {
-                SetInfraredHeatValue(renderer, renderer.gameObject.GetComponent<HeatController>().GetHeatValue());
-            }
-            else
-                SetInfraredHeatValue(renderer, 0);
+            SetInfraredHeatValue(renderer, renderer.gameObject.GetComponent<HeatController>().GetHeatValue());
         }
+        else
+            SetInfraredHeatValue(renderer, 0);
     }
-
-    private void ActivateCloudInfraredBlack(Renderer renderer)
-    {
-
-        if (renderer.material.shader != cloudDefaultshaderBlack)
-        {
-            renderer.material.shader = cloudDefaultshaderBlack;
-
-            if (renderer.gameObject.GetComponent<HeatController>())
-            {
-                SetInfraredHeatValue(renderer, renderer.gameObject.GetComponent<HeatController>().GetHeatValue());
-            }
-            else
-                SetInfraredHeatValue(renderer, 0);
-        }
-    }
+   
     void SetInfraredHeatValue(Renderer renderer,float value)
     {
         renderer.material.SetFloat("_Temperature", value);
