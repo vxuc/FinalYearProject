@@ -34,6 +34,10 @@ public class Login : MonoBehaviour
     public TMP_InputField registerConfirmPasswordInput;
     public Toggle toggleOp;
 
+    public GameObject userInfoPrefab;
+    public Transform contentTransform;
+    public TMP_InputField inputField;
+
     private void Start()
     {
         list = JsonUtility.FromJson<UserList>(textJSON.text);
@@ -107,4 +111,17 @@ public class Login : MonoBehaviour
         yield return new WaitForSeconds(time);
         debugText.text = "";
     }
+
+    public void RefreshUserInfo()
+    {
+        foreach (UserInfo info in FindObjectsOfType<UserInfo>())
+            Destroy(info.gameObject);
+
+        foreach (User user in list.users)
+        {
+            UserInfo info = Instantiate(userInfoPrefab, contentTransform).GetComponent<UserInfo>();
+            info.text.text = user.username;
+        }
+    }
+    
 }
