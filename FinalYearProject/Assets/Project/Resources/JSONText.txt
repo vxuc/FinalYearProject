@@ -13,13 +13,7 @@
 			"taper": "Backward tapered, wing root extension until front of cockpit",
 			"tip": "Square with missile pylon at tip",
 			
-			"category2": "Fuselage Specs",
-			"nose": "Pointed",
-			"cockpit": "Bubble",
-			"midSection": "Bulging",
-			"rearSection": "Tapered",
-
-			"category3": "Engine Specs",
+			"category2": "Engine Specs",
 			"engineNumber": "2",
 			"engineType": "Turbo Jet",
 			"engineMount": "Internally mounted",
@@ -28,6 +22,12 @@
 			"intakeLocation": "Below Wings",
 			"exhaustNumber": "2",
 			"exhaustLocation": "Protruding after tail unit",
+
+			"category3": "Fuselage Specs",
+			"nose": "Pointed",
+			"cockpit": "Bubble",
+			"midSection": "Bulging",
+			"rearSection": "Tapered",
 
 			"category4": "Tail Specs",
 			"shape": "V-Shaped",
@@ -47,13 +47,7 @@
 			"taper": "Backswept Tapered",
 			"tip": "Curved",
 			
-			"category2": "Fuselage Specs",
-			"nose": "Short rounded",
-			"cockpit": "Stepped",
-			"midSection": "Bulging",
-			"rearSection": "Tapered",
-
-			"category3": "Engine Specs",
+			"category2": "Engine Specs",
 			"engineNumber": "1",
 			"engineType": "Turbofan",
 			"engineMount": "Internally mounted",
@@ -62,6 +56,12 @@
 			"intakeLocation": "Sides of fuselage",
 			"exhaustNumber": "1",
 			"exhaustLocation": "Protruding after tail unit",
+			
+			"category3": "Fuselage Specs",
+			"nose": "Short rounded",
+			"cockpit": "Stepped",
+			"midSection": "Bulging",
+			"rearSection": "Tapered",
 
 			"category4": "Tail Specs",
 			"shape": "Inverted-Y",

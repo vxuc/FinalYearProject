@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
+  - enabled: 1
+    path: Assets/Scenes/ViewingGallery.unity
+    guid: 413602f64e53a4449828aaaf423e42e2
   m_configObjects: {}

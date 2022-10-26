@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class AircraftInfoManager : MonoBehaviour
 {
@@ -86,7 +87,22 @@ public class AircraftInfoManager : MonoBehaviour
                 if (property.Name.Contains("category"))
                     specs += "\n" + property.GetValue(aircraft).ToString().ToUpper() + "\n";
                 else
-                    specs += property.Name + ": " + property.GetValue(aircraft) + "\n";
+                {
+                    string name = "";
+                    for (int i = 0; i < property.Name.Length; i++)
+                    {
+                        if (i == 0)
+                            name += property.Name[i].ToString().ToUpper();
+                        else
+                        {
+                            if (Char.IsUpper(property.Name[i]))
+                                name += " ";
+
+                            name += property.Name[i];
+                        }
+                    }
+                    specs += name + ": " + property.GetValue(aircraft) + "\n";
+                }
             }
             newInfo.description = aircraft.description + specs;
         }
