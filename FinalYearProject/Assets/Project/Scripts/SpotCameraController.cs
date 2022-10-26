@@ -28,9 +28,11 @@ public class SpotCameraController : MonoBehaviour
         if (magnification == 1)
             currCamera.farClipPlane = originalFarClipPlane * magnification;
         else if (magnification == 4)
-            currCamera.farClipPlane = originalFarClipPlane * 3f;
+            currCamera.farClipPlane = 800000;
+        //currCamera.farClipPlane = originalFarClipPlane * 3f;
         else if (magnification == 24)
-            currCamera.farClipPlane = originalFarClipPlane * 24;
+            currCamera.farClipPlane = 1200000;
+        //currCamera.farClipPlane = originalFarClipPlane * 24;
 
     }
 }
