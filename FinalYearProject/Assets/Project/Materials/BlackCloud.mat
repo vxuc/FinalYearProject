@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NewestCloud
-  m_Shader: {fileID: -6465566751694194690, guid: 4522418b4e815ff499a4caea5b966587,
+  m_Name: BlackCloud
+  m_Shader: {fileID: -6465566751694194690, guid: ad8e55f121c449f40a77beef0640be94,
     type: 3}
   m_ValidKeywords:
   - _SURFACE_TYPE_TRANSPARENT
@@ -223,6 +223,7 @@ Material:
     - _SubsurfaceMask: 1
     - _SupportDecals: 1
     - _SurfaceType: 1
+    - _Temperature: 0
     - _TexWorldScale: 1
     - _TexWorldScaleEmissive: 1
     - _Thickness: 1

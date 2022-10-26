@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 4
+  m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4403.382, g: 2767.671, b: 1986.752, a: 1}
+  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -14227,10 +14227,14 @@ MonoBehaviour:
     type: 3}
   cloudDefaultShader: {fileID: -6465566751694194690, guid: 4522418b4e815ff499a4caea5b966587,
     type: 3}
-  cloudDefaultshaderWhite: {fileID: -6465566751694194690, guid: 5cdd3e35c29c27e46b734a08a32522cf,
+  cloudShaderWhite: {fileID: -6465566751694194690, guid: 5cdd3e35c29c27e46b734a08a32522cf,
     type: 3}
-  cloudDefaultshaderBlack: {fileID: -6465566751694194690, guid: ad8e55f121c449f40a77beef0640be94,
+  cloudShaderBlack: {fileID: -6465566751694194690, guid: ad8e55f121c449f40a77beef0640be94,
     type: 3}
+  cloudDefaultMaterial: {fileID: 2100000, guid: 9dabebe4c37ae0d4d893df266d156714,
+    type: 2}
+  cloudWhiteMaterial: {fileID: 2100000, guid: 52298dafd899d6e4e901af42f45d8f36, type: 2}
+  cloudBlackMaterial: {fileID: 2100000, guid: 7d006ca8caad0314c9500443501bc700, type: 2}
 --- !u!4 &792181178
 Transform:
   m_ObjectHideFlags: 0
