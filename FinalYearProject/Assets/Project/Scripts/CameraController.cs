@@ -71,6 +71,9 @@ public class CameraController : MonoBehaviour
         {
             if (IsTracking())
                 ToggleTargeting();
+
+            if (Input.GetKeyDown(KeyCode.Joystick1Button7))
+                CameraZooming();
         }
         else
         {
@@ -239,11 +242,11 @@ public class CameraController : MonoBehaviour
             if (q.transform.GetComponent<Renderer>())
                 onSight = GeometryUtility.TestPlanesAABB(planes, q.transform.GetComponent<Renderer>().bounds); ;
 
-            if (!Physics.Linecast(q.transform.position, transform.position) && onSight)
+            if (!Physics.Linecast(q.transform.position, transform.position, LayerMask.NameToLayer("SpyderCamera")) && onSight)
             {
                 if (objectGazed != q.transform.gameObject)
                 {
-                    if (q.transform.gameObject.layer != LayerMask.NameToLayer("Spyder"))
+                    if (q.transform.gameObject.layer != LayerMask.NameToLayer("SpyderCamera"))
                     {
                         if (objectGazed == null)
                             objectGazed = q.transform.gameObject;
@@ -271,32 +274,29 @@ public class CameraController : MonoBehaviour
     private void GettingTargetV2()
     {
 
-        Renderer[] gameObjects = (Renderer[])FindObjectsOfType(typeof(Renderer));
+        Collider[] gameObjects = (Collider[])FindObjectsOfType(typeof(Collider));
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
 
         if (objectGazed)
         {
-            if (!GeometryUtility.TestPlanesAABB(planes, objectGazed.GetComponent<Renderer>().bounds))
+            if (!GeometryUtility.TestPlanesAABB(planes, objectGazed.GetComponent<Collider>().bounds))
             {
                 objectGazed = null;
             }
         }
 
-        foreach (Renderer gameObject in gameObjects)
+        foreach (Collider gameObject in gameObjects)
         {
             if(gameObject.gameObject.layer < 20)
                 Debug.DrawLine(transform.position, gameObject.transform.position, Color.green);
 
             if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("Spyder") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane"))
             {
-                bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Renderer>().bounds);
+                bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Collider>().bounds);
 
-                if (objectGazed != null)
+                if (onSight)
                 {
-                    if (onSight)
-                    {
-                        Debug.DrawLine(transform.position, gameObject.transform.position, Color.yellow);
-                    }
+                    Debug.DrawLine(transform.position, gameObject.transform.position, Color.yellow);
                 }
 
                 if (!Physics.Linecast(gameObject.transform.position, transform.position) && onSight)
@@ -371,7 +371,7 @@ public class CameraController : MonoBehaviour
             Debug.DrawLine(transform.position, objectGazedTracked.transform.Find("Pivot").position, Color.red);
             //Maintaining line of sight
             Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
-            if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Renderer>().bounds) && !Physics.Linecast(objectGazedTracked.transform.position,gameObject.transform.position))
+            if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && !Physics.Linecast(objectGazedTracked.transform.position,gameObject.transform.position))
                 timer = timeToLoseTarget;
 
             else //Loses sight of target
