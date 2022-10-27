@@ -339,7 +339,17 @@ public class CameraController : MonoBehaviour
     }
     private void FollowingTarget()
     {
-        Debug.Log(objectGazedTracked);
+        if (timer < 0 || !objectGazedTracked.activeInHierarchy || !objectGazedTracked)
+        {
+            rotation = transform.rotation.eulerAngles;
+            objectGazedTracked = null;
+            tracking = false;
+            timer = timeToLoseTarget;
+            smoothTimer = timeToTrackTarget;
+            return;
+        }
+        RaycastHit raycastHit;
+
         if (objectGazedTracked?.transform.Find("Pivot"))
         {
             //Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position + (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * 0.5f - transform.position;
@@ -363,22 +373,19 @@ public class CameraController : MonoBehaviour
 
             Debug.DrawLine(transform.position, objectGazedTracked.transform.Find("Pivot").position, Color.red);
             //Maintaining line of sight
-            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
-            if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && !Physics.Linecast(objectGazedTracked.transform.position,gameObject.transform.position))
-                timer = timeToLoseTarget;
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(GetComponent<Camera>());
+            bool collided = Physics.Linecast(objectGazedTracked.transform.position, gameObject.transform.position, out raycastHit);
 
-            else //Loses sight of target
+            if (collided)
             {
-                timer -= Time.deltaTime;
-            }
+                if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform)
+                    timer = timeToLoseTarget;
 
-            if (timer < 0 || !objectGazedTracked || !objectGazedTracked.activeInHierarchy)
-            {
-                rotation = transform.rotation.eulerAngles;
-                objectGazedTracked = null;
-                tracking = false;
-                timer = timeToLoseTarget;
-                smoothTimer = timeToTrackTarget;
+                else //Loses sight of target
+                {
+                    Debug.Log("Error");
+                    timer -= Time.deltaTime;
+                }
             }
         }
         else
@@ -395,32 +402,21 @@ public class CameraController : MonoBehaviour
             }
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.fixedDeltaTime);
 
-            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
-            if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && !Physics.Linecast(objectGazedTracked.transform.position, gameObject.transform.position))
-                timer = timeToLoseTarget;
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(GetComponent<Camera>());
+            bool collided = Physics.Linecast(objectGazedTracked.transform.position, gameObject.transform.position, out raycastHit);
 
-            else //Loses sight of target
+            if (collided)
             {
-                timer -= Time.deltaTime;
-            }
+                if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform)
+                    timer = timeToLoseTarget;
 
-            if (timer < 0 || !objectGazedTracked || !objectGazedTracked.activeInHierarchy)
-            {
-                rotation = transform.rotation.eulerAngles;
-                objectGazedTracked = null;
-                tracking = false;
-                timer = timeToLoseTarget;
-                smoothTimer = timeToTrackTarget;
+                else //Loses sight of target
+                {
+                    Debug.Log("Error");
+                    timer -= Time.deltaTime;
+                }
             }
         }
-        //else
-        //{
-        //    rotation = transform.rotation.eulerAngles;
-        //    objectGazedTracked = null;
-        //    tracking = false;
-        //    timer = timeToLoseTarget;
-        //    smoothTimer = timeToTrackTarget;
-        //}
     }
 
     private void ResetCameraAxis()
