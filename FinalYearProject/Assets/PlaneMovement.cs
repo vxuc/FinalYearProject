@@ -33,8 +33,9 @@ public class PlaneMovement : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.fixedDeltaTime * movementSpeed);
-        transform.rotation = Quaternion.LookRotation(transform.position - desiredPosition, Vector3.up);
-        
+
+        var newRotation = Quaternion.LookRotation(transform.position - desiredPosition, Vector3.up).eulerAngles;
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotation), Time.fixedDeltaTime);
     }
 
     void UpdateDesiredPosition()
