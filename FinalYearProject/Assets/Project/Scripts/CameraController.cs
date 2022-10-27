@@ -66,7 +66,6 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (informationController.GetRDRMode())
         {
             if (IsTracking())
@@ -94,8 +93,6 @@ public class CameraController : MonoBehaviour
             {
                 resetting = true;
             }
-
-            GettingTargetV2();
         }
     }
 
@@ -116,6 +113,8 @@ public class CameraController : MonoBehaviour
             {
                 ResetCameraAxis();
             }
+
+            GettingTargetV2();
         }
     }
 
@@ -287,19 +286,12 @@ public class CameraController : MonoBehaviour
 
         foreach (Collider gameObject in gameObjects)
         {
-            if(gameObject.gameObject.layer < 20)
-                Debug.DrawLine(transform.position, gameObject.transform.position, Color.green);
-
-            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("Spyder") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane"))
+            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("Spyder") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane") 
+                && !Physics.Linecast(gameObject.transform.position, transform.position))
             {
                 bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Collider>().bounds);
 
                 if (onSight)
-                {
-                    Debug.DrawLine(transform.position, gameObject.transform.position, Color.yellow);
-                }
-
-                if (!Physics.Linecast(gameObject.transform.position, transform.position) && onSight)
                 {
                     if (objectGazed != gameObject.transform.gameObject)
                     {
@@ -347,6 +339,7 @@ public class CameraController : MonoBehaviour
     }
     private void FollowingTarget()
     {
+        Debug.Log(objectGazedTracked);
         if (objectGazedTracked?.transform.Find("Pivot"))
         {
             //Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position + (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * 0.5f - transform.position;
@@ -390,12 +383,44 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            rotation = transform.rotation.eulerAngles;
-            objectGazedTracked = null;
-            tracking = false;
-            timer = timeToLoseTarget;
-            smoothTimer = timeToTrackTarget;
+            Vector3 toRotate = objectGazedTracked.transform.position - transform.position;
+            Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
+
+            //Turning
+            float smooth = 90f;
+
+            if (smoothTimer > 0.5f)
+            {
+                smoothTimer -= Time.deltaTime;
+            }
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.fixedDeltaTime);
+
+            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
+            if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && !Physics.Linecast(objectGazedTracked.transform.position, gameObject.transform.position))
+                timer = timeToLoseTarget;
+
+            else //Loses sight of target
+            {
+                timer -= Time.deltaTime;
+            }
+
+            if (timer < 0 || !objectGazedTracked || !objectGazedTracked.activeInHierarchy)
+            {
+                rotation = transform.rotation.eulerAngles;
+                objectGazedTracked = null;
+                tracking = false;
+                timer = timeToLoseTarget;
+                smoothTimer = timeToTrackTarget;
+            }
         }
+        //else
+        //{
+        //    rotation = transform.rotation.eulerAngles;
+        //    objectGazedTracked = null;
+        //    tracking = false;
+        //    timer = timeToLoseTarget;
+        //    smoothTimer = timeToTrackTarget;
+        //}
     }
 
     private void ResetCameraAxis()

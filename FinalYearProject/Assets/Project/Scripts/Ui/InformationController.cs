@@ -223,11 +223,16 @@ public class InformationController : MonoBehaviour
     {
         if (cameraController.IsTracking())
         {
+            TargetUi targetUi = trackingDots.GetComponent<TargetUi>();
             if (cameraController.GetTrackedGameObject()?.transform.Find("Pivot"))
             {
-                TargetUi targetUi = trackingDots.GetComponent<TargetUi>();
                 targetUi.SetTarget(cameraController.GetTrackedGameObject().transform.Find("Pivot"));
                 targetUi.SetPosition(cameraController.GetTrackedGameObject().transform.Find("Pivot"));
+            }
+            else
+            {
+                targetUi.SetTarget(cameraController.GetTrackedGameObject().transform);
+                targetUi.SetPosition(cameraController.GetTrackedGameObject().transform);
             }
             trackingDots.gameObject.SetActive(true);
         }

@@ -48,7 +48,7 @@ public class CloudsController : MonoBehaviour
         if (cloudIntensity <= 0)
             additionalCloud = 0;
 
-        float maxSize = cloudMaxSize + cloudIntensity;
+        float maxSize = cloudMaxSize;
 
         float randPosX, randPosY, randPosZ;
         for (int i = 0; i < additionalCloud; ++i)
