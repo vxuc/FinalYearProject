@@ -13,6 +13,7 @@ public class DetailsPage : MonoBehaviour
     [Header("Details Text")]
     public TextMeshProUGUI distanceText;
     public TextMeshProUGUI heightText;
+    public TextMeshProUGUI bearingText;
 
     [Header("Deleting Plane")]
     [SerializeField] GameObject planePathParent;
@@ -24,10 +25,18 @@ public class DetailsPage : MonoBehaviour
     {
         //PlaneWaypoint plane = new PlaneWaypoint();
 
+        double planeHeight = plane.transform.position.y / 30.48;
+        float bearingHeight = (Mathf.Atan2(plane.transform.position.x - Camera.main.transform.position.x, plane.transform.position.z - Camera.main.transform.position.z)) * Mathf.Rad2Deg;
+
+        bearingHeight = (bearingHeight < 0) ? bearingHeight + 360 : bearingHeight;
+        bearingHeight = (bearingHeight > 359) ? bearingHeight = 0 : bearingHeight;
+
+
         if (plane != null)
         {
             Debug.Log(plane.name);        
-            heightText.text = (plane.transform.position.y / 30.48).ToString("Height: " + "0") + "ft";
+            heightText.text = planeHeight.ToString("Height: " + "0") + "ft";
+            bearingText.text = bearingHeight.ToString("Bearing: " + "0 ") + "degrees";
         }
 
     }
