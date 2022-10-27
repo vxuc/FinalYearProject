@@ -18,7 +18,7 @@ public class ThermalController : MonoBehaviour
     public GameObject infraredEnvironmentWhite, infraredEnvironmentBlack;
 
     [Header("Shader")]
-    public Shader defaultShader,textureShader, whiteShader, blackShader;
+    public Shader defaultShader,textureShader, textureMaskedShader,whiteShader, blackShader;
 
     [Header("Cloud")]
     public Shader cloudDefaultShader,cloudShaderWhite, cloudShaderBlack;
@@ -28,24 +28,6 @@ public class ThermalController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //gameObjectsWithHeat = (GameObject[])GameObject.FindObjectsOfType(typeof(GameObject));
-
-        //foreach (GameObject gameObject in gameObjectsWithHeat)
-        //{
-        //    if(gameObject.GetComponent<Renderer>())
-        //    {
-        //        if (gameObject.layer < 20)
-        //            gameObject.GetComponent<Renderer>().material.shader = defaultShader;
-        //        else if (gameObject.layer < 20)
-        //            gameObject.GetComponent<Renderer>().material.shader = defaultShader;
-        //        else if (gameObject.layer == LayerMask.NameToLayer("Cloud")) // Cloud
-        //            gameObject.GetComponent<Renderer>().material.shader = cloudDefaultShader;
-        //    }
-        //    if(gameObject.layer == LayerMask.NameToLayer("Particles"))
-        //    {
-        //        gameObject.SetActive(true);
-        //    }
-        //}
     }
 
     public void ChangeCameraMode(bool init = true)
@@ -96,9 +78,15 @@ public class ThermalController : MonoBehaviour
                             break;
                         default:
                             if (gameObject.layer == LayerMask.NameToLayer("ObjectsWithTexture"))
-                                SetShader(renderer, textureShader);
+                                SetShaderToNormal(renderer, textureShader);
+                            else if (gameObject.layer == LayerMask.NameToLayer("ObjectsWithTextureMask"))
+                                SetShaderToNormal(renderer, textureMaskedShader);
                             else
-                                SetShader(renderer, defaultShader);
+                            {
+                                SetShaderToNormal(renderer, defaultShader);
+                                Debug.Log("brh");
+                            }
+
                             break;
                     }
                 }
@@ -136,6 +124,19 @@ public class ThermalController : MonoBehaviour
     }
 
     private void SetShader(Renderer renderer,Shader shader)
+    {
+        for (int i = 0; i < renderer.materials.Length; i++)
+        {
+            renderer.materials[i].shader = shader;
+            if (renderer.gameObject.GetComponent<HeatController>())
+            {
+                SetInfraredHeatValue(renderer, renderer.gameObject.GetComponent<HeatController>().GetHeatValue());
+            }
+            else
+                SetInfraredHeatValue(renderer, 0);
+        }
+    }
+    private void SetShaderToNormal(Renderer renderer, Shader shader)
     {
         for (int i = 0; i < renderer.materials.Length; i++)
         {
