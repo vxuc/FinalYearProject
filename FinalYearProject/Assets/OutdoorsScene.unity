@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 262.38354, g: 325.1084, b: 430.30957, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7840,9 +7840,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planeIconPrefab: {fileID: 5163296131535279249, guid: 16b2ff2d3fe1a6f4cbcc0cb7a4744678,
     type: 3}
-  plane1Prefab: {fileID: 5603353903959242992, guid: 1c4ff80eec7a1984da0eeb6453a42ef7,
+  F18Prefab: {fileID: 5603353903959242992, guid: 1c4ff80eec7a1984da0eeb6453a42ef7,
     type: 3}
-  plane2Prefab: {fileID: 5163296131535279249, guid: e9d7852b09144774e87923873fbdcf6e,
+  BAESystemsPrefab: {fileID: 8283921860202351096, guid: 9c667d9b7c35e644d997940edb5670c2,
+    type: 3}
+  Hermes450Prefab: {fileID: 7063842306074686254, guid: c7c6810d6f4e7e74aba57f8640316794,
+    type: 3}
+  Fokker50Prefab: {fileID: 4919057274605605170, guid: 303c67feb51e1a24ebf71917e96fdf8a,
     type: 3}
   markerPrefab: {fileID: 8181050825486203681, guid: 43698ca7a708842428714bf274149ada,
     type: 3}
@@ -10592,7 +10596,7 @@ PrefabInstance:
     - target: {fileID: 1360439675915196887, guid: f62e5507aba51d0448a9de5f1db39fec,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1360439675915196888, guid: f62e5507aba51d0448a9de5f1db39fec,
         type: 3}
@@ -10702,7 +10706,7 @@ PrefabInstance:
     - target: {fileID: 2297880835822774700, guid: f62e5507aba51d0448a9de5f1db39fec,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2297880836011969748, guid: f62e5507aba51d0448a9de5f1db39fec,
         type: 3}
@@ -10794,7 +10798,7 @@ PrefabInstance:
     - target: {fileID: 2297880836460504770, guid: f62e5507aba51d0448a9de5f1db39fec,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f62e5507aba51d0448a9de5f1db39fec, type: 3}
@@ -20811,7 +20815,7 @@ BoxCollider:
   m_GameObject: {fileID: 1337394279}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1006.2251}
   m_Center: {x: 0, y: 0, z: -502.61255}
@@ -22815,8 +22819,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 520.0465, y: 121.92877}
-  m_SizeDelta: {x: 278.093, y: 52.1424}
+  m_AnchoredPosition: {x: 563.2643, y: 108.42322}
+  m_SizeDelta: {x: 364.5285, y: 79.1535}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1509270453
 MonoBehaviour:
@@ -22872,7 +22876,11 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: F18
       m_Image: {fileID: 0}
-    - m_Text: Cybereye II
+    - m_Text: BAE Systems HAWK
+      m_Image: {fileID: 0}
+    - m_Text: Hermes 450
+      m_Image: {fileID: 0}
+    - m_Text: Fokker 50
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -24795,7 +24803,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -7.4999847, y: -0.5}
+  m_AnchoredPosition: {x: -7.4999847, y: -0.5000038}
   m_SizeDelta: {x: -35, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1660801142
@@ -43899,7 +43907,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -37, y: 38}
+  m_AnchoredPosition: {x: -75.4, y: 53}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1963512660
