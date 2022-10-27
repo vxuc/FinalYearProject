@@ -95,4 +95,8 @@ public class TimeOfDay : MonoBehaviour
         UpdateTimeOfDay();
         text.text = "Time: " + currTimeOfDay.ToString();
     }
+    public void SetTimeOfDay(int time)
+    {
+        this.currTimeOfDay = (TIMEOFDAY)time;
+    }
 }
