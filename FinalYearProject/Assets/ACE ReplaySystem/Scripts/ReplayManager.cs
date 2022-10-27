@@ -889,6 +889,10 @@ public class ReplayManager : MonoBehaviour
             records[i].SetFirstFrameIndex();
             int auxIndex = frameIndex - records[i].GetFirstFrameIndex();
 
+            //Check for instantiated and deleted GO
+            HandleInstantiatedObjects(records[i], auxIndex);
+            HandleDeletedObjects(records[i], frameIndex);
+
             if (IsRecordActiveInReplay(records[i], frameIndex))
             {
                 SetTransforms(records[i], auxIndex);
@@ -923,9 +927,6 @@ public class ReplayManager : MonoBehaviour
                 }
             }
 
-            //Check for instantiated and deleted GO
-            HandleInstantiatedObjects(records[i], auxIndex);
-            HandleDeletedObjects(records[i], frameIndex);
         }
     }
 
