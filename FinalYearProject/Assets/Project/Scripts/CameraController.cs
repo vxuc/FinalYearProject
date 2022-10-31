@@ -24,6 +24,7 @@ public class CameraController : MonoBehaviour
     [Header("Tracking")]
     public Camera spotCamera;
     bool tracking = false;
+    bool forcedTracking = false;
     GameObject objectGazed = null;
     GameObject objectGazedTracked = null;
     [SerializeField] float timeToLoseTarget = 0;
@@ -31,6 +32,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float spotRadius = 1f;
     [SerializeField] float timeToTrackTarget = 0;
     float smoothTimer;
+    
 
     [Header("Zoom")]
     float cameraOriginalFOV;
@@ -98,7 +100,7 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!informationController.GetRDRMode())
+        if (!informationController.GetRDRMode() || !forcedTracking)
         {
             if (!tracking && !resetting)
             {
@@ -286,7 +288,7 @@ public class CameraController : MonoBehaviour
 
         foreach (Collider gameObject in gameObjects)
         {
-            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("Spyder") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane") 
+            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("SpyderBody") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane") 
                 && !Physics.Linecast(gameObject.transform.position, transform.position))
             {
                 bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Collider>().bounds);
@@ -328,6 +330,7 @@ public class CameraController : MonoBehaviour
             smoothTimer = timeToTrackTarget;
             objectGazedTracked = null;
             tracking = false;
+            forcedTracking = false;
             Debug.Log("Letting go a target");
         }
         else if (!Physics.Linecast(objectGazed.transform.position, transform.position))
@@ -344,6 +347,7 @@ public class CameraController : MonoBehaviour
             rotation = transform.rotation.eulerAngles;
             objectGazedTracked = null;
             tracking = false;
+            forcedTracking = true;
             timer = timeToLoseTarget;
             smoothTimer = timeToTrackTarget;
             return;
@@ -441,6 +445,11 @@ public class CameraController : MonoBehaviour
     public bool IsTracking()
     {
         return tracking;
+    }
+
+    public bool isForcedTracking()
+    {
+        return forcedTracking;
     }
 
     public void SetIsTracking(bool track)

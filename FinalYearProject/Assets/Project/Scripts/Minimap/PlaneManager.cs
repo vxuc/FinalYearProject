@@ -81,7 +81,7 @@ public class PlaneManager : MonoBehaviour
                         PlaneMovement plane = Instantiate(BAESystemsPrefab, Vector3.zero, Quaternion.identity, cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
                         plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
 
-                        GameObject planeIcon = Instantiate(planeIconPrefab, new Vector3(0, 100000, 0), Quaternion.Euler(new Vector3(0, 180, 0)), plane.transform);
+                        GameObject planeIcon = Instantiate(planeIconPrefab, new Vector3(0, 100000, 0), Quaternion.Euler(new Vector3(0, 0, 0)), plane.transform);
 
                         GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity, markerCanvas.transform);
                         marker.GetComponent<PlaneWaypoint>().SetTarget(plane.transform);
@@ -102,7 +102,7 @@ public class PlaneManager : MonoBehaviour
                         PlaneMovement plane = Instantiate(Fokker50Prefab, Vector3.zero, Quaternion.identity, cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
                         plane.destinations = FindObjectOfType<CursorControllerV2>().currentLine.GetComponent<LineController>().points;
 
-                        GameObject planeIcon = Instantiate(planeIconPrefab, new Vector3(0, 100000, 0), Quaternion.Euler(new Vector3(0, 180, 0)), plane.transform);
+                        GameObject planeIcon = Instantiate(planeIconPrefab, new Vector3(0, 100000, 0), Quaternion.Euler(new Vector3(0, 0, 0)), plane.transform);
 
                         GameObject marker = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity, markerCanvas.transform);
                     }

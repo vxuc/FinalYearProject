@@ -1151,6 +1151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10000
   destinations: []
+  flip: 1
 --- !u!65 &8689015240319452110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2341,6 +2342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10000
   destinations: []
+  flip: 0
 --- !u!64 &6945857918810661160
 MeshCollider:
   m_ObjectHideFlags: 0

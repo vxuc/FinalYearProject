@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10000
   destinations: []
+  flip: 1
 --- !u!114 &7156728868942006209
 MonoBehaviour:
   m_ObjectHideFlags: 0

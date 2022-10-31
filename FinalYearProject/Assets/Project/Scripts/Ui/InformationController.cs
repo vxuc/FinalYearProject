@@ -236,6 +236,12 @@ public class InformationController : MonoBehaviour
             }
             trackingDots.gameObject.SetActive(true);
         }
+        else if (cameraController.isForcedTracking())
+        {
+            TargetUi targetUi = trackingDots.GetComponent<TargetUi>();
+            targetUi.SetTarget(null);
+            trackingDots.gameObject.SetActive(true);
+        }
         else
         {
             trackingDots.gameObject.SetActive(false);
