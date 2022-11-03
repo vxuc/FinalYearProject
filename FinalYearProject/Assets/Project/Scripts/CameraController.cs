@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
     float cameraOriginalFOV;
     float cameraThermalOriginalFOV;
 
-    float fMagnificationFactor = 1.0f;
+    float magnificationFactor = 1.0f;
     CameraZoom cameraZoom = 0;
 
     [Header("Thermal")]
@@ -187,13 +187,13 @@ public class CameraController : MonoBehaviour
         switch (cameraZoom)//Change magnification
         {
             case CameraZoom.x24:
-                fMagnificationFactor = 24f;
+                magnificationFactor = 24f;
                 break;
             case CameraZoom.x4:
-                fMagnificationFactor = 4f;
+                magnificationFactor = 4f;
                 break;
             default:
-                fMagnificationFactor = 1f;
+                magnificationFactor = 1f;
                 break;
 
         }
@@ -203,22 +203,21 @@ public class CameraController : MonoBehaviour
             switch (thermalController.GetCameraMode())
             {
                 case ThermalController.CameraModes.COLOR:
-                    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / fMagnificationFactor;
+                    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
                     break;
                 default:
-                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / fMagnificationFactor;
+                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationFactor;
                     break;
             }
         }
         else
-            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / fMagnificationFactor;
+            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
 
-
-        joystickSensitivity = originalJoystickSensitivity / fMagnificationFactor;
+        joystickSensitivity = originalJoystickSensitivity / magnificationFactor;
 
         //Spot Camera
         spotCamera.GetComponent<SpotCameraController>().UpdateFOV(); 
-        spotCamera.GetComponent<SpotCameraController>().UpdateClipping((int)fMagnificationFactor); //Change the max range to get the target
+        spotCamera.GetComponent<SpotCameraController>().UpdateClipping((int)magnificationFactor); //Change the max range to get the target
     }
 
     private void GettingTarget() //Ignore
