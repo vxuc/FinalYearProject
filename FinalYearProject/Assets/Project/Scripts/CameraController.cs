@@ -39,6 +39,8 @@ public class CameraController : MonoBehaviour
     float cameraThermalOriginalFOV;
 
     float magnificationFactor = 1.0f;
+    float magnificationLag = 1.0f;
+    bool zooming = false;
     CameraZoom cameraZoom = 0;
 
     [Header("Thermal")]
@@ -94,6 +96,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button7))
         {
             CameraZooming();
+            zooming=true;
         }
     }
 
@@ -116,6 +119,10 @@ public class CameraController : MonoBehaviour
             }
 
             GettingTargetV2();
+        }
+        if(zooming)
+        {
+            CameraZoomingLag();
         }
     }
 
@@ -198,26 +205,64 @@ public class CameraController : MonoBehaviour
 
         }
 
-        if (thermalController)//change FOV from color to thermal vice versa
-        {
-            switch (thermalController.GetCameraMode())
-            {
-                case ThermalController.CameraModes.COLOR:
-                    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
-                    break;
-                default:
-                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationFactor;
-                    break;
-            }
-        }
-        else
-            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
+        //if (thermalController)//change FOV from color to thermal vice versa
+        //{
+        //    switch (thermalController.GetCameraMode())
+        //    {
+        //        case ThermalController.CameraModes.COLOR:
+        //            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
+        //            break;
+        //        default:
+        //            GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationFactor;
+        //            break;
+        //    }
+        //}
+        //else
+        //    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
 
         joystickSensitivity = originalJoystickSensitivity / magnificationFactor;
 
         //Spot Camera
         spotCamera.GetComponent<SpotCameraController>().UpdateFOV(); 
         spotCamera.GetComponent<SpotCameraController>().UpdateClipping((int)magnificationFactor); //Change the max range to get the target
+    }
+
+    private void CameraZoomingLag()
+    {
+        if (magnificationLag <= magnificationFactor)
+        {
+            magnificationLag += 0.5f;
+            if (magnificationLag > magnificationFactor)
+            {
+                magnificationLag = magnificationFactor;
+                zooming = false;
+            }
+        }
+        if (magnificationLag >= magnificationFactor)
+        {
+            magnificationLag -= 0.5f;
+            if (magnificationLag < magnificationFactor)
+            {
+                magnificationLag = magnificationFactor;
+                zooming = false;
+            }
+        }
+
+
+        if (thermalController)//change FOV from color to thermal vice versa
+        {
+            switch (thermalController.GetCameraMode())
+            {
+                case ThermalController.CameraModes.COLOR:
+                    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationLag;
+                    break;
+                default:
+                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationLag;
+                    break;
+            }
+        }
+        else
+            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationLag;
     }
 
     private void GettingTarget() //Ignore
