@@ -257,7 +257,13 @@ public class InformationController : MonoBehaviour
     private void DisplayBorder()
     {
         if (cameraController.GetCameraZoomLevel() < CameraController.CameraZoom.x24)
+        {
+            if (cameraController.GetCameraZoomLevel() > CameraController.CameraZoom.x1)
+                Border.transform.localScale = new Vector3(0.65f, 0.8f, 1f);
+            else
+                Border.transform.localScale = Vector3.one;
             Border.gameObject.SetActive(true);
+        }
         else
             Border.gameObject.SetActive(false);
     }
