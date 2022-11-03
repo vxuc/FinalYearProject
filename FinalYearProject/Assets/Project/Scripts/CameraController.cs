@@ -20,6 +20,10 @@ public class CameraController : MonoBehaviour
     public GameObject spyder;
 
     bool resetting = false;
+    [SerializeField] float lagTime = 0.3f;
+    float inputLagTime;
+    float outputLagTime;
+    Vector3 currDir = Vector3.zero;
 
     [Header("Tracking")]
     public Camera spotCamera;//Additional Camera to get the target as raycast is smaller the longer the distance the object is from the camera
@@ -66,6 +70,9 @@ public class CameraController : MonoBehaviour
         cameraThermalOriginalFOV = cameraOriginalFOV * 24 / 17; //Diff Pov for thermal cam
 
         rotation += spyder.transform.rotation.eulerAngles; //Changes rotation on where the spyder is facing at the start
+
+        inputLagTime = lagTime;
+        outputLagTime = lagTime;
     }
 
     // Update is called once per frame
@@ -102,7 +109,7 @@ public class CameraController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!informationController.GetRDRMode() || !forcedTracking)
+        if (!informationController.GetRDRMode() && !forcedTracking)
         {
             if (!tracking && !resetting)
             {
@@ -145,24 +152,41 @@ public class CameraController : MonoBehaviour
         }
         if(Input.GetAxis("Joystick X") != 0 || Input.GetAxis("Joystick Y") != 0) //check if there is a joystick input
         {
-            if(overTimeSensitivity < maxOverTimeSensitivity)
-                overTimeSensitivity += Time.deltaTime;
-        }
-        else
-        {
-            overTimeSensitivity = 0;
-        }
+            inputLagTime -= Time.deltaTime;
+            if (inputLagTime < 0)
+            {
+                if (overTimeSensitivity < maxOverTimeSensitivity)
+                    overTimeSensitivity += Time.deltaTime;
 
-        if(currAngleX <= -45 && y < 0) //min elevation angle
-        {
-            rotation = new Vector3(45, transform.rotation.eulerAngles.y, 0);
+                if (currAngleX <= -45 && y < 0) //min elevation angle
+                {
+                    rotation = new Vector3(45, transform.rotation.eulerAngles.y, 0);
+                }
+                else if (currAngleX >= 85 && y > 0)//max elevation angle
+                {
+                    rotation = new Vector3(-85, transform.rotation.eulerAngles.y, 0);
+                }
+                else
+                    rotation += new Vector3(-y, x, 0) * Time.deltaTime;
+
+                currDir = new Vector3(-y, x, 0);
+            }
         }
-        else if (currAngleX >= 85 && y > 0)//max elevation angle
+        else 
         {
-            rotation = new Vector3(-85, transform.rotation.eulerAngles.y, 0);
+            inputLagTime = lagTime;
+            overTimeSensitivity = 0;
+            outputLagTime -= Time.deltaTime;
+        }
+        if (outputLagTime > 0)
+        {
+            rotation += currDir * Time.deltaTime;
         }
         else
-            rotation += new Vector3(-y, x, 0) * Time.deltaTime;
+        {
+            outputLagTime = lagTime;
+            currDir = Vector3.zero;
+        }
 
         transform.rotation = Quaternion.Euler(rotation);
     }
@@ -377,6 +401,9 @@ public class CameraController : MonoBehaviour
             smoothTimer = timeToTrackTarget;
             objectGazedTracked = null;
             tracking = false;
+        }
+        else if(forcedTracking)
+        {
             forcedTracking = false;
         }
         else if (!Physics.Linecast(objectGazed.transform.position, transform.position)) //Locking on a target

@@ -25,7 +25,7 @@ public class DetailsPage : MonoBehaviour
     {
         //PlaneWaypoint plane = new PlaneWaypoint();
 
-        double planeHeight = plane.transform.position.y / 30.48;
+        double planeHeight = plane.transform.parent.localPosition.y / 30.48;
         float bearingHeight = (Mathf.Atan2(plane.transform.position.x - Camera.main.transform.position.x, plane.transform.position.z - Camera.main.transform.position.z)) * Mathf.Rad2Deg;
 
         bearingHeight = (bearingHeight < 0) ? bearingHeight + 360 : bearingHeight;
