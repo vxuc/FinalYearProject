@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     };
 
     [Header("Camera Movement")]
-    Vector3 rotation = new Vector3(0, 0, 0);
+    Vector3 rotation = Vector3.zero;
     [SerializeField] float joystickSensitivity = 100;
     float originalJoystickSensitivity;
     float overTimeSensitivity = 0;
@@ -22,9 +22,9 @@ public class CameraController : MonoBehaviour
     bool resetting = false;
 
     [Header("Tracking")]
-    public Camera spotCamera;
+    public Camera spotCamera;//Additional Camera to get the target as raycast is smaller the longer the distance the object is from the camera
     bool tracking = false;
-    bool forcedTracking = false;
+    bool forcedTracking = false; //After Track Ends
     GameObject objectGazed = null;
     GameObject objectGazedTracked = null;
     [SerializeField] float timeToLoseTarget = 0;
@@ -38,7 +38,9 @@ public class CameraController : MonoBehaviour
     float cameraOriginalFOV;
     float cameraThermalOriginalFOV;
 
-    float fMagnificationFactor = 1.0f;
+    float magnificationFactor = 1.0f;
+    float magnificationLag = 1.0f;
+    bool zooming = false;
     CameraZoom cameraZoom = 0;
 
     [Header("Thermal")]
@@ -51,18 +53,19 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Factory setting for camera
         originalJoystickSensitivity = joystickSensitivity;
         timer = timeToLoseTarget;
         smoothTimer = timeToTrackTarget;
 
-        if (GetComponent<Camera>())
+        if (GetComponent<Camera>()) //For zooming
             cameraOriginalFOV = GetComponent<Camera>().fieldOfView;
         else
             cameraOriginalFOV = 70;
 
-        cameraThermalOriginalFOV = cameraOriginalFOV * 24 / 17;
+        cameraThermalOriginalFOV = cameraOriginalFOV * 24 / 17; //Diff Pov for thermal cam
 
-        rotation += spyder.transform.rotation.eulerAngles;
+        rotation += spyder.transform.rotation.eulerAngles; //Changes rotation on where the spyder is facing at the start
     }
 
     // Update is called once per frame
@@ -70,11 +73,8 @@ public class CameraController : MonoBehaviour
     {
         if (informationController.GetRDRMode())
         {
-            if (IsTracking())
+            if (IsTracking()) //To stop trackings
                 ToggleTargeting();
-
-            if (Input.GetKeyDown(KeyCode.Joystick1Button7))
-                CameraZooming();
         }
         else
         {
@@ -86,15 +86,17 @@ public class CameraController : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button7))
-            {
-                CameraZooming();
-            }
-
             if (Input.GetKeyDown(KeyCode.Joystick1Button10) && !tracking)
             {
                 resetting = true;
             }
+        }
+
+        //Does not matter if its RDR or not
+        if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button7))
+        {
+            CameraZooming();
+            zooming=true;
         }
     }
 
@@ -118,6 +120,10 @@ public class CameraController : MonoBehaviour
 
             GettingTargetV2();
         }
+        if(zooming)
+        {
+            CameraZoomingLag();
+        }
     }
 
     private void CameraRotation()
@@ -125,7 +131,7 @@ public class CameraController : MonoBehaviour
         float x = 0;
         float y = 0;
 
-        float angleX = transform.rotation.eulerAngles.x + spyder.transform.rotation.eulerAngles.x;
+        float angleX = transform.rotation.eulerAngles.x + spyder.transform.rotation.eulerAngles.x;//Offset default
         angleX = (angleX > 180) ? angleX - 360 : angleX;
         float currAngleX = -angleX;
 
@@ -137,7 +143,7 @@ public class CameraController : MonoBehaviour
             x = Input.GetAxis("Joystick X") * joystickSensitivity* overTimeSensitivity / maxOverTimeSensitivity;
             y = Input.GetAxis("Joystick Y") * joystickSensitivity* overTimeSensitivity / maxOverTimeSensitivity;
         }
-        if(Input.GetAxis("Joystick X") != 0 || Input.GetAxis("Joystick Y") != 0)
+        if(Input.GetAxis("Joystick X") != 0 || Input.GetAxis("Joystick Y") != 0) //check if there is a joystick input
         {
             if(overTimeSensitivity < maxOverTimeSensitivity)
                 overTimeSensitivity += Time.deltaTime;
@@ -147,11 +153,11 @@ public class CameraController : MonoBehaviour
             overTimeSensitivity = 0;
         }
 
-        if(currAngleX <= -45 && y < 0)
+        if(currAngleX <= -45 && y < 0) //min elevation angle
         {
             rotation = new Vector3(45, transform.rotation.eulerAngles.y, 0);
         }
-        else if (currAngleX >= 85 && y > 0)
+        else if (currAngleX >= 85 && y > 0)//max elevation angle
         {
             rotation = new Vector3(-85, transform.rotation.eulerAngles.y, 0);
         }
@@ -165,14 +171,14 @@ public class CameraController : MonoBehaviour
     {
 
         float currFOV = GetComponent<Camera>().fieldOfView;
-        if (Input.GetKeyDown(KeyCode.Joystick1Button5))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button5)) //Zoom in
         {
             if (cameraZoom < CameraZoom.TOTAL_ZOOMS - 1)
             {
                 ++cameraZoom;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Joystick1Button3))
+        else if (Input.GetKeyDown(KeyCode.Joystick1Button3)) //Zoom out
         {
             if (cameraZoom > 0)
             {
@@ -180,49 +186,86 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Joystick1Button7))
+        if (Input.GetKeyDown(KeyCode.Joystick1Button7))//Thermal
         {
             thermalController.ChangeCameraMode();
         }
 
-        switch (cameraZoom)
+        switch (cameraZoom)//Change magnification
         {
             case CameraZoom.x24:
-                fMagnificationFactor = 24f;
+                magnificationFactor = 24f;
                 break;
             case CameraZoom.x4:
-                fMagnificationFactor = 4f;
+                magnificationFactor = 4f;
                 break;
             default:
-                fMagnificationFactor = 1f;
+                magnificationFactor = 1f;
                 break;
 
         }
 
-        if (thermalController)
+        //if (thermalController)//change FOV from color to thermal vice versa
+        //{
+        //    switch (thermalController.GetCameraMode())
+        //    {
+        //        case ThermalController.CameraModes.COLOR:
+        //            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
+        //            break;
+        //        default:
+        //            GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationFactor;
+        //            break;
+        //    }
+        //}
+        //else
+        //    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
+
+        joystickSensitivity = originalJoystickSensitivity / magnificationFactor;
+
+        //Spot Camera
+        spotCamera.GetComponent<SpotCameraController>().UpdateFOV(); 
+        spotCamera.GetComponent<SpotCameraController>().UpdateClipping((int)magnificationFactor); //Change the max range to get the target
+    }
+
+    private void CameraZoomingLag()
+    {
+        if (magnificationLag <= magnificationFactor)
+        {
+            magnificationLag += 0.5f;
+            if (magnificationLag > magnificationFactor)
+            {
+                magnificationLag = magnificationFactor;
+                zooming = false;
+            }
+        }
+        if (magnificationLag >= magnificationFactor)
+        {
+            magnificationLag -= 0.5f;
+            if (magnificationLag < magnificationFactor)
+            {
+                magnificationLag = magnificationFactor;
+                zooming = false;
+            }
+        }
+
+
+        if (thermalController)//change FOV from color to thermal vice versa
         {
             switch (thermalController.GetCameraMode())
             {
                 case ThermalController.CameraModes.COLOR:
-                    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / fMagnificationFactor;
+                    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationLag;
                     break;
                 default:
-                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / fMagnificationFactor;
+                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationLag;
                     break;
             }
         }
         else
-            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / fMagnificationFactor;
-
-
-        joystickSensitivity = originalJoystickSensitivity / fMagnificationFactor;
-
-        //Spot Camera
-        spotCamera.GetComponent<SpotCameraController>().UpdateFOV();
-        spotCamera.GetComponent<SpotCameraController>().UpdateClipping((int)fMagnificationFactor);
+            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationLag;
     }
 
-    private void GettingTarget()
+    private void GettingTarget() //Ignore
     {
         if (objectGazed)
             Debug.Log(objectGazed.name);
@@ -275,10 +318,10 @@ public class CameraController : MonoBehaviour
     private void GettingTargetV2()
     {
 
-        Collider[] gameObjects = (Collider[])FindObjectsOfType(typeof(Collider));
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
+        Collider[] gameObjects = (Collider[])FindObjectsOfType(typeof(Collider));//Get objects with collider
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera); //Get camera view
 
-        if (objectGazed)
+        if (objectGazed)//objects gazed went out of bound from camera
         {
             if (!GeometryUtility.TestPlanesAABB(planes, objectGazed.GetComponent<Collider>().bounds))
             {
@@ -289,9 +332,9 @@ public class CameraController : MonoBehaviour
         foreach (Collider gameObject in gameObjects)
         {
             if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("SpyderBody") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane") 
-                && !Physics.Linecast(gameObject.transform.position, transform.position))
+                && !Physics.Linecast(gameObject.transform.position, transform.position)) //Check whether the object should be trackable or not
             {
-                bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Collider>().bounds);
+                bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Collider>().bounds); // check if gameobject is on camera view
 
                 if (onSight)
                 {
@@ -305,14 +348,18 @@ public class CameraController : MonoBehaviour
                             HeatController object1Heat = objectGazed.GetComponent<HeatController>();
                             HeatController object2Heat = gameObject.transform.gameObject.GetComponent<HeatController>();
 
-                            if (!object1Heat && object2Heat)
+                            if (!object1Heat && object2Heat) //Get the object with the highest heat
                             {
                                 objectGazed = gameObject.transform.gameObject;
                             }
-                            if (object1Heat && object2Heat)
+                            else if (object1Heat && object2Heat)
                             {
                                 if (object1Heat.GetHeatValue() < object2Heat.GetHeatValue())
                                     objectGazed = gameObject.transform.gameObject;
+                            }
+                            else
+                            {
+                                return;
                             }
                         }
                     }
@@ -323,7 +370,7 @@ public class CameraController : MonoBehaviour
 
     private void ToggleTargeting()
     {
-        if (tracking)
+        if (tracking) //Letting go of a target
         {
             rotation = transform.rotation.eulerAngles;
             timer = timeToLoseTarget;
@@ -331,18 +378,16 @@ public class CameraController : MonoBehaviour
             objectGazedTracked = null;
             tracking = false;
             forcedTracking = false;
-            Debug.Log("Letting go a target");
         }
-        else if (!Physics.Linecast(objectGazed.transform.position, transform.position))
+        else if (!Physics.Linecast(objectGazed.transform.position, transform.position)) //Locking on a target
         {
             objectGazedTracked = objectGazed;
             tracking = true;
-            Debug.Log("Locking on a target");
         }
     }
     private void FollowingTarget()
     {
-        if (timer < 0 || !objectGazedTracked.activeInHierarchy || !objectGazedTracked)
+        if (timer < 0 || !objectGazedTracked.activeInHierarchy || !objectGazedTracked) //Loses track of target
         {
             rotation = transform.rotation.eulerAngles;
             objectGazedTracked = null;
@@ -354,13 +399,13 @@ public class CameraController : MonoBehaviour
         }
         RaycastHit raycastHit;
 
-        if (objectGazedTracked?.transform.Find("Pivot"))
+        if (objectGazedTracked?.transform.Find("Pivot")) //Get the supposed area that need to be tracked
         {
             //Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position + (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * 0.5f - transform.position;
 
             Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position +
                 (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed/15000
-                - transform.position;
+                - transform.position; //Offset 
 
 
             Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
@@ -392,7 +437,7 @@ public class CameraController : MonoBehaviour
                 }
             }
         }
-        else
+        else //No pivots
         {
             Vector3 toRotate = objectGazedTracked.transform.position - transform.position;
             Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
@@ -425,7 +470,7 @@ public class CameraController : MonoBehaviour
 
     private void ResetCameraAxis()
     {
-        rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(spyder.transform.rotation.eulerAngles.y, 0, 0)), 4.5f * Time.deltaTime).eulerAngles;
+        rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(new Vector3(0, spyder.transform.rotation.eulerAngles.y, 0)), 4.5f * Time.deltaTime).eulerAngles;
         transform.rotation = Quaternion.Euler(rotation);
         Debug.Log(rotation.x + "," + rotation.y);
 
@@ -471,5 +516,10 @@ public class CameraController : MonoBehaviour
     public GameObject GetTrackedGameObject()
     {
         return objectGazedTracked;
+    }
+
+    public void SpyderDirChange()
+    {
+        resetting = true;
     }
 }
