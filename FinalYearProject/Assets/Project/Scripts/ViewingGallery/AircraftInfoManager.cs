@@ -11,6 +11,7 @@ public class AircraftInfoManager : MonoBehaviour
     [SerializeField] Transform aircraftInfoContent;
     [SerializeField] GameObject aircraftInfoPanelPrefab;
     [SerializeField] TextMeshProUGUI descriptionText;
+    [SerializeField] TextMeshProUGUI distanceText;
 
     public GameObject currentAircraft;
 
@@ -106,6 +107,11 @@ public class AircraftInfoManager : MonoBehaviour
             }
             newInfo.description = aircraft.description + specs;
         }
+    }
+
+    private void Update()
+    {
+        distanceText.text = ((int)GameObject.Find("ViewCamera").GetComponent<Camera>().fieldOfView).ToString() + "m";
     }
 
     public void ChangeAircraft(string name)
