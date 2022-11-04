@@ -18,6 +18,11 @@ public class InformationController : MonoBehaviour
     public Image pinkDot;
     public Image pinkSpike;
 
+    [Header("Rotation")]
+    public RectTransform rotationIndicator;
+    bool trueNorth = true;
+    public TextMeshProUGUI northText;
+
     [Header("ModesText")]
     bool firstHalf = true; //TC/RDR
     bool secondHalf = true; //Central/Autonomous
@@ -134,7 +139,10 @@ public class InformationController : MonoBehaviour
     private void updateRotationText()
     {
         float az = userCamera.transform.rotation.eulerAngles.y;
-        
+        if(!trueNorth)
+            az = userCamera.transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y;
+        rotationIndicator.localRotation = Quaternion.Euler(new Vector3(0, 0, -userCamera.transform.rotation.eulerAngles.y));
+
         az = (az < 0) ? az + 360: az;
         az = (az > 359) ? az = 0 : az;
             //string az = (userCamera.rotation.y * Mathf.Rad2Deg).ToString("F0");
@@ -236,6 +244,12 @@ public class InformationController : MonoBehaviour
             }
             trackingDots.gameObject.SetActive(true);
         }
+        else if (cameraController.isForcedTracking())
+        {
+            TargetUi targetUi = trackingDots.GetComponent<TargetUi>();
+            targetUi.SetTarget(null);
+            trackingDots.gameObject.SetActive(true);
+        }
         else
         {
             trackingDots.gameObject.SetActive(false);
@@ -251,7 +265,13 @@ public class InformationController : MonoBehaviour
     private void DisplayBorder()
     {
         if (cameraController.GetCameraZoomLevel() < CameraController.CameraZoom.x24)
+        {
+            if (cameraController.GetCameraZoomLevel() > CameraController.CameraZoom.x1)
+                Border.transform.localScale = new Vector3(0.65f, 0.8f, 1f);
+            else
+                Border.transform.localScale = Vector3.one;
             Border.gameObject.SetActive(true);
+        }
         else
             Border.gameObject.SetActive(false);
     }
@@ -274,6 +294,17 @@ public class InformationController : MonoBehaviour
         zoomText.text = text;
     }
     
+    public void SetNorth()
+    {
+        if (northText)
+        {
+            if (!trueNorth)
+                northText.text = "True North";
+            else
+                northText.text = "Cabin North";
+        }
+        trueNorth = !trueNorth;
+    }
     public bool GetRDRMode()
     {
         return !firstHalf;

@@ -15,6 +15,7 @@ public class ThermalController : MonoBehaviour
     GameObject[] gameObjectsWithHeat;
 
     [Header("InfraredEnvironment")]
+    public GameObject mainLight,terrain;
     public GameObject infraredEnvironmentWhite, infraredEnvironmentBlack;
 
     [Header("Shader")]
@@ -23,6 +24,7 @@ public class ThermalController : MonoBehaviour
     [Header("Cloud")]
     public Shader cloudDefaultShader,cloudShaderWhite, cloudShaderBlack;
     public Material cloudDefaultMaterial, cloudWhiteMaterial, cloudBlackMaterial;
+
 
     CameraModes cameraModes;
     // Start is called before the first frame update
@@ -48,14 +50,23 @@ public class ThermalController : MonoBehaviour
             case CameraModes.THERMAL_WHITE:
                 infraredEnvironmentWhite.SetActive(true);
                 infraredEnvironmentBlack.SetActive(false);
+
                 break;
             case CameraModes.THERMAL_BLACK:
                 infraredEnvironmentWhite.SetActive(false);
                 infraredEnvironmentBlack.SetActive(true);
+                if(mainLight)
+                    mainLight.SetActive(false);
+                if (terrain)
+                    terrain.SetActive(false);
                 break;
             default:
                 infraredEnvironmentWhite.SetActive(false);
                 infraredEnvironmentBlack.SetActive(false);
+                if (mainLight)
+                    mainLight.SetActive(true);
+                if (terrain)
+                    terrain.SetActive(true);
                 break;
         }
 
@@ -77,14 +88,13 @@ public class ThermalController : MonoBehaviour
                             SetShader(renderer, blackShader);
                             break;
                         default:
-                            if (gameObject.layer == LayerMask.NameToLayer("ObjectsWithTexture"))
+                            if (gameObject.layer == LayerMask.NameToLayer("ObjectsWithTexture") || gameObject.layer == LayerMask.NameToLayer("SpyderBody") || gameObject.layer == LayerMask.NameToLayer("SpyderCamera"))
                                 SetShaderToNormal(renderer, textureShader);
                             else if (gameObject.layer == LayerMask.NameToLayer("ObjectsWithTextureMask"))
                                 SetShaderToNormal(renderer, textureMaskedShader);
                             else
                             {
                                 SetShaderToNormal(renderer, defaultShader);
-                                Debug.Log("brh");
                             }
 
                             break;

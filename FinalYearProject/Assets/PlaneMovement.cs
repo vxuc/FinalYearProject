@@ -10,7 +10,7 @@ public class PlaneMovement : MonoBehaviour
     public float movementSpeed;
 
     public List<Transform> destinations;
-
+    [SerializeField] bool flip = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -35,6 +35,8 @@ public class PlaneMovement : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.fixedDeltaTime * movementSpeed);
 
         var newRotation = Quaternion.LookRotation(transform.position - desiredPosition, Vector3.up).eulerAngles;
+        if (flip)
+            newRotation += new Vector3(0,180,0);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotation), Time.fixedDeltaTime);
     }
 
