@@ -12,8 +12,10 @@ public class AircraftInfoManager : MonoBehaviour
     [SerializeField] GameObject aircraftInfoPanelPrefab;
     [SerializeField] TextMeshProUGUI descriptionText;
     [SerializeField] TextMeshProUGUI distanceText;
+    [SerializeField] TextMeshProUGUI distanceText2;
 
     public GameObject currentAircraft;
+    public GameObject prevAircraft;
 
     void Awake()
     {
@@ -112,13 +114,11 @@ public class AircraftInfoManager : MonoBehaviour
     private void Update()
     {
         distanceText.text = ((int)GameObject.Find("ViewCamera").GetComponent<Camera>().fieldOfView).ToString() + "m";
+        distanceText2.text = ((int)GameObject.Find("ViewCamera").GetComponent<Camera>().fieldOfView).ToString() + "m";
     }
 
     public void ChangeAircraft(string name)
     {
-        if (currentAircraft != null)
-            Destroy(currentAircraft);
-
         if (Resources.Load("Models/" + name) == null)
             return;
 
@@ -133,7 +133,24 @@ public class AircraftInfoManager : MonoBehaviour
 
         GameObject newGO = Instantiate(Resources.Load("Models/" + name) as GameObject, Vector3.zero, Quaternion.identity);
         newGO.transform.localScale = new Vector3(0.001f * scale, 0.001f * scale, 0.001f * scale);
+        if (currentAircraft)
+        {
+            if (prevAircraft)
+                Destroy(prevAircraft);
+            prevAircraft = currentAircraft;
+            prevAircraft.layer = 15;
+            for (int i = 0; i < prevAircraft.transform.childCount; i++)
+            {
+                prevAircraft.transform.GetChild(i).gameObject.layer = 15;
+            }
+        }
+
         currentAircraft = newGO;
+        currentAircraft.layer = 14;
+        for (int i = 0; i < currentAircraft.transform.childCount; i++)
+        {
+            currentAircraft.transform.GetChild(i).gameObject.layer = 14;
+        }
     }
 }
 
