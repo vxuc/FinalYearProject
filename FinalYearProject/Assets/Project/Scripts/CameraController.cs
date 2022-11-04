@@ -12,6 +12,9 @@ public class CameraController : MonoBehaviour
         TOTAL_ZOOMS
     };
 
+    [Header("Replay")]
+    public ReplayManager replayManager;
+
     [Header("Camera Movement")]
     Vector3 rotation = Vector3.zero;
     [SerializeField] float joystickSensitivity = 100;
@@ -78,58 +81,65 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (informationController.GetRDRMode())
+        Debug.Log(replayManager.isReplayMode);
+        if (!replayManager.isReplayMode)
         {
-            if (IsTracking()) //To stop trackings
-                ToggleTargeting();
-        }
-        else
-        {
-            if (objectGazed || tracking)
+            if (informationController.GetRDRMode())
             {
-                if (Input.GetKeyDown(KeyCode.JoystickButton0))
-                {
+                if (IsTracking()) //To stop trackings
                     ToggleTargeting();
+            }
+            else
+            {
+                if (objectGazed || tracking)
+                {
+                    if (Input.GetKeyDown(KeyCode.JoystickButton0))
+                    {
+                        ToggleTargeting();
+                    }
+                }
+
+                if (Input.GetKeyDown(KeyCode.Joystick1Button10) && !tracking)
+                {
+                    resetting = true;
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Joystick1Button10) && !tracking)
+            //Does not matter if its RDR or not
+            if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button7))
             {
-                resetting = true;
+                CameraZooming();
+                zooming = true;
             }
-        }
-
-        //Does not matter if its RDR or not
-        if (Input.GetKeyDown(KeyCode.Joystick1Button5) || Input.GetKeyDown(KeyCode.Joystick1Button3) || Input.GetKeyDown(KeyCode.Joystick1Button7))
-        {
-            CameraZooming();
-            zooming=true;
         }
     }
 
     private void FixedUpdate()
     {
-        if (!informationController.GetRDRMode() && !forcedTracking)
+        if (!replayManager.isReplayMode)
         {
-            if (!tracking && !resetting)
+            if (!informationController.GetRDRMode() && !forcedTracking)
             {
-                CameraRotation();
-            }
-            else if (tracking)
-            {
-                FollowingTarget();
-            }
+                if (!tracking && !resetting)
+                {
+                    CameraRotation();
+                }
+                else if (tracking)
+                {
+                    FollowingTarget();
+                }
 
-            else if(resetting)
-            {
-                ResetCameraAxis();
-            }
+                else if (resetting)
+                {
+                    ResetCameraAxis();
+                }
 
-            GettingTargetV2();
-        }
-        if(zooming)
-        {
-            CameraZoomingLag();
+                GettingTargetV2();
+            }
+            if (zooming)
+            {
+                CameraZoomingLag();
+            }
         }
     }
 

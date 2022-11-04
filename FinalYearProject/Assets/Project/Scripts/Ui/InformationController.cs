@@ -20,6 +20,7 @@ public class InformationController : MonoBehaviour
 
     [Header("Rotation")]
     public RectTransform rotationIndicator;
+    public RectTransform spyderIndicator;
     bool trueNorth = true;
     public TextMeshProUGUI northText;
 
@@ -141,7 +142,11 @@ public class InformationController : MonoBehaviour
         float az = userCamera.transform.rotation.eulerAngles.y;
         if(!trueNorth)
             az = userCamera.transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y;
-        rotationIndicator.localRotation = Quaternion.Euler(new Vector3(0, 0, -userCamera.transform.rotation.eulerAngles.y));
+
+        if(rotationIndicator)
+            rotationIndicator.localRotation = Quaternion.Euler(new Vector3(0, 0, -userCamera.transform.rotation.eulerAngles.y));
+        if (spyderIndicator)
+            spyderIndicator.localRotation = Quaternion.Euler(new Vector3(0, 0, -spyder.transform.rotation.eulerAngles.y));
 
         az = (az < 0) ? az + 360: az;
         az = (az > 359) ? az = 0 : az;
