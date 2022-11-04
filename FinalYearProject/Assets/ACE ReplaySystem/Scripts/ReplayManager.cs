@@ -17,7 +17,7 @@ public class ReplayManager : MonoBehaviour
     //Main system variables
     [HideInInspector]
     public List<Record> records = new List<Record>();
-    public bool isReplayMode = false;
+    private bool isReplayMode = false;
 
     [Header("Maximum frames recorded")]
     [SerializeField] private int recordMaxLength = 3600; // 60fps * 60seconds = 3600 frames 
