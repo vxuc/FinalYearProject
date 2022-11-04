@@ -47,7 +47,7 @@ public class Login : MonoBehaviour
     {
         if (Verify(loginNameInput.text, loginPasswordInput.text))
         {
-            StartCoroutine(DebugText("Login Success", 1, false));
+            StartCoroutine(DebugText("Login Success", 1.5f, false));
             SceneManager.LoadScene(1);
         }
         else
