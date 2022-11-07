@@ -14,6 +14,7 @@ public class Record : MonoBehaviour
         DATA_CAMERA_ZOOM,
         DATA_CAMERA_MODE,
         DATA_CAMERA_TRACKING,
+        DATA_DATE_TIME,
         DATA_TOTAL
     }
 
@@ -70,6 +71,8 @@ public class Record : MonoBehaviour
     private WeatherController.WEATHER_TYPE weatherType;
 
     [SerializeField] string prefabName;
+    [SerializeField] bool recordOnce = false;
+    bool record = false;
 
     void Start()
     {
@@ -120,6 +123,9 @@ public class Record : MonoBehaviour
 
     public void RecordFrame()
     {
+        if (recordOnce && record)
+            return;
+
         //record transforms
         Frame frame = new Frame(transform.position, transform.rotation, transform.localScale, name + DataManager.Instance.GetNewID().ToString(), prefabName, ReplayManager.Instance.GetRunningTime());
         frame.record_data.spawnFrame = ReplayManager.Instance.GetRunningTime();
@@ -151,8 +157,14 @@ public class Record : MonoBehaviour
         //record camera mode
         RecordCameraMode(frame);
 
+        //record start date time
+        if (recordOnce)
+            RecordDateTime(frame);
+
         //Add new frame to the list
         AddFrame(frame);
+
+        record = true;
     }
 
     //Add frame, if list has maxLength remove first element
@@ -246,6 +258,13 @@ public class Record : MonoBehaviour
     void RecordCameraMode(Frame frame)
     {
         frame.SetCameraMode(FindObjectOfType<ThermalController>().GetCameraMode());
+    }
+
+    //Record Start Date Time
+    void RecordDateTime(Frame frame)
+    {
+        frame.SetDateTime(DateTime.Now);
+        Debug.Log("ONCE");
     }
 
     //Prepare to record again

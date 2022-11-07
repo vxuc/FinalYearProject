@@ -131,6 +131,45 @@ public struct SerializableQuaternion
     }
 }
 
+[System.Serializable]
+public class SerializableDateTime : IComparable<SerializableDateTime>
+{
+    [SerializeField]
+    private long m_ticks;
+
+    private bool initialized;
+    private DateTime m_dateTime;
+    public DateTime DateTime
+    {
+        get
+        {
+            if (!initialized)
+            {
+                m_dateTime = new DateTime(m_ticks);
+                initialized = true;
+            }
+
+            return m_dateTime;
+        }
+    }
+
+    public SerializableDateTime(DateTime dateTime)
+    {
+        m_ticks = dateTime.Ticks;
+        m_dateTime = dateTime;
+        initialized = true;
+    }
+
+    public int CompareTo(SerializableDateTime other)
+    {
+        if (other == null)
+        {
+            return 1;
+        }
+        return m_ticks.CompareTo(other.m_ticks);
+    }
+}
+
 [Serializable]
 public class Frame
 {
@@ -169,6 +208,9 @@ public class Frame
 
     //camera mode
     ThermalController.CameraModes cameraMode;
+
+    //start date time
+    SerializableDateTime dateTime;
 
     //record data
     public RECORD_DATA record_data;
@@ -233,6 +275,11 @@ public class Frame
         cameraMode = mode;
     }
 
+    public void SetDateTime(DateTime time)
+    {
+        dateTime = new SerializableDateTime(time);
+    }
+
     //Getters
     public Vector3 GetPosition() { return pos; }
     public Vector3 GetScale() { return scale; }
@@ -252,4 +299,5 @@ public class Frame
     public int GetCameraZoom() { return cameraZoom; }
     public bool GetCameraTracking() { return cameraTracking; }
     public ThermalController.CameraModes GetCameraMode() { return cameraMode; }
+    public DateTime GetDateTime() { return dateTime.DateTime; }
 }

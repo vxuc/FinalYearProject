@@ -40,6 +40,9 @@ public class InformationController : MonoBehaviour
     public TextMeshProUGUI zoomText;
     CameraController.CameraZoom currZoomLevel;
 
+    public System.DateTime dateTime = System.DateTime.Now;
+
+    System.DateTime startTime;
 
     void Start()
     {
@@ -50,6 +53,7 @@ public class InformationController : MonoBehaviour
             cameraController = userCamera.GetComponent<CameraController>();
             currZoomLevel = cameraController.GetCameraZoomLevel();
         }
+        startTime = System.DateTime.Now;
     }
 
     // Update is called once per frame
@@ -130,11 +134,37 @@ public class InformationController : MonoBehaviour
         }
     }
 
+    public IEnumerator UpdateServerTime()
+    {
+        while (true)
+        {
+            Debug.Log("UPDATINGG");
+            dateTime.AddHours(1);
+            yield return new WaitForSeconds(1);
+        }
+    }
+
+    public void UpdateTime()
+    {
+        //StartCoroutine(UpdateServerTime());
+    }
+
     private void updateTimeText()
     {
-        string time = System.DateTime.Now.ToString("HH:mm:ss");
-        string date = System.DateTime.Now.ToString("dd/MM/yy");
-        timeText.text = date + "    " + time;
+        if (ReplayManager.Instance.ReplayMode())
+        {
+            System.TimeSpan timeDiff = startTime - dateTime;
+            Debug.Log("CURR: " + System.DateTime.Now.Subtract(timeDiff));
+            string time = System.DateTime.Now.Subtract(timeDiff).ToString("HH:mm:ss");
+            string date = System.DateTime.Now.Subtract(timeDiff).ToString("dd/MM/yy");
+            timeText.text = date + "    " + time;
+        }
+        else
+        {
+            string time = System.DateTime.Now.ToString("HH:mm:ss");
+            string date = System.DateTime.Now.ToString("dd/MM/yy");
+            timeText.text = date + "    " + time;
+        }
     }
 
     private void updateRotationText()

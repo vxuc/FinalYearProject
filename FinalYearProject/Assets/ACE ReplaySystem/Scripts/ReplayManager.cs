@@ -30,6 +30,7 @@ public class ReplayManager : MonoBehaviour
     [Tooltip("Time between recorded frames")]
     [SerializeField] private float recordInterval = 0.2f;
 
+    private bool loadDateTime = false;
     private int timer = 0;
     private int timer2 = 0;
 
@@ -266,6 +267,24 @@ public class ReplayManager : MonoBehaviour
                             if (records[i].GetFrameAtIndex(auxIndex) != null)
                             {
                                 FindObjectOfType<InformationController>().SetTrackingDots(records[i].GetFrameAtIndex(auxIndex).GetCameraTracking());
+                            }
+                        }
+                        else if (records[i].dataType == Record.DATA_TYPE.DATA_DATE_TIME)
+                        {
+                            if (!loadDateTime)
+                            {
+                                //weather type
+                                if (records[i].GetFrameAtIndex(auxIndex) != null)
+                                {
+                                    foreach (InformationController info in FindObjectsOfType<InformationController>())
+                                    {
+                                        info.dateTime = records[i].GetFrameAtIndex(auxIndex).GetDateTime();
+                                        info.UpdateTime();
+                                        Debug.Log("SUP: " + info.dateTime);
+
+                                    }
+                                }
+                                loadDateTime = true;
                             }
                         }
 
