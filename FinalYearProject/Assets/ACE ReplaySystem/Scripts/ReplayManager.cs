@@ -279,9 +279,6 @@ public class ReplayManager : MonoBehaviour
                                     foreach (InformationController info in FindObjectsOfType<InformationController>())
                                     {
                                         info.dateTime = records[i].GetFrameAtIndex(auxIndex).GetDateTime();
-                                        info.UpdateTime();
-                                        Debug.Log("SUP: " + info.dateTime);
-
                                     }
                                 }
                                 loadDateTime = true;

@@ -134,27 +134,11 @@ public class InformationController : MonoBehaviour
         }
     }
 
-    public IEnumerator UpdateServerTime()
-    {
-        while (true)
-        {
-            Debug.Log("UPDATINGG");
-            dateTime.AddHours(1);
-            yield return new WaitForSeconds(1);
-        }
-    }
-
-    public void UpdateTime()
-    {
-        //StartCoroutine(UpdateServerTime());
-    }
-
     private void updateTimeText()
     {
         if (ReplayManager.Instance.ReplayMode())
         {
             System.TimeSpan timeDiff = startTime - dateTime;
-            Debug.Log("CURR: " + System.DateTime.Now.Subtract(timeDiff));
             string time = System.DateTime.Now.Subtract(timeDiff).ToString("HH:mm:ss");
             string date = System.DateTime.Now.Subtract(timeDiff).ToString("dd/MM/yy");
             timeText.text = date + "    " + time;
