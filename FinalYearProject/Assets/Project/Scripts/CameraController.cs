@@ -49,6 +49,7 @@ public class CameraController : MonoBehaviour
     float magnificationLag = 1.0f;
     bool zooming = false;
     CameraZoom cameraZoom = 0;
+    float zoomRate;
 
     [Header("Thermal")]
     public ThermalController thermalController;
@@ -109,6 +110,9 @@ public class CameraController : MonoBehaviour
             {
                 CameraZooming();
                 zooming = true;
+
+                //Getting zoomRate
+                zoomRate = (magnificationFactor - magnificationLag) * 1.3f * Time.fixedDeltaTime;
             }
         }
     }
@@ -265,18 +269,20 @@ public class CameraController : MonoBehaviour
 
     private void CameraZoomingLag()
     {
-        if (magnificationLag <= magnificationFactor)
+        Debug.Log("ZoomRate" + zoomRate);
+        //Debug.Log("magLag" + magnificationLag);
+        //Debug.Log("magFactor" + magnificationFactor);
+        magnificationLag += zoomRate;
+        if (zoomRate > 0)
         {
-            magnificationLag += 0.5f;
             if (magnificationLag > magnificationFactor)
             {
                 magnificationLag = magnificationFactor;
                 zooming = false;
             }
         }
-        if (magnificationLag >= magnificationFactor)
+        else
         {
-            magnificationLag -= 0.5f;
             if (magnificationLag < magnificationFactor)
             {
                 magnificationLag = magnificationFactor;
@@ -293,7 +299,7 @@ public class CameraController : MonoBehaviour
                     GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationLag;
                     break;
                 default:
-                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationLag;
+                    GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationFactor;
                     break;
             }
         }
