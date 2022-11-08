@@ -50,6 +50,7 @@ public class CameraController : MonoBehaviour
     bool zooming = false;
     CameraZoom cameraZoom = 0;
     float zoomRate;
+    public FlashingUiController flashEffect;
 
     [Header("Thermal")]
     public ThermalController thermalController;
@@ -112,7 +113,10 @@ public class CameraController : MonoBehaviour
                 zooming = true;
 
                 //Getting zoomRate
-                zoomRate = (magnificationFactor - magnificationLag) * 1.3f * Time.fixedDeltaTime;
+                zoomRate = (magnificationFactor - magnificationLag) * Time.fixedDeltaTime / 1.3f;
+                //flash
+                if (flashEffect)
+                    flashEffect.StartFlash(3f);
             }
         }
     }
@@ -272,6 +276,7 @@ public class CameraController : MonoBehaviour
         Debug.Log("ZoomRate" + zoomRate);
         //Debug.Log("magLag" + magnificationLag);
         //Debug.Log("magFactor" + magnificationFactor);
+
         magnificationLag += zoomRate;
         if (zoomRate > 0)
         {
