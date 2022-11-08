@@ -114,9 +114,6 @@ public class CameraController : MonoBehaviour
 
                 //Getting zoomRate
                 zoomRate = (magnificationFactor - magnificationLag) * Time.fixedDeltaTime / 1.3f;
-                //flash
-                if (flashEffect)
-                    flashEffect.StartFlash(3f);
             }
         }
     }
@@ -219,6 +216,9 @@ public class CameraController : MonoBehaviour
                 if (cameraZoom < CameraZoom.TOTAL_ZOOMS - 1)
                 {
                     ++cameraZoom;
+                    //Flash
+                    if (flashEffect)
+                        flashEffect.StartFlash(3f);
                 }
             }
             else if (Input.GetKeyDown(KeyCode.Joystick1Button3)) //Zoom out
@@ -226,6 +226,10 @@ public class CameraController : MonoBehaviour
                 if (cameraZoom > 0)
                 {
                     --cameraZoom;
+
+                    //Flash
+                    if (flashEffect)
+                        flashEffect.StartFlash(3f);
                 }
             }
 
@@ -273,11 +277,6 @@ public class CameraController : MonoBehaviour
 
     private void CameraZoomingLag()
     {
-        Debug.Log("ZoomRate" + zoomRate);
-        //Debug.Log("magLag" + magnificationLag);
-        //Debug.Log("magFactor" + magnificationFactor);
-
-        magnificationLag += zoomRate;
         if (zoomRate > 0)
         {
             if (magnificationLag > magnificationFactor)
@@ -294,6 +293,8 @@ public class CameraController : MonoBehaviour
                 zooming = false;
             }
         }
+
+        magnificationLag += zoomRate;
 
 
         if (thermalController)//change FOV from color to thermal vice versa
