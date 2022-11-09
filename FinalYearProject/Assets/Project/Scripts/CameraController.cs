@@ -50,7 +50,7 @@ public class CameraController : MonoBehaviour
     bool zooming = false;
     CameraZoom cameraZoom = 0;
     float zoomRate;
-    public FlashingUiController flashEffect;
+    public FlashingUiController[] flashEffect;
 
     [Header("Thermal")]
     public ThermalController thermalController;
@@ -217,8 +217,11 @@ public class CameraController : MonoBehaviour
                 {
                     ++cameraZoom;
                     //Flash
-                    if (flashEffect)
-                        flashEffect.StartFlash(3f);
+                    if (flashEffect.Length > 0)
+                    {
+                        for(int i = 0;i<flashEffect.Length;i++)
+                            flashEffect[i].StartFlash(3f);
+                    }
                 }
             }
             else if (Input.GetKeyDown(KeyCode.Joystick1Button3)) //Zoom out
@@ -228,8 +231,11 @@ public class CameraController : MonoBehaviour
                     --cameraZoom;
 
                     //Flash
-                    if (flashEffect)
-                        flashEffect.StartFlash(3f);
+                    if (flashEffect.Length > 0)
+                    {
+                        for (int i = 0; i < flashEffect.Length; i++)
+                            flashEffect[i].StartFlash(3f);
+                    }
                 }
             }
 
