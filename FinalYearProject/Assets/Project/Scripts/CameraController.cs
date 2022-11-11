@@ -76,7 +76,7 @@ public class CameraController : MonoBehaviour
 
         rotation += spyder.transform.rotation.eulerAngles; //Changes rotation on where the spyder is facing at the start
 
-        inputLagTime = lagTime;
+        inputLagTime = 0.15f;
         outputLagTime = lagTime;
     }
 
@@ -113,7 +113,7 @@ public class CameraController : MonoBehaviour
                 zooming = true;
 
                 //Getting zoomRate
-                zoomRate = (magnificationFactor - magnificationLag) * Time.fixedDeltaTime / 1.3f;
+                zoomRate = (magnificationFactor - magnificationLag) * Time.fixedDeltaTime / 0.2f;
             }
         }
     }
@@ -188,7 +188,7 @@ public class CameraController : MonoBehaviour
         }
         else 
         {
-            inputLagTime = lagTime;
+            inputLagTime = 0.15f;
             overTimeSensitivity = 0;
             outputLagTime -= Time.deltaTime;
         }
@@ -220,7 +220,7 @@ public class CameraController : MonoBehaviour
                     if (flashEffect.Length > 0)
                     {
                         for(int i = 0;i<flashEffect.Length;i++)
-                            flashEffect[i].StartFlash(3f);
+                            flashEffect[i].StartFlash(0.2f);
                     }
                 }
             }
@@ -234,7 +234,7 @@ public class CameraController : MonoBehaviour
                     if (flashEffect.Length > 0)
                     {
                         for (int i = 0; i < flashEffect.Length; i++)
-                            flashEffect[i].StartFlash(3f);
+                            flashEffect[i].StartFlash(0.2f);
                     }
                 }
             }
@@ -300,8 +300,8 @@ public class CameraController : MonoBehaviour
             }
         }
 
-        magnificationLag += zoomRate;
-
+        //magnificationLag += zoomRate;
+        magnificationLag = magnificationFactor;
 
         if (thermalController)//change FOV from color to thermal vice versa
         {
@@ -484,7 +484,7 @@ public class CameraController : MonoBehaviour
 
             if (collided)
             {
-                if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform)
+                if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform && raycastHit.transform.gameObject.layer == LayerMask.NameToLayer("Lamps"))
                     timer = timeToLoseTarget;
 
                 else //Loses sight of target
@@ -496,32 +496,33 @@ public class CameraController : MonoBehaviour
         }
         else //No pivots
         {
-            Vector3 toRotate = objectGazedTracked.transform.position - transform.position;
-            Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
+            forcedTracking = true;
+            //Vector3 toRotate = objectGazedTracked.transform.position - transform.position;
+            //Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
 
-            //Turning
-            float smooth = 90f;
+            ////Turning
+            //float smooth = 90f;
 
-            if (smoothTimer > 0.5f)
-            {
-                smoothTimer -= Time.deltaTime;
-            }
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.fixedDeltaTime);
+            //if (smoothTimer > 0.5f)
+            //{
+            //    smoothTimer -= Time.deltaTime;
+            //}
+            //transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.fixedDeltaTime);
 
-            Plane[] planes = GeometryUtility.CalculateFrustumPlanes(GetComponent<Camera>());
-            bool collided = Physics.Linecast(objectGazedTracked.transform.position, gameObject.transform.position, out raycastHit);
+            //Plane[] planes = GeometryUtility.CalculateFrustumPlanes(GetComponent<Camera>());
+            //bool collided = Physics.Linecast(objectGazedTracked.transform.position, gameObject.transform.position, out raycastHit);
 
-            if (collided)
-            {
-                if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform)
-                    timer = timeToLoseTarget;
+            //if (collided)
+            //{
+            //    if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform)
+            //        timer = timeToLoseTarget;
 
-                else //Loses sight of target
-                {
-                    Debug.Log("Error");
-                    timer -= Time.deltaTime;
-                }
-            }
+            //    else //Loses sight of target
+            //    {
+            //        Debug.Log("Error");
+            //        timer -= Time.deltaTime;
+            //    }
+            //}
         }
     }
 

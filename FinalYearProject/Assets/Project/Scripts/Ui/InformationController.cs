@@ -68,17 +68,23 @@ public class InformationController : MonoBehaviour
 
         if (modesText)
         {
-            if ((Input.GetKeyDown(KeyCode.Joystick1Button9) || Input.GetKeyDown(KeyCode.Joystick1Button8)) && !error)
+            if (!ReplayManager.Instance.ReplayMode())
             {
-                UpdateModes();
+                if ((Input.GetKeyDown(KeyCode.Joystick1Button9) || Input.GetKeyDown(KeyCode.Joystick1Button8)) && !error)
+                {
+                    UpdateModes();
+                }
             }
         }
 
         if (pinkDot && cameraController)
         {
-            if (Input.GetKeyDown(KeyCode.Joystick1Button1))
+            if (!ReplayManager.Instance.ReplayMode())
             {
-                DisplayPinkDot();
+                if (Input.GetKeyDown(KeyCode.Joystick1Button1))
+                {
+                    DisplayPinkDot();
+                }
             }
             if((!firstHalf && secondHalf) && pinkDot.gameObject.activeSelf)
             {
