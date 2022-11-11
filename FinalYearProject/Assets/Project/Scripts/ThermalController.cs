@@ -25,7 +25,9 @@ public class ThermalController : MonoBehaviour
     public Shader cloudDefaultShader,cloudShaderWhite, cloudShaderBlack;
     public Material cloudDefaultMaterial, cloudWhiteMaterial, cloudBlackMaterial;
 
-
+    [Header("ToHide")]
+    public GameObject[] gameObjectToHide;
+    
     CameraModes cameraModes;
     // Start is called before the first frame update
     void Start()
@@ -50,7 +52,10 @@ public class ThermalController : MonoBehaviour
             case CameraModes.THERMAL_WHITE:
                 infraredEnvironmentWhite.SetActive(true);
                 infraredEnvironmentBlack.SetActive(false);
-
+                for (int i = 0; i < gameObjectToHide.Length; i++)
+                {
+                    gameObjectToHide[i].SetActive(false);
+                }
                 break;
             case CameraModes.THERMAL_BLACK:
                 infraredEnvironmentWhite.SetActive(false);
@@ -59,6 +64,10 @@ public class ThermalController : MonoBehaviour
                     mainLight.SetActive(false);
                 if (terrain)
                     terrain.SetActive(false);
+                for (int i = 0; i < gameObjectToHide.Length; i++)
+                {
+                    gameObjectToHide[i].SetActive(false);
+                }
                 break;
             default:
                 infraredEnvironmentWhite.SetActive(false);
@@ -67,6 +76,10 @@ public class ThermalController : MonoBehaviour
                     mainLight.SetActive(true);
                 if (terrain)
                     terrain.SetActive(true);
+                for (int i = 0; i < gameObjectToHide.Length; i++)
+                {
+                    gameObjectToHide[i].SetActive(true);
+                }
                 break;
         }
 

@@ -77,37 +77,30 @@ public class CloudsController : MonoBehaviour
         }
     }
 
-    public void AddCloudWithButton(int additionalCloud, float maxDistance,int buttonNo)
+    public void AddCloudWithButton(int noOfClouds, float maxDistance,int buttonNo)
     {
-        float randPosX, randPosY, randPosZ;
+        ClearCloud();
 
-        for (int i = 0; i < additionalCloud; ++i)
+        float randPosX, randPosY, randPosZ;
+        float distanceFromEachGrid = maxDistance * 2 / 3f;
+        int currZGrid = (buttonNo - 1) / 3;
+        int currXGrid = buttonNo - 1;
+
+        for (int i = 0; i < noOfClouds; ++i)
         {
             float randSize = Random.Range(cloudMaxSize * 0.5f, cloudMaxSize);
 
-            randPosX = Random.Range(-maxDistance, maxDistance);
+            randPosX = Random.Range(-maxDistance + distanceFromEachGrid * currXGrid, -maxDistance + distanceFromEachGrid * (currXGrid + 1)) - maxDistance * 2 * currZGrid;
             randPosY = Random.Range(25000, 30000);
-            randPosZ = Random.Range(-maxDistance, maxDistance);
-            
+            randPosZ = Random.Range(maxDistance - distanceFromEachGrid * currZGrid, maxDistance - distanceFromEachGrid * (currZGrid + 1));
 
+            Debug.Log(currZGrid);
             Vector3 toRotate = new Vector3(randPosX, randPosY, randPosZ) - transform.position;
             toRotate.Normalize();
             Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
 
 
             var cloudVariant = Instantiate(cloudPrefab, new Vector3(randPosX, randPosY, randPosZ), desiredRotation);
-            if (buttonNo <= 3)
-            {
-                cloudVariant.transform.position += new Vector3(0, 0, maxDistance);
-                if(buttonNo == 1)
-                {
-                    cloudVariant.transform.position += new Vector3(-maxDistance,0, 0);
-                }
-                else if (buttonNo == 3)
-                {
-                    cloudVariant.transform.position += new Vector3(maxDistance, 0, 0);
-                }
-            }
             cloudVariant.transform.localScale = Vector3.one * randSize;
             cloudVariant.transform.parent = transform;
         }

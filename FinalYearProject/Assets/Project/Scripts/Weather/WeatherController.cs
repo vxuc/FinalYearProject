@@ -30,6 +30,9 @@ public class WeatherController : MonoBehaviour
     bool valueChange = false;
     public CloudsController cloudsController;
 
+    [Header("ExtraCloudsWithButton")]
+    public Slider cloudAreaSlider;
+
     [Header("Rains")]
     public ParticleSystem rainSystem;
     public GameObject rainOnLens;
@@ -144,10 +147,9 @@ public class WeatherController : MonoBehaviour
         }
     }
 
-    public void UpdateCloudByArea(int buttonNo)
+    public void UpdateCloudByButton(int buttonNo)
     {
-        float maxDistance = cloudMaxDistance / 3f;
-        cloudsController.AddCloudWithButton(50, maxDistance,buttonNo);
+        cloudsController.AddCloudWithButton(50, cloudMaxDistance, buttonNo);
     }
 
     public void SetWeather(int weather)
