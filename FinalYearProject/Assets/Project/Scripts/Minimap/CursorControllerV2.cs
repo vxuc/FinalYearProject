@@ -41,6 +41,8 @@ public class CursorControllerV2 : MonoBehaviour
     [SerializeField] GameObject detailPagePrefab;
     [SerializeField]  GameObject statsCanvas;
 
+    public List<GameObject> prevWaypoints = new List<GameObject>();
+
     //Debugging
     [Header("DEBUGGING")]
     public TextMeshProUGUI text;
@@ -70,8 +72,16 @@ public class CursorControllerV2 : MonoBehaviour
             DetectObject();
         }
 
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            GameObject prevWaypoint = prevWaypoints[prevWaypoints.Count - 1];
+            currentLine.RemovePoint(prevWaypoint.transform);
+            prevWaypoints.Remove(prevWaypoint);
+            Destroy(prevWaypoint);
+        }
+
     }
-    
+
 
 
     //Code to insert waypoints and spawn in map
@@ -110,6 +120,7 @@ public class CursorControllerV2 : MonoBehaviour
                     renderLine();
                     //Instantiates the Waypoints
                     var Point = Instantiate(prefab, pos, Quaternion.identity, PlanePath.transform);
+                    prevWaypoints.Add(Point);
                     currentLine.AddPoint(Point.transform);
                 }
             }
