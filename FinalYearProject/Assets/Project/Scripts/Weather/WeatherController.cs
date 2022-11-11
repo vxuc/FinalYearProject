@@ -31,7 +31,9 @@ public class WeatherController : MonoBehaviour
     public CloudsController cloudsController;
 
     [Header("ExtraCloudsWithButton")]
+    [SerializeField] TextMeshProUGUI cloudAreaMaxDistanceText;
     public Slider cloudAreaMaxDistanceSlider;
+    [SerializeField] TextMeshProUGUI cloudAreaIntensityText;
     public Slider cloudAreaIntensitySlider;
     public bool[] cloudAreaButton;
 
@@ -65,6 +67,7 @@ public class WeatherController : MonoBehaviour
             UpdateCloud();
         }
         
+        //Cloud slider
         if(cloudSlider)
         {
             cloudSlider.onValueChanged.AddListener
@@ -74,7 +77,6 @@ public class WeatherController : MonoBehaviour
             }
             );
         }
-
         if (valueChange)
         {
             cloudsController.ClearCloud();
@@ -94,6 +96,28 @@ public class WeatherController : MonoBehaviour
 
             valueChange = false;
         }
+
+        //Cloud Area
+        if(cloudAreaMaxDistanceSlider)
+        {
+            cloudAreaMaxDistanceSlider.onValueChanged.AddListener
+                (delegate
+                {
+                    cloudAreaMaxDistanceText.text = "Cloud Max Area: " + (cloudAreaMaxDistanceSlider.value / 100000).ToString("F0") + "km";
+                }
+                );
+        }
+        if (cloudAreaIntensitySlider)
+        {
+            cloudAreaIntensitySlider.onValueChanged.AddListener
+                (delegate
+                {
+                    cloudAreaIntensityText.text = "Cloud Intensity: " + cloudAreaIntensitySlider.value.ToString("F0");
+                }
+                );
+        }
+
+     
 
         UpdateRain();
     }
@@ -151,9 +175,12 @@ public class WeatherController : MonoBehaviour
 
     public void UpdateCloudByButton(int buttonNo)
     {
-        cloudsController.AddCloudWithButton(50, cloudMaxDistance, buttonNo);
+        cloudsController.AddCloudWithButton(15 * (int)cloudAreaIntensitySlider.value, cloudAreaMaxDistanceSlider.value, buttonNo);
     }
-
+    public void ResetAreaCloud()
+    {
+        cloudsController.ClearAllCloudbyArea();
+    }
     public void SetWeather(int weather)
     {
         this.weatherType = (WEATHER_TYPE)weather;
