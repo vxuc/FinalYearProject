@@ -7,7 +7,7 @@ public class CloudsController : MonoBehaviour
     public GameObject cloudPrefab;
     [SerializeField] float cloudMaxSize;
 
-    GameObject[] cloudAreaParent;
+    GameObject[] cloudAreaParent = new GameObject[9];
 
     public void AddCloud(int cloudIntensity,float maxDistance)
     {
@@ -81,8 +81,18 @@ public class CloudsController : MonoBehaviour
 
     public void AddCloudWithButton(int noOfClouds, float maxDistance,int buttonNo)
     {
-        ClearCloud();
-        cloudAreaParent[buttonNo] = new GameObject();
+        if (!cloudAreaParent[buttonNo])
+        {
+            cloudAreaParent[buttonNo] =  new GameObject("cloudArea" + buttonNo.ToString());
+            cloudAreaParent[buttonNo].transform.SetParent(transform.parent);
+        }
+
+        else if (cloudAreaParent[buttonNo])
+        {
+            ClearCloudbyArea(buttonNo);
+        }
+
+
         float randPosX, randPosY, randPosZ;
         float distanceFromEachGrid = maxDistance * 2 / 3f;
         int currZGrid = (buttonNo - 1) / 3;
@@ -96,7 +106,6 @@ public class CloudsController : MonoBehaviour
             randPosY = Random.Range(25000, 30000);
             randPosZ = Random.Range(maxDistance - distanceFromEachGrid * currZGrid, maxDistance - distanceFromEachGrid * (currZGrid + 1));
 
-            Debug.Log(currZGrid);
             Vector3 toRotate = new Vector3(randPosX, randPosY, randPosZ) - transform.position;
             toRotate.Normalize();
             Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
@@ -104,7 +113,7 @@ public class CloudsController : MonoBehaviour
 
             var cloudVariant = Instantiate(cloudPrefab, new Vector3(randPosX, randPosY, randPosZ), desiredRotation);
             cloudVariant.transform.localScale = Vector3.one * randSize;
-            cloudVariant.transform.parent = transform;
+            cloudVariant.transform.parent = cloudAreaParent[buttonNo].transform;
         }
     }
     public void ClearCloud()
@@ -112,6 +121,21 @@ public class CloudsController : MonoBehaviour
         foreach(Transform cloud in this.transform)
         {
             Destroy(cloud.gameObject);
+        }
+    }
+    public void ClearCloudbyArea(int buttonNo)
+    {
+        foreach (Transform cloud in cloudAreaParent[buttonNo].transform)
+        {
+            Destroy(cloud.gameObject);
+        }
+    }
+
+    public void ClearAllCloudbyArea()
+    {
+        for(int i = 0;i< cloudAreaParent.Length;i++)
+        { 
+            Destroy(cloudAreaParent[i]);
         }
     }
 }
