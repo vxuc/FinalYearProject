@@ -31,7 +31,9 @@ public class WeatherController : MonoBehaviour
     public CloudsController cloudsController;
 
     [Header("ExtraCloudsWithButton")]
-    public Slider cloudAreaSlider;
+    public Slider cloudAreaMaxDistanceSlider;
+    public Slider cloudAreaIntensitySlider;
+    public bool[] cloudAreaButton;
 
     [Header("Rains")]
     public ParticleSystem rainSystem;

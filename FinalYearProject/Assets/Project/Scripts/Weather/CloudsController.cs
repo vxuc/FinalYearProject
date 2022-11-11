@@ -7,6 +7,8 @@ public class CloudsController : MonoBehaviour
     public GameObject cloudPrefab;
     [SerializeField] float cloudMaxSize;
 
+    GameObject[] cloudAreaParent;
+
     public void AddCloud(int cloudIntensity,float maxDistance)
     {
         float randPosX, randPosY, randPosZ;
@@ -80,7 +82,7 @@ public class CloudsController : MonoBehaviour
     public void AddCloudWithButton(int noOfClouds, float maxDistance,int buttonNo)
     {
         ClearCloud();
-
+        cloudAreaParent[buttonNo] = new GameObject();
         float randPosX, randPosY, randPosZ;
         float distanceFromEachGrid = maxDistance * 2 / 3f;
         int currZGrid = (buttonNo - 1) / 3;
