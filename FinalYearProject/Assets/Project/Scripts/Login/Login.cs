@@ -32,15 +32,17 @@ public class Login : MonoBehaviour
     public TMP_InputField registerNameInput;
     public TMP_InputField registerPasswordInput;
     public TMP_InputField registerConfirmPasswordInput;
-    public Toggle toggleOp;
 
     public GameObject userInfoPrefab;
+    public GameObject adminInfoPrefab;
     public Transform contentTransform;
     public TMP_InputField inputField;
+    public Button adminButton;
 
     private void Start()
     {
         list = JsonUtility.FromJson<UserList>(textJSON.text);
+        CheckAdmin();
     }
 
     public void LoginUser()
@@ -76,7 +78,7 @@ public class Login : MonoBehaviour
         User newUser = new User();
         newUser.username = registerNameInput.text;
         newUser.password = Encrypt.Encrypts(registerPasswordInput.text);
-        newUser.op = toggleOp.isOn;
+        newUser.op = false;
         list.users.Add(newUser);
 
         string json = JsonUtility.ToJson(list, true);
@@ -123,5 +125,40 @@ public class Login : MonoBehaviour
             info.text.text = user.username;
         }
     }
-    
+
+    public void RefreshAdminInfo()
+    {
+        foreach (AdminInfo info in FindObjectsOfType<AdminInfo>())
+            Destroy(info.gameObject);
+
+        foreach (User user in list.users)
+        {
+            AdminInfo info = Instantiate(adminInfoPrefab, contentTransform).GetComponent<AdminInfo>();
+            info.nameText.text = user.username;
+        }
+    }
+
+    public void DeleteUser(string name)
+    {
+        User userToDelete = null;
+        foreach (User user in list.users)
+        {
+            if (user.username == name)
+            {
+                userToDelete = user;
+            }
+        }
+        list.users.Remove(userToDelete);
+        string json = JsonUtility.ToJson(list, true);
+        File.WriteAllText(Application.dataPath + "/Project/Resources/LoginCredentials.txt", json);
+
+        RefreshAdminInfo();
+    }
+
+    public void CheckAdmin()
+    {
+        if (adminButton)
+            if (PlayerPrefs.GetInt("IsOperator") == 1)
+                adminButton.gameObject.SetActive(true);
+    }
 }
