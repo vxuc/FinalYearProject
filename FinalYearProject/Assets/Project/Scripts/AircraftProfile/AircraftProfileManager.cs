@@ -68,6 +68,9 @@ public class AircraftProfileManager : MonoBehaviour
         list = JsonUtility.FromJson<ProfileList>(textJSON.text);
         foreach (Profile profile in list.profiles)
         {
+            if (inputField.text != profile.name)
+                continue;
+
             CursorControllerV2 cc = FindObjectOfType<CursorControllerV2>();
             Transform t = Instantiate(cc.PlanePathParent.gameObject, Vector3.zero, Quaternion.identity).transform;
             
@@ -85,6 +88,7 @@ public class AircraftProfileManager : MonoBehaviour
             planeManager.SpawnPlane(plane);
 
             cc.currentLine = null;
+            break;
         }
     }
 
