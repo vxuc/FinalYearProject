@@ -69,7 +69,6 @@ public class PlaneManager : MonoBehaviour
                 }
             }
         }
-
         else
         {
          Debug.Log("MAX SPAWN COUNT REACHED");

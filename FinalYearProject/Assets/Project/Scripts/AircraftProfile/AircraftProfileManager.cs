@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System;
 
 public class AircraftProfileManager : MonoBehaviour
 {
-    public Transform transformParent;
+    public GameObject profileInfoPrefab;
+    public Transform contentTransform;
     public TextAsset textJSON;
     public TMP_InputField inputField;
 
@@ -52,7 +54,7 @@ public class AircraftProfileManager : MonoBehaviour
                 serializableVector3s.Add(v);
 
             Profile profile = new Profile();
-            profile.name = "Jordan";
+            profile.name = inputField.text;
             profile.aircraftName = go.GetComponentInChildren<AircraftInfo>().aircraftName;
             profile.positions = serializableVector3s;
             list.profiles.Add(profile);
@@ -83,6 +85,19 @@ public class AircraftProfileManager : MonoBehaviour
             planeManager.SpawnPlane(plane);
 
             cc.currentLine = null;
+        }
+    }
+
+    public void RefreshAllProfiles()
+    {
+        foreach (ProfileInfo info in FindObjectsOfType<ProfileInfo>())
+            Destroy(info.gameObject);
+
+        list = JsonUtility.FromJson<ProfileList>(textJSON.text);
+        foreach (Profile profile in list.profiles)
+        {
+            ProfileInfo info = Instantiate(profileInfoPrefab, contentTransform).GetComponent<ProfileInfo>();
+            info.text.text = profile.name;
         }
     }
 }
