@@ -21,6 +21,12 @@ public class LineController : MonoBehaviour
         points.Add(point);
     }
 
+    public void RemovePoint(Transform point)
+    {
+        lr.positionCount--;
+        points.Remove(point);
+    }
+
     private void LateUpdate()
     {
         if(points.Count >= 2)
