@@ -9,6 +9,7 @@ TagManager:
   - WaypointLine
   - Model
   - Planes
+  - PlanePath
   layers:
   - Default
   - TransparentFX

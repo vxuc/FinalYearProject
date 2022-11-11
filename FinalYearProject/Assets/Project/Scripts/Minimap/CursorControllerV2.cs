@@ -13,7 +13,7 @@ public class CursorControllerV2 : MonoBehaviour
     [SerializeField] Camera uiCamera;
 
     //Spawn Object
-    [SerializeField] GameObject prefab;
+    public GameObject prefab;
     
 
     
@@ -29,7 +29,7 @@ public class CursorControllerV2 : MonoBehaviour
 
     public LineController currentLine;
     [Header("Waypoint")]
-    [SerializeField] Transform PlanePathParent;
+    public Transform PlanePathParent;
     GameObject PlanePath;
     //Plane Height Slider
     [Header("Slider")]
@@ -154,13 +154,15 @@ public class CursorControllerV2 : MonoBehaviour
         return PlaneHeightSlider.value;
     }
 
-    void renderLine()
+    public LineController renderLine(bool customTransform = false, Transform t = null)
     {
-        if(currentLine == null)
+        if (currentLine == null)
         {
-            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, PlanePath.transform).GetComponent<LineController>();
+            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, customTransform ? t : PlanePath.transform).GetComponent<LineController>();
+            return currentLine;
         }
-    }    
+        return null;
+    }
 
     //On Press
     public void StartedClick()

@@ -462,6 +462,7 @@ MonoBehaviour:
   dataType: 0
   frames: []
   prefabName: FEighteen
+  recordOnce: 0
 --- !u!114 &6474704564840802232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,7 +475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec81a31beabbd7a478b28c2a122edfd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aircraftName: F18
+  aircraftName: FEighteen
   type: 
   prefabName: FEighteen
 --- !u!1 &7445638060734891937

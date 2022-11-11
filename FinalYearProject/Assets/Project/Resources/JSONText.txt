@@ -1,7 +1,7 @@
 {
 	"aircraft": [
 		{
-			"name": "F18",
+			"name": "FEighteen",
 			"prefab": "F18Model",
 			"type": "Jet",
 			"scale": 1,
