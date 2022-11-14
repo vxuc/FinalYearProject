@@ -113,8 +113,8 @@ public class AircraftInfoManager : MonoBehaviour
 
     private void Update()
     {
-        distanceText.text = ((int)GameObject.Find("ViewCamera").GetComponent<Camera>().fieldOfView).ToString() + "m";
-        distanceText2.text = ((int)GameObject.Find("ViewCamera").GetComponent<Camera>().fieldOfView).ToString() + "m";
+        distanceText.text = ((int)GameObject.Find("ViewCamera").GetComponent<Camera>().fieldOfView*12).ToString() + "m";
+        distanceText2.text = ((int)GameObject.Find("ViewCamera").GetComponent<Camera>().fieldOfView*12).ToString() + "m";
     }
 
     public void ChangeAircraft(string name)
