@@ -14,17 +14,26 @@ public class FlashingUiController : MonoBehaviour
         image = GetComponent<Image>();
     }
 
-    public void StartFlash(float secondsForOneFlash)
+    public void StartFlash(float secondsForOneFlash,float delay)
     {
         if(currentFlashRoutine != null)
             StopCoroutine(currentFlashRoutine);
-        currentFlashRoutine = StartCoroutine(Flash(secondsForOneFlash));
+        currentFlashRoutine = StartCoroutine(Flash(secondsForOneFlash, delay));
     }
 
-    IEnumerator Flash(float secondsForOneFlash)
+    IEnumerator Flash(float secondsForOneFlash,float delay)
     {
         //Flash start
         float flashInDuration = secondsForOneFlash / 2;
+        for (float t = 0; t <= delay; t += Time.fixedDeltaTime)
+        {
+            Color flashColor = image.color;
+            flashColor.a = 1;
+            image.color = flashColor;
+            
+            //Wait
+            yield return null;
+        }
         for (float t = 0; t <= flashInDuration; t += Time.fixedDeltaTime)
         {
             Color flashColor = image.color;

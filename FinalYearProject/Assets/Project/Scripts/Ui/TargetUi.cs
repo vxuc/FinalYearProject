@@ -11,7 +11,10 @@ public class TargetUi : MonoBehaviour
     void Update()
     {
         if (target == null)
+        {
+            transform.localPosition = new Vector3(0f, 0f, 1f);
             return;
+        }
         pos = Camera.main.WorldToScreenPoint(target.position);
         transform.position = new Vector3(pos.x, pos.y, 1f);
     }
