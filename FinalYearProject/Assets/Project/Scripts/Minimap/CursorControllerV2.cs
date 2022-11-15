@@ -35,6 +35,9 @@ public class CursorControllerV2 : MonoBehaviour
     [Header("Slider")]
     public Slider PlaneHeightSlider;
     public TextMeshProUGUI sliderValue;
+    //Plane Speed Slider
+    public Slider PlaneSpeedSlider;
+    public TextMeshProUGUI sliderSpeedValue;
 
     //Detail Page
     [Header("Detail Page")]
@@ -51,6 +54,11 @@ public class CursorControllerV2 : MonoBehaviour
         PlaneHeightSlider.onValueChanged.AddListener((v) =>
         {
             sliderValue.text = (v / 30.48).ToString("0" + "ft");
+        });
+
+        PlaneSpeedSlider.onValueChanged.AddListener((v) =>
+        {
+            sliderSpeedValue.text = v.ToString("0");
         });
 
         controls = new CursorControls();
@@ -74,10 +82,7 @@ public class CursorControllerV2 : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            GameObject prevWaypoint = prevWaypoints[prevWaypoints.Count - 1];
-            currentLine.RemovePoint(prevWaypoint.transform);
-            prevWaypoints.Remove(prevWaypoint);
-            Destroy(prevWaypoint);
+            UndoButton();
         }
 
     }
@@ -165,6 +170,7 @@ public class CursorControllerV2 : MonoBehaviour
         return PlaneHeightSlider.value;
     }
 
+
     public LineController renderLine(bool customTransform = false, Transform t = null)
     {
         if (currentLine == null)
@@ -180,6 +186,14 @@ public class CursorControllerV2 : MonoBehaviour
     {
         Debug.Log("Start Click");
         DetectObject();
+    }
+
+    public void UndoButton()
+    {
+        GameObject prevWaypoint = prevWaypoints[prevWaypoints.Count - 1];
+        currentLine.RemovePoint(prevWaypoint.transform);
+        prevWaypoints.Remove(prevWaypoint);
+        Destroy(prevWaypoint);
     }
 
     //Enable & Disable Controls

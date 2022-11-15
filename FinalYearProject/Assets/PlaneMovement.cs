@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlaneMovement : MonoBehaviour
 {
@@ -11,12 +14,17 @@ public class PlaneMovement : MonoBehaviour
 
     public List<Transform> destinations;
     [SerializeField] bool flip = false;
+
+    public CursorControllerV2 cursorControllerV2;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         if (destinations.Count > 0)
             desiredPosition = destinations[0].position;
         transform.position = desiredPosition;
+
+        movementSpeed = cursorControllerV2.PlaneSpeedSlider.value;
     }
 
 
@@ -38,10 +46,15 @@ public class PlaneMovement : MonoBehaviour
         if (flip)
             newRotation += new Vector3(0,180,0);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotation), Time.fixedDeltaTime);
+
+
+        Debug.Log("Plane Mov Speed: " + movementSpeed);
     }
 
     void UpdateDesiredPosition()
     {
         desiredPosition = destinations[index].position;
     }
+
+    
 }

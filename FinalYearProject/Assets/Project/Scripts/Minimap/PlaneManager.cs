@@ -62,6 +62,7 @@ public class PlaneManager : MonoBehaviour
                     {
                         //Plane
                         PlaneMovement plane = Instantiate(planePrefabs[planeVal - 1], Vector3.zero, Quaternion.identity, cursorController.GetPlanePathParent()).GetComponent<PlaneMovement>();
+                        plane.cursorControllerV2 = cursorController;
                         SpawnPlane(plane);
                     }
 
