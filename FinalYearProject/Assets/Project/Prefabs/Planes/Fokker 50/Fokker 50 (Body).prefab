@@ -1061,7 +1061,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4811249410141361334}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -236, z: -623}
+  m_LocalPosition: {x: 0, y: -251, z: -623}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1150,8 +1150,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10000
+  tempSpeed: 0
   destinations: []
   flip: 1
+  cursorControllerV2: {fileID: 0}
 --- !u!65 &8689015240319452110
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2341,8 +2343,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10000
+  tempSpeed: 0
   destinations: []
   flip: 0
+  cursorControllerV2: {fileID: 0}
 --- !u!64 &6945857918810661160
 MeshCollider:
   m_ObjectHideFlags: 0
