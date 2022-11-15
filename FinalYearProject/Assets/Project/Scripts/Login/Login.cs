@@ -116,6 +116,8 @@ public class Login : MonoBehaviour
 
     public void RefreshUserInfo()
     {
+        list = JsonUtility.FromJson<UserList>(textJSON.text);
+
         foreach (UserInfo info in FindObjectsOfType<UserInfo>())
             Destroy(info.gameObject);
 
@@ -128,12 +130,16 @@ public class Login : MonoBehaviour
 
     public void RefreshAdminInfo()
     {
+        list = JsonUtility.FromJson<UserList>(textJSON.text);
         foreach (AdminInfo info in FindObjectsOfType<AdminInfo>())
             Destroy(info.gameObject);
+
 
         foreach (User user in list.users)
         {
             AdminInfo info = Instantiate(adminInfoPrefab, contentTransform).GetComponent<AdminInfo>();
+            if (user.username == "admin")
+                info.GetComponentInChildren<Button>().gameObject.SetActive(false);
             info.nameText.text = user.username;
         }
     }
@@ -152,7 +158,13 @@ public class Login : MonoBehaviour
         string json = JsonUtility.ToJson(list, true);
         File.WriteAllText(Application.dataPath + "/Project/Resources/LoginCredentials.txt", json);
 
+        Invoke(nameof(Refresh), .5f);
+    }
+
+    void Refresh()
+    {
         RefreshAdminInfo();
+
     }
 
     public void CheckAdmin()
