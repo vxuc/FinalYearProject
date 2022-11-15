@@ -138,6 +138,8 @@ public class Login : MonoBehaviour
         foreach (User user in list.users)
         {
             AdminInfo info = Instantiate(adminInfoPrefab, contentTransform).GetComponent<AdminInfo>();
+            if (user.username == "admin")
+                info.GetComponentInChildren<Button>().gameObject.SetActive(false);
             info.nameText.text = user.username;
         }
     }
