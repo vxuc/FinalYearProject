@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour
         //Factory setting for camera
         originalJoystickSensitivity = joystickSensitivity;
         timer = timeToLoseTarget;
-        smoothTimer = timeToTrackTarget;
+        smoothTimer = timeToTrackTarget + 1;
 
         if (GetComponent<Camera>()) //For zooming
             cameraOriginalFOV = GetComponent<Camera>().fieldOfView;
@@ -442,31 +442,33 @@ public class CameraController : MonoBehaviour
             tracking = false;
             forcedTracking = true;
             timer = timeToLoseTarget;
-            smoothTimer = timeToTrackTarget;
+            smoothTimer = timeToTrackTarget + 1;
             return;
         }
         RaycastHit raycastHit;
 
         if (objectGazedTracked?.transform.Find("Pivot")) //Get the supposed area that need to be tracked
         {
-            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").localPosition * 1.5f + objectGazedTracked.transform.position - transform.position;
+            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").localPosition
+                + objectGazedTracked.transform.position
+                - transform.position;
 
             //Vector3 toRotate = objectGazedTracked.transform.position -
             //    (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed/15000
             //    - transform.position; //Offset 
 
-
             Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
 
             //Turning
-            float smooth = objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed / 15000 * 95f;
+            float smooth = 50f * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed / 10000;
 
             
-            if (smoothTimer > 0.5f)
+            if (smoothTimer > 1f)
             {
                 smoothTimer -= Time.deltaTime;
             }
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation,smooth * Time.fixedDeltaTime / smoothTimer);
+            //this.transform.LookAt(objectGazedTracked?.transform.Find("Pivot"));
+            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, smooth * Time.fixedDeltaTime / smoothTimer);
 
 
             Debug.DrawLine(transform.position, objectGazedTracked.transform.Find("Pivot").position, Color.red);
@@ -493,33 +495,7 @@ public class CameraController : MonoBehaviour
             tracking = false;
             forcedTracking = true;
             timer = timeToLoseTarget;
-            smoothTimer = timeToTrackTarget;
-            //Vector3 toRotate = objectGazedTracked.transform.position - transform.position;
-            //Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
-
-            ////Turning
-            //float smooth = 90f;
-
-            //if (smoothTimer > 0.5f)
-            //{
-            //    smoothTimer -= Time.deltaTime;
-            //}
-            //transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.fixedDeltaTime);
-
-            //Plane[] planes = GeometryUtility.CalculateFrustumPlanes(GetComponent<Camera>());
-            //bool collided = Physics.Linecast(objectGazedTracked.transform.position, gameObject.transform.position, out raycastHit);
-
-            //if (collided)
-            //{
-            //    if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform)
-            //        timer = timeToLoseTarget;
-
-            //    else //Loses sight of target
-            //    {
-            //        Debug.Log("Error");
-            //        timer -= Time.deltaTime;
-            //    }
-            //}
+            smoothTimer = timeToTrackTarget + 1;
         }
     }
 
