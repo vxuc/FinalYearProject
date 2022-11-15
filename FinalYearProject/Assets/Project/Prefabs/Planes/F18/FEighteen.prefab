@@ -442,6 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10000
+  tempSpeed: 0
   destinations: []
   flip: 0
 --- !u!114 &858736273698213191
