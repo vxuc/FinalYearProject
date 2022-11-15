@@ -68,23 +68,17 @@ public class InformationController : MonoBehaviour
 
         if (modesText)
         {
-            if (!ReplayManager.Instance.ReplayMode())
+            if ((Input.GetKeyDown(KeyCode.Joystick1Button9) || Input.GetKeyDown(KeyCode.Joystick1Button8)) && !error)
             {
-                if ((Input.GetKeyDown(KeyCode.Joystick1Button9) || Input.GetKeyDown(KeyCode.Joystick1Button8)) && !error)
-                {
-                    UpdateModes();
-                }
+                UpdateModes();
             }
         }
 
         if (pinkDot && cameraController)
         {
-            if (!ReplayManager.Instance.ReplayMode())
+            if (Input.GetKeyDown(KeyCode.Joystick1Button1))
             {
-                if (Input.GetKeyDown(KeyCode.Joystick1Button1))
-                {
-                    DisplayPinkDot();
-                }
+                DisplayPinkDot();
             }
             if((!firstHalf && secondHalf) && pinkDot.gameObject.activeSelf)
             {
@@ -264,8 +258,9 @@ public class InformationController : MonoBehaviour
             }
             else
             {
-                targetUi.SetTarget(cameraController.GetTrackedGameObject().transform);
-                targetUi.SetPosition(cameraController.GetTrackedGameObject().transform);
+                targetUi.SetTarget(null);
+                //targetUi.SetTarget(cameraController.GetTrackedGameObject().transform);
+                //targetUi.SetPosition(cameraController.GetTrackedGameObject().transform);
             }
             trackingDots.gameObject.SetActive(true);
         }

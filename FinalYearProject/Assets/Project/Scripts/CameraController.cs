@@ -51,6 +51,8 @@ public class CameraController : MonoBehaviour
     CameraZoom cameraZoom = 0;
     float zoomRate;
     public FlashingUiController[] flashEffect;
+    [SerializeField] float flashDelay = 0.7f;
+    [SerializeField] float flashLerp = 0.5f;
 
     [Header("Thermal")]
     public ThermalController thermalController;
@@ -65,7 +67,7 @@ public class CameraController : MonoBehaviour
         //Factory setting for camera
         originalJoystickSensitivity = joystickSensitivity;
         timer = timeToLoseTarget;
-        smoothTimer = timeToTrackTarget;
+        smoothTimer = timeToTrackTarget + 1;
 
         if (GetComponent<Camera>()) //For zooming
             cameraOriginalFOV = GetComponent<Camera>().fieldOfView;
@@ -92,15 +94,12 @@ public class CameraController : MonoBehaviour
             }
             else
             {
-                if (objectGazed || tracking)
+                if (Input.GetKeyDown(KeyCode.JoystickButton0))
                 {
-                    if (Input.GetKeyDown(KeyCode.JoystickButton0))
-                    {
-                        ToggleTargeting();
-                    }
+                    ToggleTargeting();
                 }
 
-                if (Input.GetKeyDown(KeyCode.Joystick1Button10) && !tracking)
+                if (Input.GetKeyDown(KeyCode.Joystick1Button10) && (!tracking || !forcedTracking))
                 {
                     resetting = true;
                 }
@@ -220,7 +219,7 @@ public class CameraController : MonoBehaviour
                     if (flashEffect.Length > 0)
                     {
                         for(int i = 0;i<flashEffect.Length;i++)
-                            flashEffect[i].StartFlash(0.2f);
+                            flashEffect[i].StartFlash(flashLerp,flashDelay);
                     }
                 }
             }
@@ -234,7 +233,7 @@ public class CameraController : MonoBehaviour
                     if (flashEffect.Length > 0)
                     {
                         for (int i = 0; i < flashEffect.Length; i++)
-                            flashEffect[i].StartFlash(0.2f);
+                            flashEffect[i].StartFlash(flashLerp, flashDelay);
                     }
                 }
             }
@@ -257,21 +256,6 @@ public class CameraController : MonoBehaviour
                     break;
 
             }
-
-            //if (thermalController)//change FOV from color to thermal vice versa
-            //{
-            //    switch (thermalController.GetCameraMode())
-            //    {
-            //        case ThermalController.CameraModes.COLOR:
-            //            GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
-            //            break;
-            //        default:
-            //            GetComponent<Camera>().fieldOfView = cameraThermalOriginalFOV / magnificationFactor;
-            //            break;
-            //    }
-            //}
-            //else
-            //    GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationFactor;
 
             joystickSensitivity = originalJoystickSensitivity / magnificationFactor;
 
@@ -432,14 +416,21 @@ public class CameraController : MonoBehaviour
             objectGazedTracked = null;
             tracking = false;
         }
-        else if(forcedTracking)
+        else if (forcedTracking)
         {
             forcedTracking = false;
         }
-        else if (!Physics.Linecast(objectGazed.transform.position, transform.position)) //Locking on a target
+        else if (objectGazed)
         {
-            objectGazedTracked = objectGazed;
-            tracking = true;
+            if (!Physics.Linecast(objectGazed.transform.position, transform.position)) //Locking on a target
+            {
+                objectGazedTracked = objectGazed;
+                tracking = true;
+            }
+        }
+        else
+        {
+            forcedTracking = true; //Forced track on sky
         }
     }
     private void FollowingTarget()
@@ -451,30 +442,33 @@ public class CameraController : MonoBehaviour
             tracking = false;
             forcedTracking = true;
             timer = timeToLoseTarget;
-            smoothTimer = timeToTrackTarget;
+            smoothTimer = timeToTrackTarget + 1;
             return;
         }
         RaycastHit raycastHit;
 
         if (objectGazedTracked?.transform.Find("Pivot")) //Get the supposed area that need to be tracked
         {
-            //Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position + (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * 0.5f - transform.position;
+            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").localPosition
+                + objectGazedTracked.transform.position
+                - transform.position;
 
-            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position +
-                (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed/15000
-                - transform.position; //Offset 
-
+            //Vector3 toRotate = objectGazedTracked.transform.position -
+            //    (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed/15000
+            //    - transform.position; //Offset 
 
             Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
 
             //Turning
-            float smooth = 90f;
+            float smooth = 50f * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed / 10000;
 
-            if (smoothTimer > 0.5f)
+            
+            if (smoothTimer > 1f)
             {
                 smoothTimer -= Time.deltaTime;
             }
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.fixedDeltaTime);
+            //this.transform.LookAt(objectGazedTracked?.transform.Find("Pivot"));
+            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, smooth * Time.fixedDeltaTime / smoothTimer);
 
 
             Debug.DrawLine(transform.position, objectGazedTracked.transform.Find("Pivot").position, Color.red);
@@ -484,7 +478,7 @@ public class CameraController : MonoBehaviour
 
             if (collided)
             {
-                if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform && raycastHit.transform.gameObject.layer == LayerMask.NameToLayer("Lamps"))
+                if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && (raycastHit.transform == objectGazedTracked.transform || raycastHit.transform.gameObject.layer == LayerMask.NameToLayer("Lamps")))
                     timer = timeToLoseTarget;
 
                 else //Loses sight of target
@@ -496,33 +490,12 @@ public class CameraController : MonoBehaviour
         }
         else //No pivots
         {
+            rotation = transform.rotation.eulerAngles;
+            objectGazedTracked = null;
+            tracking = false;
             forcedTracking = true;
-            //Vector3 toRotate = objectGazedTracked.transform.position - transform.position;
-            //Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
-
-            ////Turning
-            //float smooth = 90f;
-
-            //if (smoothTimer > 0.5f)
-            //{
-            //    smoothTimer -= Time.deltaTime;
-            //}
-            //transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smooth / smoothTimer * Time.fixedDeltaTime);
-
-            //Plane[] planes = GeometryUtility.CalculateFrustumPlanes(GetComponent<Camera>());
-            //bool collided = Physics.Linecast(objectGazedTracked.transform.position, gameObject.transform.position, out raycastHit);
-
-            //if (collided)
-            //{
-            //    if (GeometryUtility.TestPlanesAABB(planes, objectGazedTracked.GetComponent<Collider>().bounds) && raycastHit.transform == objectGazedTracked.transform)
-            //        timer = timeToLoseTarget;
-
-            //    else //Loses sight of target
-            //    {
-            //        Debug.Log("Error");
-            //        timer -= Time.deltaTime;
-            //    }
-            //}
+            timer = timeToLoseTarget;
+            smoothTimer = timeToTrackTarget + 1;
         }
     }
 
