@@ -135,6 +135,74 @@
 			"shape": "Inverted-Y",
 			"tailFin": "Backswept tapered with curved tip",
 			"tailPlane": "Backswept tapered with slight curved tips"
+		},
+		{
+			"name": "BELL 205",
+			"prefab": "BELL205Model",
+			"type": "Helicopter",
+			"scale": 100,
+			"description": "Hawk is a single engine fighter designed as a basic and advanced jet trainer with operational air defence and attack roles.",
+			
+			"category1": "Wing Specs",
+			"wingMount": "Low",
+			"dihedral": "Horizontal",
+			"taper": "Backswept Tapered",
+			"tip": "Curved",
+			
+			"category2": "Engine Specs",
+			"engineNumber": "1",
+			"engineType": "Turbofan",
+			"engineMount": "Internally mounted",
+			"intakeNumber": "2",
+			"intakeShape": "Semi-circular",
+			"intakeLocation": "Sides of fuselage",
+			"exhaustNumber": "1",
+			"exhaustLocation": "Protruding after tail unit",
+			
+			"category3": "Fuselage Specs",
+			"nose": "Short rounded",
+			"cockpit": "Stepped",
+			"midSection": "Bulging",
+			"rearSection": "Tapered",
+
+			"category4": "Tail Specs",
+			"shape": "Inverted-Y",
+			"tailFin": "Backswept tapered with curved tip",
+			"tailPlane": "Backswept tapered with slight curved tips"
+		},
+		{
+			"name": "BELL 412",
+			"prefab": "BELL412Model",
+			"type": "Helicopter",
+			"scale": 100,
+			"description": "Hawk is a single engine fighter designed as a basic and advanced jet trainer with operational air defence and attack roles.",
+			
+			"category1": "Wing Specs",
+			"wingMount": "Low",
+			"dihedral": "Horizontal",
+			"taper": "Backswept Tapered",
+			"tip": "Curved",
+			
+			"category2": "Engine Specs",
+			"engineNumber": "1",
+			"engineType": "Turbofan",
+			"engineMount": "Internally mounted",
+			"intakeNumber": "2",
+			"intakeShape": "Semi-circular",
+			"intakeLocation": "Sides of fuselage",
+			"exhaustNumber": "1",
+			"exhaustLocation": "Protruding after tail unit",
+			
+			"category3": "Fuselage Specs",
+			"nose": "Short rounded",
+			"cockpit": "Stepped",
+			"midSection": "Bulging",
+			"rearSection": "Tapered",
+
+			"category4": "Tail Specs",
+			"shape": "Inverted-Y",
+			"tailFin": "Backswept tapered with curved tip",
+			"tailPlane": "Backswept tapered with slight curved tips"
 		}
 	]
 }
