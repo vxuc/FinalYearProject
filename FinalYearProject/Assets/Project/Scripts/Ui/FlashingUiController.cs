@@ -28,7 +28,7 @@ public class FlashingUiController : MonoBehaviour
         for (float t = 0; t <= delay; t += Time.fixedDeltaTime)
         {
             Color flashColor = image.color;
-            flashColor.a = 1;
+            flashColor.a = 0.5f;
             image.color = flashColor;
             
             //Wait
@@ -37,7 +37,7 @@ public class FlashingUiController : MonoBehaviour
         for (float t = 0; t <= flashInDuration; t += Time.fixedDeltaTime)
         {
             Color flashColor = image.color;
-            flashColor.a = Mathf.Lerp(1, 0, t / flashInDuration);
+            flashColor.a = Mathf.Lerp(1f, 0, t / flashInDuration);
             image.color = flashColor;
 
             //Wait
