@@ -441,9 +441,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199aee18a853c3749bbc8abecbd828d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0
-  PlaneSpeedSlider: {fileID: 0}
-  sliderValue: {fileID: 0}
+  movementSpeed: 10000
+  tempSpeed: 0
   destinations: []
   flip: 0
 --- !u!114 &858736273698213191
@@ -1051,7 +1050,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d24fe3c859b169349b5520ec34b70c04,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d24fe3c859b169349b5520ec34b70c04,
         type: 3}
