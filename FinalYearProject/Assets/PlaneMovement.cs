@@ -25,7 +25,8 @@ public class PlaneMovement : MonoBehaviour
             desiredPosition = destinations[0].position;
         transform.position = desiredPosition;
 
-        movementSpeed = cursorControllerV2.PlaneSpeedSlider.value;
+        if (cursorControllerV2)
+            movementSpeed = cursorControllerV2.PlaneSpeedSlider.value;
         tempSpeed = movementSpeed;
     }
 
