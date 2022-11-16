@@ -398,12 +398,22 @@ public class CameraController : MonoBehaviour
 
         if (objectGazedTracked?.transform.Find("Pivot")) //Get the supposed area that need to be tracked
         {
-            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position - objectGazedTracked.transform.Find("Pivot").localPosition*100
+            Vector3 toRotate = objectGazedTracked.transform.position 
                 - transform.position;
 
-            //Vector3 toRotate = objectGazedTracked.transform.position -
-            //    (objectGazedTracked.transform.position - objectGazedTracked.transform.Find("Pivot").position) * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed/15000
-            //    - transform.position; //Offset 
+            Vector3 cross = Vector3.Cross(transform.rotation * Vector3.forward, Quaternion.LookRotation(toRotate) * Vector3.forward);
+            Debug.Log(cross.y);
+
+            //Offset
+            toRotate = objectGazedTracked.transform.Find("Pivot").position
+                     + new Vector3(objectGazedTracked.transform.Find("Pivot").localPosition.x, 0, objectGazedTracked.transform.Find("Pivot").localPosition.z)
+                     - transform.position;
+            if (cross.y < 0)
+            {
+                toRotate = objectGazedTracked.transform.Find("Pivot").position
+                    - new Vector3(objectGazedTracked.transform.Find("Pivot").localPosition.x, 0, objectGazedTracked.transform.Find("Pivot").localPosition.z)
+                    - transform.position;
+            }
 
             Quaternion desiredRotation = Quaternion.LookRotation(toRotate);
 
