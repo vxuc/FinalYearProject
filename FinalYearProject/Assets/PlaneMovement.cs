@@ -57,6 +57,9 @@ public class PlaneMovement : MonoBehaviour
         Debug.Log("SPEED: " + movementSpeed);
     }
 
+    /// <summary>
+    /// Update Desired Position for plane
+    /// </summary>
     void UpdateDesiredPosition()
     {
         desiredPosition = destinations[index].position;
@@ -65,17 +68,19 @@ public class PlaneMovement : MonoBehaviour
         if (ind < 0) ind = destinations.Count - 1;
         Debug.Log(IsLeft(transform.position - destinations[ind].position, desiredPosition - transform.position));
 
-        //float angle = IsLeft(transform.position - destinations[ind].position, desiredPosition - transform.position) ? -45 : 45;
+        float angle = IsLeft(transform.position - destinations[ind].position, desiredPosition - transform.position) ? -45 : 45;
         //Vector3 newDir = Quaternion.Euler(0, 0f, 45f) * transform.forward;
-        //Vector3 newRotation = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, newDir.z);
-        //StartCoroutine(Bank(newRotation));
-        //transform.Rotate(transform.right, isLeft ? 25f : -25f;
+        bool isLeft = IsLeft(transform.position - destinations[ind].position, desiredPosition - transform.position);
+        Vector3 newRotation = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, angle);
+        StartCoroutine(Bank(newRotation));
+        transform.Rotate(transform.right, isLeft ? 25f : -25f);
 
-        movementSpeed = tempSpeed * 0.5f;
-        transform.Rotate(Vector3.forward, IsLeft(transform.position - destinations[ind].position, desiredPosition - transform.position) ? -35f : 35f);
-        Invoke(nameof(ResetSpeed), 2f);
+        //movementSpeed = tempSpeed * 0.5f;
+        //transform.Rotate(Vector3.forward, IsLeft(transform.position - destinations[ind].position, desiredPosition - transform.position) ? -35f : 35f);
+        //Invoke(nameof(ResetSpeed), 2f);
     }
 
+    
     private void ResetSpeed()
     {
         movementSpeed = tempSpeed;
