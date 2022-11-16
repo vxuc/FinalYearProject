@@ -41,7 +41,8 @@ public class Login : MonoBehaviour
 
     private void Start()
     {
-        list = JsonUtility.FromJson<UserList>(textJSON.text);
+        string i = File.ReadAllText(Application.streamingAssetsPath + "/LoginCredentials.txt");
+        list = JsonUtility.FromJson<UserList>(i);
         CheckAdmin();
     }
 
@@ -82,7 +83,8 @@ public class Login : MonoBehaviour
         list.users.Add(newUser);
 
         string json = JsonUtility.ToJson(list, true);
-        File.WriteAllText(Application.dataPath + "/Project/Resources/LoginCredentials.txt", json);
+        File.WriteAllText(Application.streamingAssetsPath + "/LoginCredentials.txt", json);
+
 
         StartCoroutine(DebugText("Register Success", 1, false));
     }
@@ -116,7 +118,8 @@ public class Login : MonoBehaviour
 
     public void RefreshUserInfo()
     {
-        list = JsonUtility.FromJson<UserList>(textJSON.text);
+        string i = File.ReadAllText(Application.streamingAssetsPath + "/LoginCredentials.txt");
+        list = JsonUtility.FromJson<UserList>(i);
 
         foreach (UserInfo info in FindObjectsOfType<UserInfo>())
             Destroy(info.gameObject);
@@ -130,7 +133,9 @@ public class Login : MonoBehaviour
 
     public void RefreshAdminInfo()
     {
-        list = JsonUtility.FromJson<UserList>(textJSON.text);
+        string i = File.ReadAllText(Application.streamingAssetsPath + "/LoginCredentials.txt");
+        list = JsonUtility.FromJson<UserList>(i);
+        
         foreach (AdminInfo info in FindObjectsOfType<AdminInfo>())
             Destroy(info.gameObject);
 
@@ -156,7 +161,7 @@ public class Login : MonoBehaviour
         }
         list.users.Remove(userToDelete);
         string json = JsonUtility.ToJson(list, true);
-        File.WriteAllText(Application.dataPath + "/Project/Resources/LoginCredentials.txt", json);
+        File.WriteAllText(Application.streamingAssetsPath + "/LoginCredentials.txt", json);
 
         Invoke(nameof(Refresh), .5f);
     }

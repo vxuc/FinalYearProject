@@ -59,13 +59,13 @@ public class WeatherController : MonoBehaviour
     void Update()
     {
         weatherText.text = "Weather: " + weatherType.ToString();
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            weatherType++;
-            if (weatherType >= WEATHER_TYPE.WEATHER_TOTAL)
-                weatherType = 0;
-            UpdateCloud();
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    weatherType++;
+        //    if (weatherType >= WEATHER_TYPE.WEATHER_TOTAL)
+        //        weatherType = 0;
+        //    UpdateCloud();
+        //}
         
         //Cloud slider
         if(cloudSlider)

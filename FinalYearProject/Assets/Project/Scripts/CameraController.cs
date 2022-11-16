@@ -39,7 +39,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] float spotRadius = 1f;
     [SerializeField] float timeToTrackTarget = 0;
     float smoothTimer;
-    
+
 
     [Header("Zoom")]
     float cameraOriginalFOV;
@@ -155,15 +155,15 @@ public class CameraController : MonoBehaviour
         angleX = (angleX > 180) ? angleX - 360 : angleX;
         float currAngleX = -angleX;
 
-        float maxOverTimeSensitivity = 5; 
+        float maxOverTimeSensitivity = 5;
 
         if (Input.GetJoystickNames() != null)
         {
 
-            x = Input.GetAxis("Joystick X") * joystickSensitivity* overTimeSensitivity / maxOverTimeSensitivity;
-            y = Input.GetAxis("Joystick Y") * joystickSensitivity* overTimeSensitivity / maxOverTimeSensitivity;
+            x = Input.GetAxis("Joystick X") * joystickSensitivity * overTimeSensitivity / maxOverTimeSensitivity;
+            y = Input.GetAxis("Joystick Y") * joystickSensitivity * overTimeSensitivity / maxOverTimeSensitivity;
         }
-        if(Input.GetAxis("Joystick X") != 0 || Input.GetAxis("Joystick Y") != 0) //check if there is a joystick input
+        if (Input.GetAxis("Joystick X") != 0 || Input.GetAxis("Joystick Y") != 0) //check if there is a joystick input
         {
             inputLagTime -= Time.deltaTime;
             if (inputLagTime < 0)
@@ -185,7 +185,7 @@ public class CameraController : MonoBehaviour
                 currDir = new Vector3(-y, x, 0);
             }
         }
-        else 
+        else
         {
             inputLagTime = 0.15f;
             overTimeSensitivity = 0;
@@ -218,8 +218,8 @@ public class CameraController : MonoBehaviour
                     //Flash
                     if (flashEffect.Length > 0)
                     {
-                        for(int i = 0;i<flashEffect.Length;i++)
-                            flashEffect[i].StartFlash(flashLerp,flashDelay);
+                        for (int i = 0; i < flashEffect.Length; i++)
+                            flashEffect[i].StartFlash(flashLerp, flashDelay);
                     }
                 }
             }
@@ -242,27 +242,26 @@ public class CameraController : MonoBehaviour
             {
                 thermalController.ChangeCameraMode();
             }
-
-            switch (cameraZoom)//Change magnification
-            {
-                case CameraZoom.x24:
-                    magnificationFactor = 24f;
-                    break;
-                case CameraZoom.x4:
-                    magnificationFactor = 4f;
-                    break;
-                default:
-                    magnificationFactor = 1f;
-                    break;
-
-            }
-
-            joystickSensitivity = originalJoystickSensitivity / magnificationFactor;
-
-            //Spot Camera
-            spotCamera.GetComponent<SpotCameraController>().UpdateFOV();
-            spotCamera.GetComponent<SpotCameraController>().UpdateClipping((int)magnificationFactor); //Change the max range to get the target
         }
+        switch (cameraZoom)//Change magnification
+        {
+            case CameraZoom.x24:
+                magnificationFactor = 24f;
+                break;
+            case CameraZoom.x4:
+                magnificationFactor = 4f;
+                break;
+            default:
+                magnificationFactor = 1f;
+                break;
+
+        }
+
+        joystickSensitivity = originalJoystickSensitivity / magnificationFactor;
+
+        //Spot Camera
+        spotCamera.GetComponent<SpotCameraController>().UpdateFOV();
+        spotCamera.GetComponent<SpotCameraController>().UpdateClipping((int)magnificationFactor); //Change the max range to get the target
     }
 
     private void CameraZoomingLag()
@@ -308,7 +307,7 @@ public class CameraController : MonoBehaviour
         if (objectGazed)
             Debug.Log(objectGazed.name);
 
-        RaycastHit[] hit = Physics.SphereCastAll(transform.position, spotRadius, transform.forward,float.MaxValue);
+        RaycastHit[] hit = Physics.SphereCastAll(transform.position, spotRadius, transform.forward, float.MaxValue);
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
 
         if (!ObjectInRayArray(hit, objectGazed))
@@ -369,7 +368,7 @@ public class CameraController : MonoBehaviour
 
         foreach (Collider gameObject in gameObjects)
         {
-            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("SpyderBody") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane") 
+            if (gameObject.transform.gameObject.layer < 20 && gameObject.gameObject.layer != LayerMask.NameToLayer("SpyderBody") && gameObject.gameObject.layer != LayerMask.NameToLayer("Plane")
                 && !Physics.Linecast(gameObject.transform.position, transform.position)) //Check whether the object should be trackable or not
             {
                 bool onSight = GeometryUtility.TestPlanesAABB(planes, gameObject.transform.GetComponent<Collider>().bounds); // check if gameobject is on camera view
@@ -462,7 +461,7 @@ public class CameraController : MonoBehaviour
             //Turning
             float smooth = 50f * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed / 10000;
 
-            
+
             if (smoothTimer > 1f)
             {
                 smoothTimer -= Time.deltaTime;
@@ -506,7 +505,7 @@ public class CameraController : MonoBehaviour
         Debug.Log(rotation.x + "," + rotation.y);
 
         float degree = 0.5f;
-        if (Mathf.Abs(transform.rotation.eulerAngles.x - spyder.transform.rotation.eulerAngles.x) <= degree && Mathf.Abs(transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y) <= degree) 
+        if (Mathf.Abs(transform.rotation.eulerAngles.x - spyder.transform.rotation.eulerAngles.x) <= degree && Mathf.Abs(transform.rotation.eulerAngles.y - spyder.transform.rotation.eulerAngles.y) <= degree)
             resetting = false;
     }
     private bool ObjectInRayArray(RaycastHit[] array, GameObject gameObject)
