@@ -398,8 +398,7 @@ public class CameraController : MonoBehaviour
 
         if (objectGazedTracked?.transform.Find("Pivot")) //Get the supposed area that need to be tracked
         {
-            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").localPosition
-                + objectGazedTracked.transform.position
+            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position * objectGazedTracked.GetComponentInParent<PlaneMovement>().movementSpeed / 10080
                 - transform.position;
 
             //Vector3 toRotate = objectGazedTracked.transform.position -
