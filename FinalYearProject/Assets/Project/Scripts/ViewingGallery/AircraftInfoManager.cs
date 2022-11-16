@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using System.IO;
 
 public class AircraftInfoManager : MonoBehaviour
 {
@@ -75,7 +76,8 @@ public class AircraftInfoManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        list = JsonUtility.FromJson<AircraftList>(textJSON.text);
+        string path = File.ReadAllText(Application.streamingAssetsPath + "/Aircrafts.txt");
+        list = JsonUtility.FromJson<AircraftList>(path);
 
         foreach (Aircraft aircraft in list.aircraft)
         {
