@@ -269,7 +269,7 @@ public class CameraController : MonoBehaviour
     {
         if (zoomRate > 0)
         {
-            if (magnificationLag > magnificationFactor)
+            if (magnificationLag >= magnificationFactor)
             {
                 magnificationLag = magnificationFactor;
                 zooming = false;
@@ -277,7 +277,7 @@ public class CameraController : MonoBehaviour
         }
         else
         {
-            if (magnificationLag < magnificationFactor)
+            if (magnificationLag <= magnificationFactor)
             {
                 magnificationLag = magnificationFactor;
                 zooming = false;
