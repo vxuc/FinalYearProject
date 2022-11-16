@@ -88,7 +88,6 @@ public class AircraftProfileManager : MonoBehaviour
             planeManager.SpawnPlane(plane);
 
             cc.currentLine = null;
-            break;
         }
     }
 
@@ -98,10 +97,15 @@ public class AircraftProfileManager : MonoBehaviour
             Destroy(info.gameObject);
 
         list = JsonUtility.FromJson<ProfileList>(textJSON.text);
+        List<string> allProfile = new List<string>();
         foreach (Profile profile in list.profiles)
         {
+            if (allProfile.Contains(profile.name))
+                continue;
+
             ProfileInfo info = Instantiate(profileInfoPrefab, contentTransform).GetComponent<ProfileInfo>();
             info.text.text = profile.name;
+            allProfile.Add(profile.name);
         }
     }
 }

@@ -1023,6 +1023,8 @@ public class ReplayManager : MonoBehaviour
 
         //optional
         Time.timeScale = 1f;
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 
     //Start replay from begining
