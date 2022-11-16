@@ -542,6 +542,7 @@ public class CameraController : MonoBehaviour
     {
         cameraZoom = (CameraZoom)level;
         CameraZooming();
+        CameraZoomingLag();
     }
 
     public GameObject GetTrackedGameObject()
