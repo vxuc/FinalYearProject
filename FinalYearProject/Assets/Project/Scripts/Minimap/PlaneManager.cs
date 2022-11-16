@@ -30,11 +30,11 @@ public class PlaneManager : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-            markerCanvas.SetActive(false);
+        //if (Input.GetKeyDown(KeyCode.B))
+        //    markerCanvas.SetActive(false);
 
-        else if (Input.GetKeyUp(KeyCode.B))
-            markerCanvas.SetActive(true);
+        //else if (Input.GetKeyUp(KeyCode.B))
+        //    markerCanvas.SetActive(true);
 
         //Spawn Counter
         Debug.Log("Spawn Count: " + spawnCount);

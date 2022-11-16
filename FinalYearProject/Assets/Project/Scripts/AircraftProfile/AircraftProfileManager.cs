@@ -32,7 +32,8 @@ public class AircraftProfileManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        list = JsonUtility.FromJson<ProfileList>(textJSON.text);
+        string i = File.ReadAllText(Application.streamingAssetsPath + "/Profiles.txt");
+        list = JsonUtility.FromJson<ProfileList>(i);
     }
 
     // Update is called once per frame
@@ -60,12 +61,14 @@ public class AircraftProfileManager : MonoBehaviour
             list.profiles.Add(profile);
         }
         string json = JsonUtility.ToJson(list, true);
-        File.WriteAllText(Application.dataPath + "/Project/Resources/Profiles.txt", json);
+        File.WriteAllText(Application.streamingAssetsPath + "/Profiles.txt", json);
     }
 
     public void LoadProfile()
     {
-        list = JsonUtility.FromJson<ProfileList>(textJSON.text);
+        string i = File.ReadAllText(Application.streamingAssetsPath + "/Profiles.txt");
+        list = JsonUtility.FromJson<ProfileList>(i);
+
         foreach (Profile profile in list.profiles)
         {
             if (inputField.text != profile.name)
@@ -96,7 +99,9 @@ public class AircraftProfileManager : MonoBehaviour
         foreach (ProfileInfo info in FindObjectsOfType<ProfileInfo>())
             Destroy(info.gameObject);
 
-        list = JsonUtility.FromJson<ProfileList>(textJSON.text);
+        string i = File.ReadAllText(Application.streamingAssetsPath + "/Profiles.txt");
+        list = JsonUtility.FromJson<ProfileList>(i);
+
         List<string> allProfile = new List<string>();
         foreach (Profile profile in list.profiles)
         {

@@ -84,12 +84,12 @@ public class TimeOfDay : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            currTimeOfDay++;
-            if (currTimeOfDay >= TIMEOFDAY.TIME_TOTAL)
-                currTimeOfDay = 0;
-        }
+        //if (Input.GetKeyDown(KeyCode.T))
+        //{
+        //    currTimeOfDay++;
+        //    if (currTimeOfDay >= TIMEOFDAY.TIME_TOTAL)
+        //        currTimeOfDay = 0;
+        //}
 
         volume.enabled = true;
         UpdateTimeOfDay();
