@@ -302,56 +302,6 @@ public class CameraController : MonoBehaviour
             GetComponent<Camera>().fieldOfView = cameraOriginalFOV / magnificationLag;
     }
 
-    private void GettingTarget() //Ignore
-    {
-        if (objectGazed)
-            Debug.Log(objectGazed.name);
-
-        RaycastHit[] hit = Physics.SphereCastAll(transform.position, spotRadius, transform.forward, float.MaxValue);
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(spotCamera);
-
-        if (!ObjectInRayArray(hit, objectGazed))
-        {
-            objectGazed = null;
-        }
-
-        foreach (RaycastHit q in hit)
-        {
-            Debug.DrawLine(transform.position, q.transform.position, Color.green);
-            bool onSight = false;
-
-            if (q.transform.GetComponent<Renderer>())
-                onSight = GeometryUtility.TestPlanesAABB(planes, q.transform.GetComponent<Renderer>().bounds); ;
-
-            if (!Physics.Linecast(q.transform.position, transform.position, LayerMask.NameToLayer("SpyderCamera")) && onSight)
-            {
-                if (objectGazed != q.transform.gameObject)
-                {
-                    if (q.transform.gameObject.layer != LayerMask.NameToLayer("SpyderCamera"))
-                    {
-                        if (objectGazed == null)
-                            objectGazed = q.transform.gameObject;
-
-                        else
-                        {
-                            HeatController object1Heat = objectGazed.GetComponent<HeatController>();
-                            HeatController object2Heat = q.transform.gameObject.GetComponent<HeatController>();
-                            if (!object1Heat && object2Heat)
-                            {
-                                objectGazed = q.transform.gameObject;
-                            }
-                            if (object1Heat && object2Heat)
-                            {
-                                if (object1Heat.GetHeatValue() < object2Heat.GetHeatValue())
-                                    objectGazed = q.transform.gameObject;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     private void GettingTargetV2()
     {
 
@@ -448,8 +398,7 @@ public class CameraController : MonoBehaviour
 
         if (objectGazedTracked?.transform.Find("Pivot")) //Get the supposed area that need to be tracked
         {
-            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").localPosition
-                + objectGazedTracked.transform.position
+            Vector3 toRotate = objectGazedTracked.transform.Find("Pivot").position - objectGazedTracked.transform.Find("Pivot").localPosition*100
                 - transform.position;
 
             //Vector3 toRotate = objectGazedTracked.transform.position -
