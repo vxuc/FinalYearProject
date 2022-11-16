@@ -18,6 +18,7 @@ public class AircraftProfileManager : MonoBehaviour
     {
         public string name;
         public string aircraftName;
+        public float aircraftSpeed;
         public List<SerializableVector3> positions;
     }
 
@@ -44,6 +45,19 @@ public class AircraftProfileManager : MonoBehaviour
 
     public void SaveProfile()
     {
+        string i = File.ReadAllText(Application.streamingAssetsPath + "/Profiles.txt");
+        list = JsonUtility.FromJson<ProfileList>(i);
+
+        if (list == null)
+            return;
+
+        foreach (Profile profile in list.profiles)
+        {
+            if (profile.name == inputField.text)
+                return;
+        }
+        
+
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("PlanePath"))
         {
             Vector3[] positions = new Vector3[10000];
@@ -57,6 +71,7 @@ public class AircraftProfileManager : MonoBehaviour
             Profile profile = new Profile();
             profile.name = inputField.text;
             profile.aircraftName = go.GetComponentInChildren<AircraftInfo>().aircraftName;
+            profile.aircraftSpeed = go.GetComponentInChildren<PlaneMovement>().movementSpeed;
             profile.positions = serializableVector3s;
             list.profiles.Add(profile);
         }
@@ -68,6 +83,9 @@ public class AircraftProfileManager : MonoBehaviour
     {
         string i = File.ReadAllText(Application.streamingAssetsPath + "/Profiles.txt");
         list = JsonUtility.FromJson<ProfileList>(i);
+
+        if (list == null)
+            return;
 
         foreach (Profile profile in list.profiles)
         {
@@ -88,6 +106,7 @@ public class AircraftProfileManager : MonoBehaviour
 
             PlaneManager planeManager = FindObjectOfType<PlaneManager>();
             PlaneMovement plane = Instantiate(FindObjectOfType<PlaneManager>().planePrefabs.Find(GameObject => GameObject.name == profile.aircraftName), t).GetComponent<PlaneMovement>();
+            plane.movementSpeed = profile.aircraftSpeed;
             planeManager.SpawnPlane(plane);
 
             cc.currentLine = null;
@@ -103,6 +122,10 @@ public class AircraftProfileManager : MonoBehaviour
         list = JsonUtility.FromJson<ProfileList>(i);
 
         List<string> allProfile = new List<string>();
+
+        if (list == null)
+            return;
+
         foreach (Profile profile in list.profiles)
         {
             if (allProfile.Contains(profile.name))
