@@ -131,8 +131,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 10000
+  tempSpeed: 0
   destinations: []
-  flip: 1
+  flip: 0
+  cursorControllerV2: {fileID: 0}
 --- !u!114 &7156728868942006209
 MonoBehaviour:
   m_ObjectHideFlags: 0

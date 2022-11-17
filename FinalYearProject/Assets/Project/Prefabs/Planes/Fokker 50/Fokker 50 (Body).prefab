@@ -1152,7 +1152,7 @@ MonoBehaviour:
   movementSpeed: 10000
   tempSpeed: 0
   destinations: []
-  flip: 1
+  flip: 0
   cursorControllerV2: {fileID: 0}
 --- !u!65 &8689015240319452110
 BoxCollider:
