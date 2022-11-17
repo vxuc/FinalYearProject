@@ -1,3 +1,8 @@
+/**
+ * This class is to handle the mouse clicks in the minimap
+ * The mapping of mouse clicks in the minimap to the 3D environment is not correctly done.
+ * It can only do up to 10x10 and it should be 30x30.
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +13,8 @@ using TMPro;
 public class CursorControllerV2 : MonoBehaviour
 {
     private CursorControls controls;
+    protected float width;
+    protected float height;
 
     //Minimap RT
     [SerializeField] Camera uiCamera;
@@ -68,12 +75,14 @@ public class CursorControllerV2 : MonoBehaviour
     {
         //Calls out Click Function
         controls.Mouse.Click.started += _ => StartedClick();
-  
+
+        var rectTransform = GetComponent<RectTransform>();
+        width = rectTransform.sizeDelta.x;
+        height = rectTransform.sizeDelta.y;
     }
 
     void Update()
     {
-    
         //Right Click on Map
         if (Input.GetMouseButtonDown(1))
         {
@@ -84,15 +93,12 @@ public class CursorControllerV2 : MonoBehaviour
         {
             UndoButton();
         }
-
     }
 
-
-
-    //Code to insert waypoints and spawn in map
+    // Code to insert waypoints and spawn in map
+    // This function is to detect the mouse clicks in the minimap and spawn the aircrafts in the 3D Environment
     private void DetectObject()
     {
-
         PointerEventData pointerData = new PointerEventData(EventSystem.current);
         List<RaycastResult> results = new List<RaycastResult>();
 
@@ -100,9 +106,12 @@ public class CursorControllerV2 : MonoBehaviour
         pointerData.position = controls.Mouse.Position.ReadValue<Vector2>();
         GetComponent<GraphicRaycaster>().Raycast(pointerData, results);
 
+        Debug.Log("x=" + pointerData.position.x + " y=" + pointerData.position.y);
 
         if (Input.GetMouseButtonDown(0))
         {
+            // spawnCount is the maximum number of planes to be spawned
+            // planeVal is the total number of planes which has spawned
             if (PlaneManager.Instance.spawnCount < 16 && PlaneManager.Instance.planeVal > 0)
             {
                 //For every result returned, output the name of the GameObject on the Canvas hit by the Ray
@@ -113,13 +122,20 @@ public class CursorControllerV2 : MonoBehaviour
                     if (currentLine == null)
                         PlanePath = Instantiate(PlanePathParent.gameObject, Vector3.zero, Quaternion.identity);
 
-                    //The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
-                    Vector3 pos = new Vector3(((pointerData.position.x - transform.position.x + 375) - GetComponent<RectTransform>().rect.width * 0.5f) / GetComponent<RectTransform>().rect.width * 1350000,
+                    // Coordinate of the Spyder: -34541.93, 465.6, 26517.73
+                    Vector3 pos = new Vector3(
+                        (pointerData.position.x - width * 0.5f) * 3800/* + 15000.0f*/,
                         PlaneHeightSlider.value,
-                        ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
-                    Debug.Log("World Pos: " + pos);
-                    //Instantiate(prefab, pos, Quaternion.identity);
+                        (pointerData.position.y - height * 0.5f) * 3800/* + 15000.0f*/
+                        );
 
+
+                    ////The map position needs to be at the bottom left (0, 0) for this size to work unless RAYCAST [Later on during improvisation and debugging]
+                    //Vector3 pos = new Vector3(((pointerData.position.x - transform.position.x + 375) - GetComponent<RectTransform>().rect.width * 0.5f) / GetComponent<RectTransform>().rect.width * 1350000,
+                    //    PlaneHeightSlider.value,
+                    //    ((pointerData.position.y - transform.position.y + 375) - GetComponent<RectTransform>().rect.height * 0.5f) / GetComponent<RectTransform>().rect.height * 1350000);
+                    Debug.Log("*** World Pos: " + pos);
+                    //Instantiate(prefab, pos, Quaternion.identity);
 
                     //Draw a line
                     renderLine();
@@ -158,10 +174,7 @@ public class CursorControllerV2 : MonoBehaviour
                         statInfo.transform.SetParent(statsCanvas.transform);
                     }
                 }
-
             }
-
-
         }
     }
 
@@ -169,7 +182,6 @@ public class CursorControllerV2 : MonoBehaviour
     {
         return PlaneHeightSlider.value;
     }
-
 
     public LineController renderLine(bool customTransform = false, Transform t = null)
     {
