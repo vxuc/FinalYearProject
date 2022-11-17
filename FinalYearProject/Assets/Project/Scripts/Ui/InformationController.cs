@@ -60,9 +60,9 @@ public class InformationController : MonoBehaviour
     void Update()
     {
         if (rotationText && userCamera)
-            updateRotationText();
+            UpdateRotationText();
         if (timeText)
-            updateTimeText();
+            UpdateTimeText();
 
  
 
@@ -134,7 +134,7 @@ public class InformationController : MonoBehaviour
         }
     }
 
-    private void updateTimeText()
+    private void UpdateTimeText()
     {
         if (ReplayManager.Instance.ReplayMode())
         {
@@ -151,7 +151,7 @@ public class InformationController : MonoBehaviour
         }
     }
 
-    private void updateRotationText()
+    private void UpdateRotationText()
     {
         float az = userCamera.transform.rotation.eulerAngles.y;
         if(!trueNorth)

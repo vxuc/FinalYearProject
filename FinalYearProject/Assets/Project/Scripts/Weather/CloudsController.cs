@@ -89,7 +89,7 @@ public class CloudsController : MonoBehaviour
 
         else if (cloudAreaParent[buttonNo])
         {
-            ClearCloudbyArea(buttonNo);
+            ClearCloudByArea(buttonNo);
         }
 
 
@@ -123,7 +123,7 @@ public class CloudsController : MonoBehaviour
             Destroy(cloud.gameObject);
         }
     }
-    public void ClearCloudbyArea(int buttonNo)
+    public void ClearCloudByArea(int buttonNo)
     {
         foreach (Transform cloud in cloudAreaParent[buttonNo].transform)
         {
@@ -131,7 +131,7 @@ public class CloudsController : MonoBehaviour
         }
     }
 
-    public void ClearAllCloudbyArea()
+    public void ClearAllCloudByArea()
     {
         for(int i = 0;i< cloudAreaParent.Length;i++)
         { 

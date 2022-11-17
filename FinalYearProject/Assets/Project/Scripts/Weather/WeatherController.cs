@@ -179,7 +179,7 @@ public class WeatherController : MonoBehaviour
     }
     public void ResetAreaCloud()
     {
-        cloudsController.ClearAllCloudbyArea();
+        cloudsController.ClearAllCloudByArea();
     }
     public void SetWeather(int weather)
     {
